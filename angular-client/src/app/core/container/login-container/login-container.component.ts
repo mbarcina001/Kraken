@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { USERS_ROUTE } from '../../app.constants';
 
 @Component({
   selector: 'app-login-container',
@@ -7,13 +9,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoginContainerComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private route: Router
+  ) { }
 
   ngOnInit(): void { }
 
   login ($event: any) {
     console.log('login');
     console.log($event);
+    this.route.navigate([USERS_ROUTE]);
   }
 
 }
