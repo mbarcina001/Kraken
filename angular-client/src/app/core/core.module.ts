@@ -1,8 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AppRoutingModule } from '../app-routing.module';
+
 import { LoginContainerComponent } from './container/login-container/login-container.component';
 import { LoginComponent } from './components/login/login.component';
-import { AppRoutingModule } from '../app-routing.module';
 
 @NgModule({
     declarations: [
@@ -11,7 +13,9 @@ import { AppRoutingModule } from '../app-routing.module';
     ],
     imports: [
         CommonModule,
-        AppRoutingModule
+        AppRoutingModule,
+        FormsModule,
+        ReactiveFormsModule
     ],
     providers: [],
     exports: [
