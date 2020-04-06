@@ -5,11 +5,15 @@ import { AppRoutingModule } from '../app-routing.module';
 
 import { LoginContainerComponent } from './container/login-container/login-container.component';
 import { LoginComponent } from './components/login/login.component';
+import { HeaderComponent } from './components/header/header.component';
+import { FooterComponent } from './components/footer/footer.component';
 
 @NgModule({
     declarations: [
         LoginContainerComponent,
         LoginComponent,
+        HeaderComponent,
+        FooterComponent
     ],
     imports: [
         CommonModule,
@@ -19,7 +23,9 @@ import { LoginComponent } from './components/login/login.component';
     ],
     providers: [],
     exports: [
-        AppRoutingModule
+        AppRoutingModule,
+        HeaderComponent,
+        FooterComponent
     ]
 })
 
