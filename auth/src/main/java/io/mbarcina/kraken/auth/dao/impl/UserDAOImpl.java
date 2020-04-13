@@ -1,6 +1,4 @@
-package io.mbarcina.kraken.dao.impl;
-
-import java.util.List;
+package io.mbarcina.kraken.auth.dao.impl;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
@@ -9,8 +7,8 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import io.mbarcina.kraken.dao.IUserDAO;
-import io.mbarcina.kraken.entity.User;
+import io.mbarcina.kraken.auth.dao.IUserDAO;
+import io.mbarcina.kraken.auth.entity.User;
 
 @Repository
 public class UserDAOImpl implements IUserDAO{
@@ -19,13 +17,14 @@ public class UserDAOImpl implements IUserDAO{
 	private EntityManager entityManager;
 	
 	@Transactional
-	public List<User> getUsers() {
+	public User findByUsername(String username) {
 		// Create a query
-		TypedQuery<User> theQuery = entityManager.createQuery("from User", User.class);
+		TypedQuery<User> theQuery = entityManager.createQuery("from User WHERE u.userName = ?1", User.class)
+			.setParameter(1, username);
 		
-		// Get the result list
-		List<User> users = theQuery.getResultList();
+		// Get the result
+		User user = theQuery.getSingleResult();
 		
-		return users;
+		return user;
 	}
 }

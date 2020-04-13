@@ -1,8 +1,8 @@
-package io.mbarcina.kraken.dao;
+package io.mbarcina.kraken.api.dao;
 
 import java.util.List;
 
-import io.mbarcina.kraken.entity.User;
+import io.mbarcina.kraken.api.entity.User;
 
 public interface IUserDAO {
 	

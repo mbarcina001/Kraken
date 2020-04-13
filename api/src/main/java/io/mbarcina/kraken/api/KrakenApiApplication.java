@@ -1,13 +1,13 @@
-package io.mbarcina.kraken;
+package io.mbarcina.kraken.api;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class KrakenApplication 
+public class KrakenApiApplication 
 {
     public static void main( String[] args )
     {
-    	SpringApplication.run(KrakenApplication.class, args);
+    	SpringApplication.run(KrakenApiApplication.class, args);
     }
 }

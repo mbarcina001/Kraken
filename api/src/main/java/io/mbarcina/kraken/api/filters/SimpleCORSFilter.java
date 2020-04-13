@@ -1,4 +1,4 @@
-package io.mbarcina.kraken.filters;
+package io.mbarcina.kraken.api.filters;
 
 import java.io.IOException;
 import javax.servlet.Filter;

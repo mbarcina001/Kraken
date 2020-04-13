@@ -1,4 +1,4 @@
-package io.mbarcina.kraken.entity;
+package io.mbarcina.kraken.auth.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
