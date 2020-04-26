@@ -12,9 +12,9 @@ export class UserService {
     ) { }
 
     getUserList() {
-		return of([
+		/*return of([
 			{username: 'test', password: 'test', email: 'test'}
-		])
-        // return this.http.get<any>('http://localhost:8080/');
+		])*/
+        return this.http.get<any>('http://localhost:8080/api/users');
     }
 }

@@ -16,6 +16,6 @@ export class AuthService {
   }
 
   isAuthenticated() {
-    return false;
+    return true;
   }
 }
