@@ -1,5 +1,5 @@
 # docker build -t kraken-mysql .
-# docker run -d -p 3306:3306 --name kraken-mysql kraken-mysql
+# docker run -d -p 3406:3306 --name kraken-mysql kraken-mysql
 # docker exec -it kraken-mysql bash
 
 # Derived from official mysql image (our base image)
