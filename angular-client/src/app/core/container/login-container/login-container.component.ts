@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { USERS_ROUTE } from '../../app.constants';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-login-container',
@@ -10,14 +11,14 @@ import { USERS_ROUTE } from '../../app.constants';
 export class LoginContainerComponent implements OnInit {
 
   constructor(
-    private route: Router
+    private route: Router,
+    private authService: AuthService
   ) { }
 
   ngOnInit(): void { }
 
   login ($event: any) {
-    console.log('login');
-    console.log($event);
+    this.authService.login($event.email, $event.password);
     this.route.navigate([USERS_ROUTE]);
   }
 

@@ -23,10 +23,8 @@ export class LoginComponent implements OnInit {
 
   validateAndLogin(): void {
     if(this.loginForm.valid) {
-      this.doLogin.emit('test')
+      this.doLogin.emit(this.loginForm.value);
     } else {
-      console.log("Show errors");
-      console.log(this.loginForm);
       this.loginForm.markAllAsTouched();
     }
   }

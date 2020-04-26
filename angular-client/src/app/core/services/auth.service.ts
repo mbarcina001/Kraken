@@ -8,10 +8,14 @@ export class AuthService {
 
   constructor() { }
 
-  login (username: string, pass: string) {
+  login (email: string, pass: string) {
     return of({
       name: 'test',
       token: 'asdf123456'
     })
+  }
+
+  isAuthenticated() {
+    return false;
   }
 }

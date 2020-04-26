@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { LoginContainerComponent } from './core/container/login-container/login-container.component';
 import { LOGIN_ROUTE, USERS_ROUTE } from './core/app.constants';
 import { UserContainerComponent } from './features/user/container/user-container/user-container.component';
+import { AuthGuard } from './core/guards/auth.guard';
 
 const routes: Routes = [
   {
@@ -16,12 +17,14 @@ const routes: Routes = [
   },
   {
     path: USERS_ROUTE,
-    component: UserContainerComponent
+    component: UserContainerComponent,
+    canActivate: [AuthGuard]
   }
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
+  providers: [AuthGuard]
 })
 export class AppRoutingModule { }
