@@ -21,8 +21,8 @@ public class User {
 	
 	@NotNull
 	@NotBlank
-	@Column(name="username")
-	private String username;
+	@Column(name="name")
+	private String name;
 	
 	@NotNull
 	@NotBlank
@@ -34,12 +34,12 @@ public class User {
 	@Column(name="email")
     private String email;
     
-	public String getUsername() {
-		return username;
+	public String getName() {
+		return name;
 	}
 	
-	public void setUsername(String username) {
-		this.username = username;
+	public void setName(String name) {
+		this.name = name;
 	}
 	
 	public String getPassword() {
@@ -60,9 +60,9 @@ public class User {
 	
 	public User() { }
 	
-	public User(String username, String password, String email) {
+	public User(String name, String password, String email) {
 		super();
-		this.username = username;
+		this.name = name;
 		this.password = password;
 		this.email = email;
 	}
@@ -73,7 +73,7 @@ public class User {
 		int result = 1;
 		result = prime * result + ((email == null) ? 0 : email.hashCode());
 		result = prime * result + ((password == null) ? 0 : password.hashCode());
-		result = prime * result + ((username == null) ? 0 : username.hashCode());
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		return result;
 	}
 	
@@ -96,16 +96,16 @@ public class User {
 				return false;
 		} else if (!password.equals(other.password))
 			return false;
-		if (username == null) {
-			if (other.username != null)
+		if (name == null) {
+			if (other.name != null)
 				return false;
-		} else if (!username.equals(other.username))
+		} else if (!name.equals(other.name))
 			return false;
 		return true;
 	}
 	
 	@Override
 	public String toString() {
-		return "User [username=" + username + ", password=" + password + ", email=" + email + "]";
+		return "User [name=" + name + ", password=" + password + ", email=" + email + "]";
 	}
 }

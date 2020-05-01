@@ -15,6 +15,6 @@ export class UserService {
 		/*return of([
 			{username: 'test', password: 'test', email: 'test'}
 		])*/
-        return this.http.get<any>('http://localhost:8080/api/users');
+        return this.http.get<any>('http://localhost:8080/api/users/');
     }
 }

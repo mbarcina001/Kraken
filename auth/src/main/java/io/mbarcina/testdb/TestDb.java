@@ -11,7 +11,7 @@ public class TestDb {
 		String user = "root";
 		String pass = "root";
 		
-		String jdbcUrl = "jdbc:mysql://localhost:3306/kraken?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true";
+		String jdbcUrl = "jdbc:mysql://localhost:3406/kraken?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true";
 		String driver = "com.mysql.cj.jdbc.Driver";
 		
 		// get connection to database

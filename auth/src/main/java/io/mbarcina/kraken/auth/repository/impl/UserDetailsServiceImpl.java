@@ -33,7 +33,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 			customUserDetails.setGrantedAuthorities(authorities);*/
 			return customUserDetails;
 		}
-		throw new UsernameNotFoundException(username);
+		throw new UsernameNotFoundException("Username or password wrong");
 	}
 
 }
