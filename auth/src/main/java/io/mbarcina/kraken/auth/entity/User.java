@@ -11,7 +11,7 @@ import javax.validation.constraints.NotBlank;
 import com.sun.istack.NotNull;
 
 @Entity
-@Table(name="User")
+@Table(name="user")
 public class User {
 	
 	@Id
@@ -21,7 +21,7 @@ public class User {
 	
 	@NotNull
 	@NotBlank
-	@Column(name="username")
+	@Column(name="name")
 	private String username;
 	
 	@NotNull
