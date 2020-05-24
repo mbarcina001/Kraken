@@ -19,4 +19,4 @@ INSERT INTO oauth_client_details
         authorities, resource_ids)
 VALUES
     ('krakenapp', '$2y$12$Ta4Fn9sgEMST/EL98Ujc/O5x35ip7hQUOzMECDEc4e5FLUrZj33cq', 'read,write', 'password,refresh_token,client_credentials,authorization_code', 
-        'USER', 'resource');
+        'USER', 'krakenresource');
