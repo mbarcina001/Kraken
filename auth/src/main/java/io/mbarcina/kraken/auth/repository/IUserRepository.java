@@ -8,4 +8,5 @@ import io.mbarcina.kraken.auth.entity.User;
 @Repository
 public interface IUserRepository extends JpaRepository<User, Long> {
 	User findOneByUsername(String username);
+	User findByEmail(String username);
 }

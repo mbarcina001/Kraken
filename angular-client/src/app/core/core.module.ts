@@ -7,6 +7,7 @@ import { LoginContainerComponent } from './container/login-container/login-conta
 import { LoginComponent } from './components/login/login.component';
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
+import { AuthService } from '../store/services/auth.service';
 
 @NgModule({
     declarations: [
@@ -21,7 +22,9 @@ import { FooterComponent } from './components/footer/footer.component';
         FormsModule,
         ReactiveFormsModule
     ],
-    providers: [],
+    providers: [
+        AuthService
+    ],
     exports: [
         AppRoutingModule,
         HeaderComponent,

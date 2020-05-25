@@ -17,21 +17,39 @@ public class UserDetailsService implements org.springframework.security.core.use
 
 	@Autowired
 	private IUserRepository userRepository;
+	
+	public UserDetails loadUserByUsername(String mail) {
+		User user = userRepository.findByEmail(mail);
+		if (user != null) {
+			CustomUserDetails customUserDetails = new CustomUserDetails();
+			customUserDetails.setUsername(user.getUsername());
+			customUserDetails.setPassword(user.getPassword());
+			/*
+			 * Set<GrantedAuthority> authorities = new HashSet<GrantedAuthority>(); for
+			 * (UserAuthority authority : user.getUserAuthorities()) { authorities.add(new
+			 * CustomGrantedAuthority(authority.getAuthority().getName())); }
+			 * customUserDetails.setGrantedAuthorities(authorities);
+			 */
+			return customUserDetails;
+		}
+		throw new UsernameNotFoundException("Username or password wrong");
+	}
 
-	public UserDetails loadUserByUsername(String username) {
+	// Load by username
+	/*public UserDetails loadUserByUsername(String username) {
 		User user = userRepository.findOneByUsername(username);
 		if (user != null) {
 			CustomUserDetails customUserDetails = new CustomUserDetails();
 			customUserDetails.setUsername(user.getUsername());
 			customUserDetails.setPassword(user.getPassword());
-			/*Set<GrantedAuthority> authorities = new HashSet<GrantedAuthority>();
+			Set<GrantedAuthority> authorities = new HashSet<GrantedAuthority>();
 			for (UserAuthority authority : user.getUserAuthorities()) {
 				authorities.add(new CustomGrantedAuthority(authority.getAuthority().getName()));
 			}
-			customUserDetails.setGrantedAuthorities(authorities);*/
+			customUserDetails.setGrantedAuthorities(authorities);
 			return customUserDetails;
 		}
 		throw new UsernameNotFoundException("Username or password wrong");
-	}
+	}*/
 
 }
