@@ -23,6 +23,8 @@ import org.springframework.web.filter.CorsFilter;
 public class ResourceServerConfiguration extends
 		ResourceServerConfigurerAdapter {
 	
+	private static final String RESOURCE_ID = "krakenresource";
+	
 	@Autowired
     @Qualifier("dataSource")
     private DataSource dataSource;
@@ -51,12 +53,10 @@ public class ResourceServerConfiguration extends
 			.antMatchers("/greeting").authenticated()
 	        .and().exceptionHandling().accessDeniedHandler(new OAuth2AccessDeniedHandler());
 	}
-	
-	private String resourceIds= "krakenresource";
-			
+				
 	@Override
 	public void configure(ResourceServerSecurityConfigurer resources) throws Exception {
-		resources.resourceId(resourceIds).tokenStore(tokenStore());
+		resources.resourceId(RESOURCE_ID).tokenStore(tokenStore());
 	}
 
 }
