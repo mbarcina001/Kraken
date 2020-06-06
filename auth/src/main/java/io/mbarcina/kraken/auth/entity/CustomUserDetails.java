@@ -1,6 +1,7 @@
 package io.mbarcina.kraken.auth.entity;
 
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -10,13 +11,17 @@ public class CustomUserDetails implements UserDetails {
 	private static final long serialVersionUID = 1424968907281392220L;
 	private String username;
 	private String password;
+	private List<GrantedAuthority> grantedAuthorities;
 
 	@Override
-	public Collection<? extends GrantedAuthority> getAuthorities() {
-		// TODO Auto-generated method stub
-		return null;
+	public String getUsername() {
+		return this.username;
 	}
-
+	
+	public void setUsername(String pUsername) {
+		this.username = pUsername;
+	}
+	
 	@Override
 	public String getPassword() {
 		return this.password;
@@ -27,12 +32,12 @@ public class CustomUserDetails implements UserDetails {
 	}
 
 	@Override
-	public String getUsername() {
-		return this.username;
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		return this.grantedAuthorities;
 	}
 	
-	public void setUsername(String pUsername) {
-		this.username = pUsername;
+	public void setAuthorities(List<GrantedAuthority> pGrantedAuthorities) {
+		this.grantedAuthorities = pGrantedAuthorities;
 	}
 
 	@Override
@@ -59,4 +64,9 @@ public class CustomUserDetails implements UserDetails {
 		return true;
 	}
 
+	@Override
+	public String toString() {
+		return "CustomUserDetails [username=" + username + ", password=" + password + ", grantedAuthorities="
+				+ grantedAuthorities + "]";
+	}
 }
