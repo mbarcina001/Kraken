@@ -1,0 +1,45 @@
+<ng-template #loginTmpl let-contact>
+    <form [formGroup]="loginForm" class="custom100-form validate-form" action="javascript:void(0);">
+        <img width="120px" class="mx-auto d-block mb-4" src="/assets/images/logo/kraken.png">
+
+        <span class="custom100-form-title pb-5">
+            Login to continue
+        </span>
+        
+        <div class="wrap-input100 validate-input" [ngClass]="{'alert-validate' : showErrors('email')}" data-validate="Valid email is required: ex@abc.xyz">
+            <input class="input100" [ngClass]="{'has-val' : this.loginForm.controls['email'].value}" type="text" name="email" formControlName="email">
+            <span class="focus-input100"></span>
+            <span class="label-input100">Email</span>
+        </div>
+        
+        
+        <div class="wrap-input100 validate-input" [ngClass]="{'alert-validate' : showErrors('password')}" data-validate="Password is required">
+            <input class="input100" [ngClass]="{'has-val' : this.loginForm.controls['password'].value}" type="password" name="pass" formControlName="password">
+            <span class="focus-input100"></span>
+            <span class="label-input100">Password</span>
+        </div>
+
+        <div class="d-flex justify-content-between align-items-center w-full pt-1 pb-4">
+            <div class="contact100-form-checkbox">
+                <input class="input-checkbox100" id="ckb1" type="checkbox" name="remember-me">
+                <label class="label-checkbox100" for="ckb1">
+                    Remember me
+                </label>
+            </div>
+
+            <div>
+                <a href="#" class="txt1">
+                    Forgot Password?
+                </a>
+            </div>
+        </div>
+
+        <div class="container-custom100-form-btn">
+            <button class="custom100-form-btn" (click)="validateAndLogin()">
+                Login
+            </button>
+        </div>
+
+        <a href="" (click)="showRegisterTemplate()">Don't have an account? Register</a>
+    </form>
+</ng-template>
