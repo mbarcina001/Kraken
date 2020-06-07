@@ -5,8 +5,8 @@ INSERT INTO user (id, name, password, email) VALUES
     (4, 'testne', 'test', 'testne');
 
 INSERT INTO role(id, name) VALUES
-    (1, 'admin'),
-    (2, 'user');
+    (1, 'ROLE_ADMIN'),
+    (2, 'ROLE_USER');
 
 INSERT INTO user_role(user_id, role_id) VALUES
     (1, 1),
