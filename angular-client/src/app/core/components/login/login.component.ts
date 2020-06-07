@@ -10,7 +10,7 @@ export class LoginComponent implements OnInit {
 
   @Output() doLogin = new EventEmitter<any>();
 
-  public loginForm;
+  public loginForm: FormGroup;
 
   constructor() { }
 
@@ -22,7 +22,7 @@ export class LoginComponent implements OnInit {
   }
 
   validateAndLogin(): void {
-    if(this.loginForm.valid) {
+    if (this.loginForm.valid) {
       this.doLogin.emit(this.loginForm.value);
     } else {
       this.loginForm.markAllAsTouched();
@@ -30,7 +30,8 @@ export class LoginComponent implements OnInit {
   }
 
   showErrors(controlName: string) {
-    return (this.loginForm.controls[controlName].dirty || this.loginForm.controls[controlName].touched) && this.loginForm.controls[controlName].errors
+    return (this.loginForm.controls[controlName].dirty || this.loginForm.controls[controlName].touched)
+      && this.loginForm.controls[controlName].errors;
   }
 
 }

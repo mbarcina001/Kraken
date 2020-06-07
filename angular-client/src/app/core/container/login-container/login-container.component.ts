@@ -13,7 +13,7 @@ import { auth } from '../../../store/actions/auth.actions';
 })
 export class LoginContainerComponent implements OnInit {
 
-  auth$ = this.store.select(state => state.auth.auth);
+  auth$ = this.store.select(state => state.auth.authResult);
   authLoading$ = this.store.select(state => state.auth.loading);
   authErrorMessage$ = this.store.select(state => state.auth.error);
 
@@ -25,9 +25,13 @@ export class LoginContainerComponent implements OnInit {
     this.auth$.subscribe(x => {
       console.log(x);
     });
+    this.authLoading$.subscribe(x => {
+      console.log(x);
+    });
   }
 
   login($event: any) {
+    this.store.select(state => console.log(state));
     // this.authService.login($event.email, $event.password);
     this.store.dispatch(auth({email: $event.email, password: $event.password}));
     // this.route.navigate([USERS_ROUTE]);
