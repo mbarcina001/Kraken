@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { USERS_ROUTE } from '../../app.constants';
-import { AuthService } from '../../services/auth.service';
 import { Store } from '@ngrx/store';
 import { auth } from '../../../store/actions/auth.actions';
 
@@ -11,7 +10,7 @@ import { auth } from '../../../store/actions/auth.actions';
   templateUrl: './login-container.component.html',
   styleUrls: ['./login-container.component.scss']
 })
-export class LoginContainerComponent implements OnInit {
+export class LoginContainerComponent {
 
   auth$ = this.store.select(state => state.auth.authResult);
   authLoading$ = this.store.select(state => state.auth.loading);
@@ -21,20 +20,12 @@ export class LoginContainerComponent implements OnInit {
     private store: Store<any>
   ) { }
 
-  ngOnInit(): void {
-    this.auth$.subscribe(x => {
-      console.log(x);
-    });
-    this.authLoading$.subscribe(x => {
-      console.log(x);
-    });
-  }
-
   login($event: any) {
-    this.store.select(state => console.log(state));
-    // this.authService.login($event.email, $event.password);
     this.store.dispatch(auth({email: $event.email, password: $event.password}));
     // this.route.navigate([USERS_ROUTE]);
   }
 
+  register($event: any) {
+    // TODO
+  }
 }

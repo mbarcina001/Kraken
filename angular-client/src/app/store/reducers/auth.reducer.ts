@@ -9,6 +9,7 @@ export interface State {
     password: string;
     authResult: Auth;
     error: string;
+    isAuthenticated: boolean;
 }
 
 export const initialState: State = {
@@ -16,13 +17,14 @@ export const initialState: State = {
     email: '',
     password: '',
     authResult: null,
-    error: ''
+    error: '',
+    isAuthenticated: false
 };
 
 const reducer = createReducer(
     initialState,
     on(AuthActions.auth, (state, { email, password }) => ({ ...state, loading: true, email, password , error: ''})),
-    on(AuthActions.authSuccess, (state, { authResult }) => ({ ...state, loading: false, authResult })),
+    on(AuthActions.authSuccess, (state, { authResult }) => ({ ...state, loading: false, authResult, isAuthenticated: true })),
 );
 
 export function authReducer(state: State | undefined, action: Action) {
