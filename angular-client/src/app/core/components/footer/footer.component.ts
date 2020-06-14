@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-footer',
@@ -7,7 +8,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FooterComponent implements OnInit {
 
-  constructor() { }
+  isAuthenticated$ = this.store.select(state => state.auth.isAuthenticated);
+
+  constructor(
+    private store: Store<any>
+  ) { }
 
   ngOnInit(): void {
   }

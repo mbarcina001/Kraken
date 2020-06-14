@@ -1,15 +1,17 @@
 import { Component, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent {
 
-  constructor() { }
+  isAuthenticated$ = this.store.select(state => state.auth.isAuthenticated);
 
-  ngOnInit(): void {
-  }
+  constructor(
+    private store: Store<any>
+  ) { }
 
 }

@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { User } from 'src/app/features/model/user';
-import { UserService } from 'src/app/features/service/user-service';
+import { UserService } from 'src/app/features/user/service/user-service';
 
 @Component({
   selector: 'app-user-container',

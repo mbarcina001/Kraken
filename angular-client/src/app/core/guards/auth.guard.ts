@@ -10,11 +10,11 @@ export class AuthGuard implements CanActivate {
 
   constructor(private store: Store<any>, public router: Router) {}
 
-  canActivate(): /*Observable<boolean>*/ boolean {
-    return true;
-    /*return this.store.pipe(
+  canActivate(): Observable<boolean> {
+    return this.store.pipe(
       select(isAuthenticated),
       map(authed => {
+        console.log('canActivate: ' + authed);
         if (!authed) {
           console.log('navigate login');
           this.router.navigate(['login']);
@@ -22,6 +22,6 @@ export class AuthGuard implements CanActivate {
         }
         return true;
       })
-    );*/
+    );
   }
 }

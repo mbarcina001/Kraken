@@ -1,9 +1,10 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { LoginContainerComponent } from './core/container/login-container/login-container.component';
-import { LOGIN_ROUTE, USERS_ROUTE } from './core/app.constants';
-import { UserContainerComponent } from './features/user/container/user-container/user-container.component';
+import { LOGIN_ROUTE, USERS_ROUTE, HOME_ROUTE } from './core/app.constants';
+import { UserContainerComponent } from './features/user/container/user-container.component';
 import { AuthGuard } from './core/guards/auth.guard';
+import { HomeContainerComponent } from './features/home/containers/home-container.component';
 
 const routes: Routes = [
   {
@@ -16,9 +17,14 @@ const routes: Routes = [
     component: LoginContainerComponent
   },
   {
+    path: HOME_ROUTE,
+    component: HomeContainerComponent,
+    canActivate: [AuthGuard]
+  },
+  {
     path: USERS_ROUTE,
     component: UserContainerComponent,
-    // canActivate: [AuthGuard]
+    canActivate: [AuthGuard]
   }
 ];
 
