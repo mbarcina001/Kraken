@@ -14,7 +14,6 @@ import org.springframework.security.oauth2.config.annotation.configurers.ClientD
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
-import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.error.OAuth2AccessDeniedHandler;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore;
@@ -45,15 +44,6 @@ public class AuthConfig extends AuthorizationServerConfigurerAdapter {
     public OAuth2AccessDeniedHandler oauthAccessDeniedHandler() {
         return new OAuth2AccessDeniedHandler();
     }
-	
-	@Override
-    public void configure(AuthorizationServerSecurityConfigurer oauthServer) {
-        oauthServer
-		    .tokenKeyAccess("permitAll()")
-		    .checkTokenAccess("isAuthenticated()")
-		    .passwordEncoder(userPasswordEncoder())
-		    .allowFormAuthenticationForClients();
-    }
 
 	@Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
@@ -63,9 +53,9 @@ public class AuthConfig extends AuthorizationServerConfigurerAdapter {
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) {
         endpoints
-	        .tokenStore(tokenStore())
-	        .authenticationManager(authenticationManager)
-	        .userDetailsService(krakenUserDetailsService);
+	        .tokenStore(tokenStore()) // Use a JdbcTokenStore for saving tokens
+	        .authenticationManager(authenticationManager) // Use our authentication manager 
+	        .userDetailsService(krakenUserDetailsService); // Use custom service for retrieving user details
     }
 
 	@Bean
