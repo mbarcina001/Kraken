@@ -54,7 +54,7 @@ public class ResourceServerConfiguration extends
 		http.cors().and().csrf().disable()
 	        .anonymous().disable()
 	        .authorizeRequests()
-	        .antMatchers("/api-docs/**").permitAll()
+	        .antMatchers("/api-docs/**").permitAll() // Sobra?
 	        .and().exceptionHandling().accessDeniedHandler(new OAuth2AccessDeniedHandler());
 	}
 				

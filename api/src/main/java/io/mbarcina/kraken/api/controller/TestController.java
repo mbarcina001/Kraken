@@ -1,5 +1,6 @@
 package io.mbarcina.kraken.api.controller;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,8 +26,9 @@ public class TestController {
 	}
     
 	@RequestMapping(value= {"/"})
-	public String greetingPublic() {
+	public ResponseEntity<String> greetingPublic() {
 		System.out.println("Hi anon!");
-		return "Hi anon!";
+		// return "Hi anon!";
+		return ResponseEntity.ok("Service online");
 	}
 }

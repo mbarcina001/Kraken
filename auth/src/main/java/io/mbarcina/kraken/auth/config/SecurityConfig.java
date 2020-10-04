@@ -32,7 +32,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .and()
                 .authorizeRequests()
                 // Allow unauthenticated requests to /auth/signin endpoint
-        		.antMatchers(HttpMethod.POST, "/auth/signin").permitAll()
+        		.antMatchers(HttpMethod.POST, "/auth/signin", "/auth/register").permitAll()
         		// Every other request must be authenticated
                 .anyRequest().authenticated()
             .and()

@@ -19,7 +19,7 @@ public class UserDAOImpl implements IUserDAO{
 	private EntityManager entityManager;
 	
 	@Transactional
-	public List<User> getUsers() {
+	public List<User> getUserList() {
 		// Create a query
 		TypedQuery<User> theQuery = entityManager.createQuery("from User", User.class);
 		

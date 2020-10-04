@@ -6,6 +6,6 @@ import io.mbarcina.kraken.api.entity.User;
 
 public interface IUserDAO {
 	
-	public List<User> getUsers();
+	public List<User> getUserList();
 	
 }

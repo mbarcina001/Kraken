@@ -3,6 +3,7 @@ package io.mbarcina.kraken.auth.controller;
 import static java.util.stream.Collectors.toList;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,12 +13,14 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.mbarcina.kraken.auth.model.AuthenticationRequestModel;
+import io.mbarcina.kraken.auth.model.RegisterRequestModel;
 import io.mbarcina.kraken.auth.model.UserModel;
 import io.mbarcina.kraken.auth.provider.JwtTokenProvider;
 import io.mbarcina.kraken.auth.service.UserDetailsService;
@@ -60,5 +63,20 @@ public class AuthController implements Serializable{
         } catch (AuthenticationException e) {
             throw new BadCredentialsException("Invalid username/password supplied");
         }
+    }
+    
+    @PostMapping("/register")
+    public UserModel register(@RequestBody RegisterRequestModel data) {
+    	String mail = data.getEmail();
+    	
+    	try {
+    		this.users.loadUserByUsername(mail);
+    	} catch (UsernameNotFoundException e) {
+    		// TODO: Register
+        	List<String> roles = new ArrayList<String>();
+        	return new UserModel(mail, data.getUsername(), "test", roles);
+    	}
+    	
+		throw new BadCredentialsException("Username already in use");
     }
 }

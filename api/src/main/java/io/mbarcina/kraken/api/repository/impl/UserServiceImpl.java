@@ -18,8 +18,8 @@ public class UserServiceImpl implements IUserService{
 	private IUserDAO userDAO;
 	
 	@Transactional
-	public List<User> getUsers(){
-		return userDAO.getUsers();
+	public List<User> getUserList(){
+		return userDAO.getUserList();
 	}
 
 }
