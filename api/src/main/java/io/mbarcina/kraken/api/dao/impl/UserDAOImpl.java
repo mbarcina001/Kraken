@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import io.mbarcina.kraken.api.dao.IUserDAO;
-import io.mbarcina.kraken.api.entity.User;
+import io.mbarcina.kraken.auth.entity.User;
 
 @Repository
 public class UserDAOImpl implements IUserDAO{

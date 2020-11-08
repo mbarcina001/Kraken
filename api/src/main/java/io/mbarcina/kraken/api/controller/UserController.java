@@ -7,12 +7,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import io.mbarcina.kraken.api.entity.User;
 import io.mbarcina.kraken.api.exception.TestException;
 import io.mbarcina.kraken.api.repository.IUserService;
+import io.mbarcina.kraken.auth.entity.User;
 
 @RestController
-@RequestMapping("api/users")
+@RequestMapping("/api")
 public class UserController {
 	
 	@Autowired
@@ -22,7 +22,7 @@ public class UserController {
 	public ResponseEntity<List<User>> hello() throws TestException {
 		List<User> users;
 		users = userService.getUserList();
-		throw new TestException("error geting users");
-		// return ResponseEntity.ok(users);
+		// throw new TestException("error geting users");
+		return ResponseEntity.ok(users);
 	}
 }
