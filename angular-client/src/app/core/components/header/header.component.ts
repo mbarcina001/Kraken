@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { isAuthenticated } from 'src/app/store/selectors/auth.selector';
+import { getAuthenticatedUser, isAuthenticated } from 'src/app/store/selectors/auth.selector';
 
 @Component({
   selector: 'app-header',
@@ -10,6 +10,7 @@ import { isAuthenticated } from 'src/app/store/selectors/auth.selector';
 export class HeaderComponent {
 
   isAuthenticated$ = this.store.select(isAuthenticated);
+  getAuthenticatedUser$ = this.store.select(getAuthenticatedUser);
 
   constructor(
     private store: Store<any>

@@ -1,6 +1,6 @@
 INSERT INTO user (id, name, password, email) VALUES 
-    (1, 'admin', '$2y$12$DX7sOg0uxEZXHEWet0BwMebcgryS2dzLhG/vtMgB0Zx8sMUFa6xUq', 'admin@kraken.com'), 
-    (2, 'test', '$2y$12$qIMTUuwS4AiPnw.jw3tmwOsB92tlOthORYWsoXQf1rYwvPHRmK0fm', 'test@kraken.com');
+    (1, 'admin', '$2y$12$Y.sySM0y6PPPDz4918TOqOi6IHuOS9RNYpsZcX1HJz91mZV2y0GOe', 'admin@kraken.com'), 
+    (2, 'user', '$2y$12$5Obu2CgOvdAGk7aHChzvDOtMMk8ds10lTzLJxvXpiM7aJv39XQcgm ', 'user@kraken.com');
 
 INSERT INTO role(id, name) VALUES
     (1, 'ROLE_ADMIN'),
