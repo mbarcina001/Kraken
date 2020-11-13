@@ -1,7 +1,19 @@
+ 
 {
-    "/oauth/token": {
-      "target": "http://localhost:9191",
-      "secure": false,
-      "changeOrigin": true
+  "/AUTH_API/*": {
+    "target": "http://127.0.0.1:9191",
+    "secure": false,
+    "changeOrigin": true,
+    "pathRewrite": {
+      "^/AUTH_API": ""
     }
+  },
+  "/RESOURCE_API/*": {
+    "target": "http://127.0.0.1:9600",
+    "secure": false,
+    "changeOrigin": true,
+    "pathRewrite": {
+      "^/RESOURCE_API": ""
+    }
+  }
 }

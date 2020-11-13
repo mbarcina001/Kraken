@@ -1,11 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Actions, ofType, Effect } from '@ngrx/effects';
-import { map, mergeMap, catchError } from 'rxjs/operators';
+import { map, mergeMap } from 'rxjs/operators';
 import { AuthService } from '../services/auth.service';
 import { auth, authSuccess } from '../actions/auth.actions';
-import { Auth, AuthResponse } from '../models/auth.model';
+import { Auth } from '../models/auth.model';
 import { HOME_ROUTE } from 'src/app/core/app.constants';
 import { Router } from '@angular/router';
+import jwt_decode from 'jwt-decode';
+
 
 @Injectable()
 export class AuthEffects {
@@ -15,12 +17,11 @@ export class AuthEffects {
       ofType(auth),
       mergeMap((action: any) => this.authService.auth(action.email, action.password)
         .pipe(
-          map((res: AuthResponse) => {
-            const authResult: Auth = new Auth(
-              res.access_token, res.token_type, res.refresh_token, res.expires_in, res.scope
-            );
+          map((result: any) => {
             this.route.navigate([HOME_ROUTE]);
-            return authSuccess({ authResult });
+            const decoded: any = jwt_decode(result.access_token);
+            const authenticatedUser = new Auth('', decoded.user_name, result.access_token, decoded.authorities);
+            return authSuccess({ authenticatedUser });
           }),
           /*catchError((err: any) => {
             // return of(getIssueListFail({ error: error.message}))

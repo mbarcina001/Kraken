@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
-
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable()
@@ -21,6 +20,10 @@ export class AuthService {
                 Authorization: 'Basic ' + btoa('krakenapp:krakensecret')
             });
 
-        return this.http.post<any>('/oauth/token', params.toString(), {headers});
+        return this.http.post<any>('/AUTH_API/oauth/token', params.toString(), {headers});
+
+        // return this.http.post<any>(environment.authUrl + 'oauth/token', body, {headers});
+        // return this.http.get<any>('/test', { headers });
+        // return this.http.get<any>('http://localhost:9600/api/users');
     }
 }
