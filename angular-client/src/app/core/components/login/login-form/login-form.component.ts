@@ -1,4 +1,4 @@
-import { Component, ChangeDetectorRef, Output, EventEmitter, ChangeDetectionStrategy, OnInit } from '@angular/core';
+import { Component, ChangeDetectorRef, Output, EventEmitter, ChangeDetectionStrategy, OnInit, Input } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
@@ -8,6 +8,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 })
 export class LoginFormComponent implements OnInit{
 
+  @Input() isLoading: boolean;
   @Output() showRegisterTemplate = new EventEmitter<any>();
   @Output() doLogin = new EventEmitter<any>();
 
@@ -29,6 +30,7 @@ export class LoginFormComponent implements OnInit{
 
   validateAndLogin(): void {
     if (this.loginForm.valid) {
+      this.loginForm.disable();
       this.doLogin.emit(this.loginForm.value);
     } else {
       this.loginForm.markAllAsTouched();

@@ -35,9 +35,11 @@
 
     <div class="container-custom100-form-btn">
         <button class="custom100-form-btn" (click)="validateAndLogin()">
-            Login
+            Login <i *ngIf="isLoading" class="ml-2 fa fas fa-spinner fa-spin"></i>
         </button>
     </div>
+
+    <!-- fa fa-cog fa-spin -->
 
     <a href="javascript:void(0);" (click)="showRegisterTemplate.emit()">Don't have an account? Register</a>
 </form>

@@ -2,11 +2,11 @@
 
 	<div class="header-limiter">
 
-		<img width="100px" class="mx-auto d-block mb-4" src="/assets/images/logo/kraken.png">
+		<img width="100px" class="mx-auto d-block" src="/assets/images/logo/kraken.png">
 
 		<nav>
 			<a href="#" class="selected">Home</a>
-			<a href="#">Users</a>
+			<a href="#" *ngIf="userIsAdmin()">Users</a>
 			<a href="#">{{(getAuthenticatedUser$ | async).username}}</a>
 		</nav>
 

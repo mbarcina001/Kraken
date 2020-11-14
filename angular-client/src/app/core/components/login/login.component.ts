@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter, ViewChild, TemplateRef, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
+import { Component, Output, EventEmitter, ViewChild, TemplateRef, ChangeDetectorRef, ChangeDetectionStrategy, AfterViewInit, Input } from '@angular/core';
 import { LOGIN_TEMPLATE, REGISTER_TEMPLATE } from '../../app.constants';
 
 @Component({
@@ -7,17 +7,18 @@ import { LOGIN_TEMPLATE, REGISTER_TEMPLATE } from '../../app.constants';
   styleUrls: ['./login.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class LoginComponent {
+export class LoginComponent implements AfterViewInit {
 
   @ViewChild('loginTmpl') loginTmpl: TemplateRef<any>;
   @ViewChild('registerTmpl') registerTmpl: TemplateRef<any>;
 
+  @Input() isLoading: boolean;
   @Output() doLogin = new EventEmitter<any>();
   @Output() doRegister = new EventEmitter<any>();
 
   private showingTemplate = LOGIN_TEMPLATE;
 
-  constructor(private cdRef:ChangeDetectorRef){} 
+  constructor(private cdRef: ChangeDetectorRef){}
 
   ngAfterViewInit() {
     this.cdRef.detectChanges();

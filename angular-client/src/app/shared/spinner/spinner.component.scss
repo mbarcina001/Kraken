@@ -1,0 +1,26 @@
+@keyframes spin {
+    0% {
+        background: transparent;
+        transform: rotate(720deg);
+    }
+}
+
+.content {
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    background: rgb(0,0,0,0.3);
+    top: 0;
+    right: 0;
+
+    img {
+        position: absolute;
+        left: 42%;
+        top: 35%;
+        height: 15em;
+        width: 17em;
+        margin: 0px auto;
+        z-index: 999;
+        border-radius: 4em;
+    }
+}

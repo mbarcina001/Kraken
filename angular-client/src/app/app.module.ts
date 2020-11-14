@@ -12,6 +12,8 @@ import { StoreModule } from '@ngrx/store';
 import { authReducer } from './store/reducers/auth.reducer';
 import { HomeModule } from './features/home/home.module';
 import { UserModule } from './features/user/user.module';
+import { SharedModule } from './shared/shared.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -21,10 +23,12 @@ import { UserModule } from './features/user/user.module';
     BrowserModule,
     HttpClientModule,
     CoreModule,
+    SharedModule,
     HomeModule,
     UserModule,
     EffectsModule.forRoot([AuthEffects]),
-    StoreModule.forRoot({auth: authReducer})
+    StoreModule.forRoot({auth: authReducer}),
+    BrowserAnimationsModule
   ],
   providers: [
     UserService,

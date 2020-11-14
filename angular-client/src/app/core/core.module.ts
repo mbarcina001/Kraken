@@ -10,6 +10,7 @@ import { FooterComponent } from './components/footer/footer.component';
 import { AuthService } from '../store/services/auth.service';
 import { LoginFormComponent } from './components/login/login-form/login-form.component';
 import { RegisterFormComponent } from './components/login/register-form/register-form.component';
+import { NoPermissionsComponent } from './components/no-permissions/no-permissions.component';
 
 @NgModule({
     declarations: [
@@ -18,7 +19,8 @@ import { RegisterFormComponent } from './components/login/register-form/register
         HeaderComponent,
         FooterComponent,
         LoginFormComponent,
-        RegisterFormComponent
+        RegisterFormComponent,
+        NoPermissionsComponent,
     ],
     imports: [
         CommonModule,
@@ -32,7 +34,7 @@ import { RegisterFormComponent } from './components/login/register-form/register
     exports: [
         AppRoutingModule,
         HeaderComponent,
-        FooterComponent
+        FooterComponent,
     ]
 })
 

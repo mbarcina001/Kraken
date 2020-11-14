@@ -4,6 +4,7 @@ import { Store, select } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { isAuthenticated } from 'src/app/store/selectors/auth.selector';
 import { map } from 'rxjs/operators';
+import { LOGIN_ROUTE } from '../app.constants';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -14,11 +15,8 @@ export class AuthGuard implements CanActivate {
     return this.store.pipe(
       select(isAuthenticated),
       map(authed => {
-        console.log('canActivate: ');
-        console.log(authed);
         if (!authed) {
-          console.log('navigate login');
-          this.router.navigate(['login']);
+          this.router.navigate([LOGIN_ROUTE]);
           return false;
         }
         return true;

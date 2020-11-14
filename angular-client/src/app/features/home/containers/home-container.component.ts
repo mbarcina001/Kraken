@@ -10,7 +10,7 @@ import { getAuthenticatedUser } from 'src/app/store/selectors/auth.selector';
 export class HomeContainerComponent implements OnInit {
 
   authenticatedUser$ = this.store.select(getAuthenticatedUser);
-
+  loading = false;
 
   constructor(
     private store: Store<any>
