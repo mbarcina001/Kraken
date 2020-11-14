@@ -20,6 +20,21 @@ CREATE TABLE if not exists user_role(
     FOREIGN KEY (role_id) REFERENCES role (id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
+CREATE TABLE if not exists meeting(
+    id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    description varchar(50),
+    organiser_id int,
+    meeting_date_start DATETIME,
+    meeting_date_end DATETIME,
+    FOREIGN KEY (organiser_id) REFERENCES user (id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE if not exists meeting_attendant(
+    user_id int,
+    meeting_id int,
+    FOREIGN KEY (user_id) REFERENCES user (id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (meeting_id) REFERENCES meeting (id) ON DELETE CASCADE ON UPDATE CASCADE
+);
 
 CREATE TABLE oauth_client_details (
   client_id VARCHAR(256) PRIMARY KEY,
