@@ -1,5 +1,5 @@
 CREATE TABLE if not exists user(
-    id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    id int NOT NULL PRIMARY KEY,
     email varchar(50),
     password varchar(60),
     name varchar(50),
@@ -21,11 +21,11 @@ CREATE TABLE if not exists user_role(
 );
 
 CREATE TABLE if not exists meeting(
-    id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    id int NOT NULL PRIMARY KEY,
     description varchar(50),
     organiser_id int,
-    meeting_date_start DATETIME,
-    meeting_date_end DATETIME,
+    meeting_start_date DATETIME,
+    meeting_end_date DATETIME,
     FOREIGN KEY (organiser_id) REFERENCES user (id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 

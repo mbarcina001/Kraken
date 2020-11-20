@@ -1,19 +1,28 @@
 package io.mbarcina.kraken.auth.entity;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-public class CustomUserDetails implements UserDetails {
+public class CustomUserDetails implements UserDetails, Serializable {
 
 	private static final long serialVersionUID = 1424968907281392220L;
+	private int id;
 	private String username;
 	private String password;
 	private List<GrantedAuthority> grantedAuthorities;
 
-	@Override
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
 	public String getUsername() {
 		return this.username;
 	}
@@ -22,7 +31,6 @@ public class CustomUserDetails implements UserDetails {
 		this.username = pUsername;
 	}
 	
-	@Override
 	public String getPassword() {
 		return this.password;
 	}
@@ -31,7 +39,6 @@ public class CustomUserDetails implements UserDetails {
 		this.password = pPassword;
 	}
 
-	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		return this.grantedAuthorities;
 	}
@@ -66,7 +73,7 @@ public class CustomUserDetails implements UserDetails {
 
 	@Override
 	public String toString() {
-		return "CustomUserDetails [username=" + username + ", password=" + password + ", grantedAuthorities="
+		return "CustomUserDetails [id=" + id + ", username=" + username + ", password=" + password + ", grantedAuthorities="
 				+ grantedAuthorities + "]";
 	}
 }

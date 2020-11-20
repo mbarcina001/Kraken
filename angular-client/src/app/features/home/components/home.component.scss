@@ -1,0 +1,17 @@
+.container {
+    height: calc(100% - 5em);
+}
+
+mat-tab-group {
+    overflow: hidden !important;
+    height:100%;
+}
+
+.no-records-found{
+    padding: 16px;
+    text-align: center;
+}
+
+::ng-deep .mat-tab-body-content {
+    overflow: hidden !important;
+}

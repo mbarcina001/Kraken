@@ -16,9 +16,17 @@ INSERT INTO role(id, name) VALUES
 
 INSERT INTO user_role(user_id, role_id) VALUES
     (1, 1),
-    (2, 2);
+    (2, 2),
+    (3, 2),
+    (4, 2),
+    (5, 2),
+    (6, 2),
+    (7, 2),
+    (8, 2),
+    (9, 2),
+    (10, 2);
 
-INSERT INTO meeting(id, description, organiser_id, meeting_date_start, meeting_date_end) VALUES
+INSERT INTO meeting(id, description, organiser_id, meeting_start_date, meeting_end_date) VALUES
     (1, 'test meeting A', 1, '2020-09-01 10:10:10', '2020-09-01 11:10:10'),
     (2, 'test meeting B', 1, '2020-10-01 10:10:10', '2020-10-01 11:10:10'),
     (3, 'test meeting C', 1, '2020-11-01 10:10:10', '2020-11-01 11:10:10'),

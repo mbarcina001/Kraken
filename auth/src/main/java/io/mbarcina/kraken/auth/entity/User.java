@@ -7,10 +7,10 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
@@ -21,7 +21,6 @@ import com.sun.istack.NotNull;
 public class User {
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="id")
 	private int id;
 	
@@ -40,9 +39,22 @@ public class User {
 	@Column(name="email")
     private String email;
 	
-	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private List<UserRole> roles = new ArrayList<UserRole>();
+	@ManyToMany(fetch=FetchType.LAZY, cascade={CascadeType.PERSIST, CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH })
+	@JoinTable(
+		name = "user_role",
+		joinColumns = @JoinColumn(name="user_id"),
+		inverseJoinColumns = @JoinColumn(name="role_id")
+	)
+	private List<Role> roles = new ArrayList<Role>();
     
+	public int getId() {
+		return id;
+	}
+
+	public void setUserId(int id) {
+		this.id = id;
+	}
+
 	public String getUsername() {
 		return username;
 	}
@@ -67,11 +79,11 @@ public class User {
 		this.email = email;
 	}
 	
-	public List<UserRole> getRoles() {
+	public List<Role> getRoles() {
 		return roles;
 	}
 
-	public void setRoles(List<UserRole> userAuthorities) {
+	public void setRoles(List<Role> userAuthorities) {
 		this.roles = userAuthorities;
 	}
 
@@ -130,7 +142,7 @@ public class User {
 	public User() {  }
 
 	public User(int id, @NotBlank String username, @NotBlank String password, @NotBlank String email,
-			List<UserRole> roles) {
+			List<Role> roles) {
 		super();
 		this.id = id;
 		this.username = username;

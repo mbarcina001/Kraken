@@ -4,16 +4,17 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
-import { UserService } from './features/user/service/user-service';
 import { TokenInterceptor } from './core/interceptors/token-interceptor';
 import { EffectsModule } from '@ngrx/effects';
 import { AuthEffects } from './store/effects/auth.effects';
 import { StoreModule } from '@ngrx/store';
 import { authReducer } from './store/reducers/auth.reducer';
+import { userReducer } from './store/reducers/user.reducer';
 import { HomeModule } from './features/home/home.module';
-import { UserModule } from './features/user/user.module';
+import { AdminModule } from './features/admin/admin.module';
 import { SharedModule } from './shared/shared.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { UserEffects } from './store/effects/user.effects';
 
 @NgModule({
   declarations: [
@@ -25,13 +26,18 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     CoreModule,
     SharedModule,
     HomeModule,
-    UserModule,
-    EffectsModule.forRoot([AuthEffects]),
-    StoreModule.forRoot({auth: authReducer}),
+    AdminModule,
+    EffectsModule.forRoot([
+      AuthEffects,
+      UserEffects
+    ]),
+    StoreModule.forRoot({
+      auth: authReducer,
+      user: userReducer
+    }),
     BrowserAnimationsModule
   ],
   providers: [
-    UserService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptor,

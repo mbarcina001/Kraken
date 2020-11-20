@@ -2,17 +2,22 @@
 
 <div class="container">
 
-    <mat-tab-group mat-align-tabs="start">
+    <h2>Home</h2>
+
+    <mat-tab-group mat-align-tabs="start" [(selectedIndex)]="selectedIndex">
         <mat-tab label="Reuniones en curso">
-            <app-meeting-table [data]="ELEMENT_DATA"></app-meeting-table>
+            <app-meeting-table [data]="currentMeetings" *ngIf="currentMeetings && currentMeetings.length > 0"></app-meeting-table>
+            <div class="no-records-found" *ngIf="currentMeetings && currentMeetings.length === 0"><h2>No records found</h2></div>
         </mat-tab>
 
         <mat-tab label="Próximas reuniones">
-            <app-meeting-table [data]="ELEMENT_DATA"></app-meeting-table>
+            <app-meeting-table [data]="nextMeetings" *ngIf="nextMeetings && nextMeetings.length > 0"></app-meeting-table>
+            <div class="no-records-found" *ngIf="nextMeetings && nextMeetings.length === 0"><h2>No records found</h2></div>
         </mat-tab>
 
         <mat-tab label="Reuniones finalizadas">
-            <app-meeting-table [data]="ELEMENT_DATA"></app-meeting-table>
+            <app-meeting-table [data]="pastMeetings" *ngIf="pastMeetings && pastMeetings.length > 0"></app-meeting-table>
+            <div class="no-records-found" *ngIf="pastMeetings && pastMeetings.length === 0"><h2>No records found</h2></div>
         </mat-tab>
     </mat-tab-group>
 

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { isAuthenticated } from 'src/app/store/selectors/auth.selector';
+import { selectIsAuthenticated } from 'src/app/store/selectors/auth.selector';
 
 @Component({
   selector: 'app-footer',
@@ -9,7 +9,7 @@ import { isAuthenticated } from 'src/app/store/selectors/auth.selector';
 })
 export class FooterComponent implements OnInit {
 
-  isAuthenticated$ = this.store.select(isAuthenticated);
+  isAuthenticated$ = this.store.select(selectIsAuthenticated);
 
   constructor(
     private store: Store<any>

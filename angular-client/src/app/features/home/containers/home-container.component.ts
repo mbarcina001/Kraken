@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { getAuthenticatedUser } from 'src/app/store/selectors/auth.selector';
+import { selectUserMeetings } from 'src/app/store/selectors/user.selector';
 
 @Component({
   selector: 'app-home-container',
@@ -9,14 +9,21 @@ import { getAuthenticatedUser } from 'src/app/store/selectors/auth.selector';
 })
 export class HomeContainerComponent implements OnInit {
 
-  authenticatedUser$ = this.store.select(getAuthenticatedUser);
-  loading = false;
+  userMeetings$ = this.store.select(selectUserMeetings);
+
+  userLoading$ = this.store.select(state => state.user.loading);
+  userErrorMessage$ = this.store.select(state => state.user.error);
 
   constructor(
     private store: Store<any>
   ) { }
 
   ngOnInit(): void {
+    this.getUserMeetings();
+  }
+
+  getUserMeetings() {
+    this.store.dispatch({ type: '[User] get meetings' });
   }
 
 }

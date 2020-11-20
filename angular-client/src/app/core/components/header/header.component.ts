@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { getAuthenticatedUser, isAuthenticated } from 'src/app/store/selectors/auth.selector';
-import { ADMIN_ROLE } from '../../app.constants';
+import { selectAuthenticatedUser, selectIsAuthenticated } from 'src/app/store/selectors/auth.selector';
+import * as appConstants from '../../app.constants';
 
 @Component({
   selector: 'app-header',
@@ -10,19 +11,20 @@ import { ADMIN_ROLE } from '../../app.constants';
 })
 export class HeaderComponent implements OnInit{
 
-  isAuthenticated$ = this.store.select(isAuthenticated);
+  isAuthenticated$ = this.store.select(selectIsAuthenticated);
+  getAuthenticatedUser$ = this.store.select(selectAuthenticatedUser);
+
+  EXPOSE_CONSTANTS = appConstants;
   isAdmin = false;
 
-  getAuthenticatedUser$ = this.store.select(getAuthenticatedUser);
-
   constructor(
-    private store: Store<any>
+    private store: Store<any>,
+    private router: Router
   ) { }
 
   ngOnInit() {
     this.getAuthenticatedUser$.subscribe(user => {
-      console.log(user);
-      if (user && user.roles.indexOf(ADMIN_ROLE) !== -1) {
+      if (user && user.roles.indexOf(appConstants.ADMIN_ROLE) !== -1) {
         this.isAdmin = true;
       }
     });
@@ -30,6 +32,10 @@ export class HeaderComponent implements OnInit{
 
   userIsAdmin() {
     return this.isAdmin;
+  }
+
+  getActiveRoute() {
+    return this.router.url.replace('/', '');
   }
 
 }

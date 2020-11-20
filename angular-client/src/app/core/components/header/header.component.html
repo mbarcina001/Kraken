@@ -5,8 +5,11 @@
 		<img width="100px" class="mx-auto d-block" src="/assets/images/logo/kraken.png">
 
 		<nav>
-			<a href="#" class="selected">Home</a>
-			<a href="#" *ngIf="userIsAdmin()">Users</a>
+			<a href="#" [routerLink]="[EXPOSE_CONSTANTS.HOME_ROUTE]" [class.selected]="getActiveRoute() === EXPOSE_CONSTANTS.HOME_ROUTE">Home</a>
+			<a href="#" [routerLink]="[EXPOSE_CONSTANTS.ADMIN_ROUTE]" [class.selected]="getActiveRoute() === EXPOSE_CONSTANTS.ADMIN_ROUTE" *ngIf="userIsAdmin()">Admin</a>
+		</nav>
+
+		<nav class="user">
 			<a href="#">{{(getAuthenticatedUser$ | async).username}}</a>
 		</nav>
 

@@ -1,12 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Auth } from 'src/app/store/models/auth.model';
-
-export interface PeriodicElement {
-  name: string;
-  position: number;
-  weight: number;
-  symbol: string;
-}
+import { Meeting } from 'src/app/store/models/meeting.model';
 
 @Component({
   selector: 'app-home',
@@ -15,21 +8,38 @@ export interface PeriodicElement {
 })
 export class HomeComponent {
 
-  @Input() authenticatedUser: Auth;
+  userMeetings$: Meeting[];
+  get userMeetings(): Meeting[] {
+    return this.userMeetings$;
+  }
+  @Input() set userMeetings(value: Meeting[]) {
+    if (value && value.length > 0) {
+      const currentTime = new Date().getTime();
+
+      this.currentMeetings = value.filter(
+        meeting => meeting.meetingStartDate.getTime() <= currentTime && meeting.meetingEndDate.getTime() >= currentTime
+      );
+      this.nextMeetings = value.filter(
+        meeting => meeting.meetingStartDate.getTime() > currentTime
+      );
+      this.pastMeetings = value.filter(
+        meeting => meeting.meetingStartDate.getTime() < currentTime
+      );
+
+      if (this.currentMeetings.length > 0) {
+        this.selectedIndex = 0;
+      } else {
+        this.selectedIndex = 1;
+      }
+    }
+  }
+
   @Input() loading: boolean;
 
-  ELEMENT_DATA: PeriodicElement[] = [
-    {position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H'},
-    {position: 2, name: 'Helium', weight: 4.0026, symbol: 'He'},
-    {position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li'},
-    {position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be'},
-    {position: 5, name: 'Boron', weight: 10.811, symbol: 'B'},
-    {position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C'},
-    {position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N'},
-    {position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O'},
-    {position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F'},
-    {position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne'},
-  ];
+  currentMeetings: Meeting[];
+  nextMeetings: Meeting[];
+  pastMeetings: Meeting[];
+  selectedIndex: number;
 
   constructor() { }
 

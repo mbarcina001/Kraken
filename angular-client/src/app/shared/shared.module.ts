@@ -7,21 +7,29 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
+import { DatePipe } from './pipes/date.pipe';
 
 @NgModule({
     declarations: [
-        SpinnerComponent
+        SpinnerComponent,
+        DatePipe
     ],
     imports: [
         CommonModule,
     ],
     exports: [
+        // Components
         SpinnerComponent,
+
+        // Pipes
+        DatePipe,
+
+        // Angular Material
         MatTableModule,
         MatExpansionModule,
         MatTabsModule,
         MatPaginatorModule,
-        MatSortModule
+        MatSortModule,
     ]
 })
 

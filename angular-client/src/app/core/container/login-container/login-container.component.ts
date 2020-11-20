@@ -18,16 +18,12 @@ export class LoginContainerComponent implements OnInit{
     private store: Store<any>
   ) { }
 
-  ngOnInit(): void {
-    this.authLoading$.subscribe((x) => {
-      console.log(x);
-    });
-  }
+  ngOnInit(): void {  }
 
 
 
   login($event: any) {
-    this.store.dispatch(auth({email: $event.email, password: $event.password}));
+    this.store.dispatch({type: '[Auth] login', email: $event.email, password: $event.password});
   }
 
   register($event: any) {
