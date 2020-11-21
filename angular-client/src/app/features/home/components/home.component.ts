@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Meeting } from 'src/app/store/models/meeting.model';
 
 @Component({
@@ -35,6 +35,7 @@ export class HomeComponent {
   }
 
   @Input() loading: boolean;
+  @Output() reloadMeetings: EventEmitter<void> = new EventEmitter();
 
   currentMeetings: Meeting[];
   nextMeetings: Meeting[];
@@ -42,5 +43,9 @@ export class HomeComponent {
   selectedIndex: number;
 
   constructor() { }
+
+  onReloadMeetings() {
+    this.reloadMeetings.emit();
+  }
 
 }

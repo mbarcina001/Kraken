@@ -2,7 +2,11 @@
 
 <div class="container">
 
-    <h2>Home</h2>
+    <div class="d-flex justify-content-between">
+        <h2>Home</h2>
+        <button type="button" class="btn btn-dark" (click)="onReloadMeetings()"><i class="fa fas fa-sync-alt"></i> Update list</button>
+    </div>
+    
 
     <mat-tab-group mat-align-tabs="start" [(selectedIndex)]="selectedIndex">
         <mat-tab label="Reuniones en curso">

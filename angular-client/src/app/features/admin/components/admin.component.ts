@@ -12,7 +12,7 @@ import { User } from 'src/app/store/models/user.model';
 export class AdminComponent {
 
   @Input() loading: boolean;
-  @Output() reloadUserList = new EventEmitter();
+  @Output() reloadUsers = new EventEmitter();
 
   userList$: User[];
   get userList(): User[] {
@@ -34,10 +34,6 @@ export class AdminComponent {
 
   constructor() { }
 
-  reload(): void {
-    this.reloadUserList.emit();
-  }
-
   sortAndPaginate() {
     /*
     * The code needs to be inside a timeout function as angular material paginator doesn't work well inside *ngIf
@@ -50,6 +46,10 @@ export class AdminComponent {
 
   getRoles(elementRoles) {
     return elementRoles.map(role => role.name.toLowerCase().replace('role_', '')).join(', ');
+  }
+
+  onReloadUsers() {
+    this.reloadUsers.emit();
   }
 
 }

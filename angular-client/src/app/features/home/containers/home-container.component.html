@@ -1,1 +1,1 @@
-<app-home [userMeetings]="userMeetings$ | async" [loading]="userLoading$ | async"></app-home>
+<app-home [userMeetings]="userMeetings$ | async" [loading]="userLoading$ | async" (reloadMeetings)="getUserMeetings()"></app-home>
