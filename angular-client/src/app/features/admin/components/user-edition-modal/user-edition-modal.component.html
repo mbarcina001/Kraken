@@ -1,0 +1,18 @@
+<div>
+    <form [formGroup]="userEditionForm" class="form">
+        <h2>User edition</h2>
+
+        <p type="Username:">
+            <input type="text" formControlName="username">
+        </p>
+
+        <p type="Email:">
+            <input type="text" formControlName="email">
+        </p>
+
+        <div class="float-right mt-4">
+            <button type="button" class="btn btn-dark" (click)="onEditUser()">Submit</button>
+        </div>
+    
+    </form>
+</div>

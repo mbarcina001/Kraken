@@ -7,6 +7,11 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material/dialog';
+
+
 import { DatePipe } from './pipes/date.pipe';
 
 @NgModule({
@@ -25,11 +30,16 @@ import { DatePipe } from './pipes/date.pipe';
         DatePipe,
 
         // Angular Material
-        MatTableModule,
+        MatCheckboxModule,
+        MatDialogModule,
         MatExpansionModule,
-        MatTabsModule,
         MatPaginatorModule,
         MatSortModule,
+        MatTableModule,
+        MatTabsModule
+    ],
+    providers: [
+        {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: false}}
     ]
 })
 

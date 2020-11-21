@@ -1,8 +1,11 @@
+import { SelectionModel } from '@angular/cdk/collections';
 import { Component, Output, EventEmitter, Input, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { User } from 'src/app/store/models/user.model';
+import { UserEditionModalComponent } from './user-edition-modal/user-edition-modal.component';
 
 @Component({
   selector: 'app-admin',
@@ -27,12 +30,15 @@ export class AdminComponent {
 
   dataSource: any;
 
-  displayedColumns: string[] = ['username', 'email', 'roles'];
+  displayedColumns: string[] = ['checked', 'username', 'email', 'roles'];
 
   @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: false}) sort: MatSort;
+  selection = new SelectionModel<User>(false, []);
 
-  constructor() { }
+  constructor(
+    public dialog: MatDialog
+  ) { }
 
   sortAndPaginate() {
     /*
@@ -44,12 +50,23 @@ export class AdminComponent {
     });
   }
 
-  getRoles(elementRoles) {
+  getStringRoles(elementRoles) {
     return elementRoles.map(role => role.name.toLowerCase().replace('role_', '')).join(', ');
   }
 
   onReloadUsers() {
     this.reloadUsers.emit();
+  }
+
+  editUser() {
+    console.log('edit');
+    console.log(this.selection);
+    const dialogRef = this.dialog.open(UserEditionModalComponent, {
+      data: { username: 'austin', email: 'austin@email.com' },
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
   }
 
 }
