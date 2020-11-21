@@ -1,6 +1,7 @@
 import {Component, Inject} from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import {MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { Role } from 'src/app/store/models/user.model';
 
 @Component({
   selector: 'app-user-edition-modal',
@@ -14,12 +15,14 @@ export class UserEditionModalComponent {
 
   constructor(
     @Inject(MAT_DIALOG_DATA)
-    public data: {username: string, email: string, roles: string[]},
+    public data: {username: string, email: string, roles: Role[], allRoles: Role[]},
     private formBuilder: FormBuilder,
   ) {
     this.userEditionForm = this.formBuilder.group({
       username: data.username,
-      email: data.email
+      email: data.email,
+      roles: data.roles,
+      allRoles: data.allRoles
     });
   }
 

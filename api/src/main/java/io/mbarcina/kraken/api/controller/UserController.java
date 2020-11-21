@@ -15,6 +15,7 @@ import io.mbarcina.kraken.api.repository.IMeetingService;
 import io.mbarcina.kraken.api.repository.IUserService;
 import io.mbarcina.kraken.api.utils.KrakenConstants;
 import io.mbarcina.kraken.auth.entity.CustomUserDetails;
+import io.mbarcina.kraken.auth.entity.Role;
 import io.mbarcina.kraken.auth.entity.User;
 
 @RestController
@@ -40,5 +41,12 @@ public class UserController {
 		int id = ((CustomUserDetails) authentication.getPrincipal()).getId();
 		List<Meeting> meetings = meetingService.getUserMeetingList(id);
 		return ResponseEntity.ok(meetings);
+	}
+	
+	@Secured({KrakenConstants.ROLE_ADMIN, KrakenConstants.ROLE_USER})
+	@RequestMapping(value= {"/roles/list"})
+	public ResponseEntity<List<Role>> getRoles() throws TestException {
+		List<Role> roles = userService.getRoleList();
+		return ResponseEntity.ok(roles);
 	}
 }

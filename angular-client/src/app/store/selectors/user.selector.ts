@@ -11,3 +11,9 @@ export const selectUsers = createSelector(
     state => state["user"],
     (user) => user.users
 );
+
+export const selectRoles = createSelector(
+    // tslint:disable-next-line: no-string-literal
+    state => state["user"],
+    (user) => user.roles
+);

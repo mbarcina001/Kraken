@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import { Actions, ofType, Effect } from '@ngrx/effects';
 import { map, mergeMap } from 'rxjs/operators';
 import { UserService } from '../services/user.service';
-import { getUserMeetings, getUserMeetingsSuccess, getUsers, getUsersSuccess } from '../actions/user.actions';
+import { getUserMeetings, getUserMeetingsSuccess, getUsers, getUsersSuccess, getRoles, getRolesSuccess } from '../actions/user.actions';
 import { Meeting } from '../models/meeting.model';
-import { User } from '../models/user.model';
+import { Role, User } from '../models/user.model';
 
 
 @Injectable()
@@ -43,6 +43,22 @@ export class UserEffects {
         .pipe(
           map((users: User[]) => {
             return getUsersSuccess({ users });
+          }),
+          /*catchError((err: any) => {
+            // return of(getIssueListFail({ error: error.message}))
+            console.error(err);
+          })*/
+        )
+      )
+    );
+
+    @Effect()
+    getRoles$ = this.actions$.pipe(
+      ofType(getRoles),
+      mergeMap(() => this.userService.getRoles()
+        .pipe(
+          map((roles: Role[]) => {
+            return getRolesSuccess({ roles });
           }),
           /*catchError((err: any) => {
             // return of(getIssueListFail({ error: error.message}))

@@ -14,4 +14,8 @@ export class UserService {
     public getUsers(): Observable<any> {
         return this.http.get<any>('/RESOURCE_API/user/list');
     }
+
+    public getRoles(): Observable<any> {
+        return this.http.get<any>('/RESOURCE_API/user/roles/list');
+    }
 }
