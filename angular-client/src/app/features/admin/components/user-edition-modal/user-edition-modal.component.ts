@@ -12,6 +12,7 @@ import { Role } from 'src/app/store/models/user.model';
 export class UserEditionModalComponent {
 
   public userEditionForm: FormGroup;
+  allRoles: Role[];
 
   constructor(
     @Inject(MAT_DIALOG_DATA)
@@ -21,9 +22,10 @@ export class UserEditionModalComponent {
     this.userEditionForm = this.formBuilder.group({
       username: data.username,
       email: data.email,
-      roles: data.roles,
-      allRoles: data.allRoles
+      roles: Array.isArray(data.roles) ? data.roles : [data.roles],
     });
+    console.log(this.userEditionForm);
+    this.allRoles = data.allRoles;
   }
 
   onEditUser() {

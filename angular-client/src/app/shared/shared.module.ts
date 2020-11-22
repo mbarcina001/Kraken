@@ -10,6 +10,8 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material/dialog';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
 
 
 import { DatePipe } from './pipes/date.pipe';
@@ -36,7 +38,9 @@ import { DatePipe } from './pipes/date.pipe';
         MatPaginatorModule,
         MatSortModule,
         MatTableModule,
-        MatTabsModule
+        MatTabsModule,
+        MatInputModule,
+        MatSelectModule
     ],
     providers: [
         {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: false}}

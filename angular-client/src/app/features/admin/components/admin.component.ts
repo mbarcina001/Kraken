@@ -14,7 +14,6 @@ import { UserEditionModalComponent } from './user-edition-modal/user-edition-mod
 })
 export class AdminComponent {
 
-  @Input() roles: Role[];
   @Input() loading: boolean;
   @Output() reloadUsers = new EventEmitter();
 
@@ -29,7 +28,23 @@ export class AdminComponent {
     }
   }
 
-  dataSource: any;
+  roleList$: Role[];
+  get roleList(): Role[] {
+    return this.roleList$;
+  }
+  @Input() set roleList(value: Role[]) {
+    if (value && value.length > 0) {
+      value.forEach(role => {
+        this.roles.push({
+          ...role,
+          name: this.getRoleName(role)
+        });
+      });
+    }
+  }
+
+  dataSource: MatTableDataSource<User>;
+  roles: Role[] = [];
 
   displayedColumns: string[] = ['checked', 'username', 'email', 'roles'];
 
@@ -56,13 +71,16 @@ export class AdminComponent {
     return elementRoles.map(role => role.name.toLowerCase().replace('role_', '')).join(', ');
   }
 
+  getRoleName(role: Role) {
+    return role.name.toLowerCase().replace('role_', '');
+  }
+
   onReloadUsers() {
     this.reloadUsers.emit();
   }
 
   editUser() {
-    console.log('edit');
-    console.log(this.selection.selected);
+    console.log(this.selection.selected[0].roles);
     const dialogRef = this.dialog.open(UserEditionModalComponent, {
       data: {
         username: this.selection.selected[0].username,

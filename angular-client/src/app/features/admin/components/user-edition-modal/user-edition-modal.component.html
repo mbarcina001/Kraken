@@ -1,14 +1,32 @@
 <div>
     <form [formGroup]="userEditionForm" class="form">
-        <h2>User edition</h2>
+        <h2 class="mb-4">User edition</h2>
 
-        <p type="Username:">
-            <input type="text" formControlName="username">
-        </p>
+        <mat-form-field>
+            <mat-label>Username</mat-label>
+            <input type="email" matInput formControlName="username">
+            <mat-error *ngIf="userEditionForm.get('username').errors && userEditionForm.get('username').touched">
+              Please enter a valid email address
+            </mat-error>
+        </mat-form-field>
 
-        <p type="Email:">
-            <input type="text" formControlName="email">
-        </p>
+        <mat-form-field>
+            <mat-label>Email</mat-label>
+            <input type="email" matInput formControlName="email">
+            <mat-error *ngIf="userEditionForm.get('email').errors && userEditionForm.get('email').touched">
+              Please enter a valid email address
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Roles</mat-label>
+            <mat-select formControlName="roles" multiple>
+                <mat-option *ngFor="let role of allRoles" [value]="role">{{role.name}}</mat-option>
+            </mat-select>
+            <mat-error *ngIf="userEditionForm.get('roles').errors && userEditionForm.get('roles').touched">
+                Please enter a valid email address
+            </mat-error>
+        </mat-form-field>
 
         <div class="float-right mt-4">
             <button type="button" class="btn btn-dark" (click)="onEditUser()">Submit</button>
