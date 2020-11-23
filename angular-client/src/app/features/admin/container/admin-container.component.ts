@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { selectUsers, selectRoles } from 'src/app/store/selectors/user.selector';
+import { ACTION_USER_GET_ROLES, ACTION_USER_GET_USERS } from 'src/app/store/store.constants';
 
 @Component({
   selector: 'app-admin-container',
@@ -21,8 +22,8 @@ export class AdminContainerComponent implements OnInit {
   }
 
   getUsers() {
-    this.store.dispatch({ type: '[User] get users' });
-    this.store.dispatch({ type: '[User] get roles' });
+    this.store.dispatch({ type: ACTION_USER_GET_USERS });
+    this.store.dispatch({ type: ACTION_USER_GET_ROLES });
   }
 
 }
