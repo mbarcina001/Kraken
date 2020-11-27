@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
+import { AuthRequest } from 'src/app/store/models/auth-request.model';
+import { selectAuthenticatedUser, selectAuthError, selectAuthLoading } from 'src/app/store/selectors/auth.selector';
 import { ACTION_AUTH_LOGIN } from 'src/app/store/store.constants';
-import { auth } from '../../../store/actions/auth.actions';
 
 
 @Component({
@@ -9,22 +10,18 @@ import { auth } from '../../../store/actions/auth.actions';
   templateUrl: './login-container.component.html',
   styleUrls: ['./login-container.component.scss']
 })
-export class LoginContainerComponent implements OnInit{
+export class LoginContainerComponent {
 
-  auth$ = this.store.select(state => state.auth.authResult);
-  authLoading$ = this.store.select(state => state.auth.loading);
-  authErrorMessage$ = this.store.select(state => state.auth.error);
+  auth$ = this.store.select(selectAuthenticatedUser);
+  authLoading$ = this.store.select(selectAuthLoading);
+  authError$ = this.store.select(selectAuthError);
 
   constructor(
     private store: Store<any>
   ) { }
 
-  ngOnInit(): void {  }
-
-
-
   login($event: any) {
-    this.store.dispatch({type: ACTION_AUTH_LOGIN, email: $event.email, password: $event.password});
+    this.store.dispatch({type: ACTION_AUTH_LOGIN, loginRequest: new AuthRequest($event.email, $event.password)});
   }
 
   register($event: any) {

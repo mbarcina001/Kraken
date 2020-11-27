@@ -4,7 +4,7 @@ import * as UserActions from '../actions/user.actions';
 import { Meeting } from '../models/meeting.model';
 import { Role, User } from '../models/user.model';
 
-export interface State {
+export interface UserState {
     loading: boolean;
     userId: number;
     users: User[];
@@ -13,7 +13,7 @@ export interface State {
     error: string;
 }
 
-export const initialState: State = {
+export const initialState: UserState = {
     loading: false,
     userId: -1,
     users: [],
@@ -32,6 +32,6 @@ const reducer = createReducer(
     on(UserActions.getRolesSuccess, (state, { roles }) => ({ ...state, loading: false, roles })),
 );
 
-export function userReducer(state: State | undefined, action: Action) {
+export function userReducer(state: UserState | undefined, action: Action) {
     return reducer(state, action);
 }

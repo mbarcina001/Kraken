@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { selectUsers, selectRoles } from 'src/app/store/selectors/user.selector';
+import { selectUsers, selectRoles, selectUserLoading, selectUserError } from 'src/app/store/selectors/user.selector';
 import { ACTION_USER_GET_ROLES, ACTION_USER_GET_USERS } from 'src/app/store/store.constants';
 
 @Component({
@@ -12,8 +12,8 @@ export class AdminContainerComponent implements OnInit {
   users$ = this.store.select(selectUsers);
   allRoles$ = this.store.select(selectRoles);
 
-  userLoading$ = this.store.select(state => state.user.loading);
-  userErrorMessage$ = this.store.select(state => state.user.error);
+  userLoading$ = this.store.select(selectUserLoading);
+  userErrorMessage$ = this.store.select(selectUserError);
 
   constructor( private store: Store<any> ) { }
 

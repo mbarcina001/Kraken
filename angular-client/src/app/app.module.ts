@@ -15,6 +15,7 @@ import { AdminModule } from './features/admin/admin.module';
 import { SharedModule } from './shared/shared.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { UserEffects } from './store/effects/user.effects';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,9 @@ import { UserEffects } from './store/effects/user.effects';
       auth: authReducer,
       user: userReducer
     }),
+    ToastrModule.forRoot({
+      enableHtml: true
+  }),
     BrowserAnimationsModule
   ],
   providers: [

@@ -1,21 +1,20 @@
-import {Action, createReducer, on } from '@ngrx/store';
+import { Action, createReducer, on } from '@ngrx/store';
 
 import * as AuthActions from '../actions/auth.actions';
+import { AuthRequest } from '../models/auth-request.model';
 import { Auth } from '../models/auth.model';
 
-export interface State {
+export interface AuthState {
     loading: boolean;
-    email: string;
-    password: string;
+    loginRequest: AuthRequest;
     authenticatedUser: Auth;
     error: string;
     isAuthenticated: boolean;
 }
 
-export const initialState: State = {
+export const initialState: AuthState = {
     loading: false,
-    email: '',
-    password: '',
+    loginRequest: null,
     authenticatedUser: null,
     error: '',
     isAuthenticated: false
@@ -23,10 +22,11 @@ export const initialState: State = {
 
 const reducer = createReducer(
     initialState,
-    on(AuthActions.auth, (state, { email, password }) => ({ ...state, loading: true, email, password , error: ''})),
+    on(AuthActions.auth, (state, { loginRequest }) => ({ ...state, loading: true, loginRequest, error: ''})),
     on(AuthActions.authSuccess, (state, { authenticatedUser }) => ({ ...state, loading: false, authenticatedUser, isAuthenticated: true })),
+    on(AuthActions.authError, (state, { error }) => ({ ...state, loading: false, error })),
 );
 
-export function authReducer(state: State | undefined, action: Action) {
+export function authReducer(state: AuthState | undefined, action: Action) {
     return reducer(state, action);
 }

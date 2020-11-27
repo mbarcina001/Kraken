@@ -1,5 +1,6 @@
-import { Component, ChangeDetectorRef, Output, EventEmitter, ChangeDetectionStrategy, OnInit, Input } from '@angular/core';
+import { Component, Output, EventEmitter, OnInit, Input } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-login-form',
@@ -8,6 +9,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 })
 export class LoginFormComponent implements OnInit{
 
+  @Input() enableForm: Observable<any>;
   @Input() isLoading: boolean;
   @Output() showRegisterTemplate = new EventEmitter<any>();
   @Output() doLogin = new EventEmitter<any>();
@@ -30,7 +32,10 @@ export class LoginFormComponent implements OnInit{
 
   validateAndLogin(): void {
     if (this.loginForm.valid) {
-      this.loginForm.disable();
+      const sub = this.enableForm.subscribe(x => {
+        sub.unsubscribe();
+        this.loginForm.enable();
+    });
       this.doLogin.emit(this.loginForm.value);
     } else {
       this.loginForm.markAllAsTouched();

@@ -10,7 +10,7 @@
 </div>
 
 <ng-template #loginTmpl>
-    <app-login-form [isLoading]="isLoading" (doLogin)="doLogin.emit($event)" (showRegisterTemplate)="showRegisterTemplate()"></app-login-form>
+    <app-login-form [isLoading]="isLoading" (doLogin)="doLogin.emit($event)" (showRegisterTemplate)="showRegisterTemplate()" [enableForm]="enableForm" ></app-login-form>
 </ng-template>
 
 <ng-template #registerTmpl>

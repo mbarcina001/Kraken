@@ -28,14 +28,14 @@
 
         <div>
             <a href="#" class="txt1">
-                Forgot Password?
+                Forgot Password? {{isLoading}}
             </a>
         </div>
     </div>
 
     <div class="container-custom100-form-btn">
         <button class="custom100-form-btn" (click)="validateAndLogin()">
-            Login <i *ngIf="isLoading" class="ml-2 fa fas fa-spinner fa-spin"></i>
+            Login <span *ngIf="isLoading"><i class="ml-2 fa fas fa-spinner fa-spin"></i></span>
         </button>
     </div>
 

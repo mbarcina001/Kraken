@@ -9,3 +9,4 @@ export const ACTION_USER_GET_ROLES_SUCCESS = '[User] get roles success';
 /* Auth actions */
 export const ACTION_AUTH_LOGIN = '[Auth] login';
 export const ACTION_AUTH_LOGIN_SUCCESS = '[Auth] login success';
+export const ACTION_AUTH_LOGIN_ERROR = '[Auth] login error';

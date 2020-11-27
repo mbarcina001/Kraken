@@ -80,7 +80,6 @@ export class AdminComponent {
   }
 
   editUser() {
-    console.log(this.selection.selected[0].roles);
     const dialogRef = this.dialog.open(UserEditionModalComponent, {
       data: {
         username: this.selection.selected[0].username,
