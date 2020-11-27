@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { selectUserMeetings } from 'src/app/store/selectors/user.selector';
+import { selectUserError, selectUserLoading, selectUserMeetings } from 'src/app/store/selectors/user.selector';
 
 @Component({
   selector: 'app-home-container',
@@ -11,8 +11,8 @@ export class HomeContainerComponent implements OnInit {
 
   userMeetings$ = this.store.select(selectUserMeetings);
 
-  userLoading$ = this.store.select(state => state.user.loading);
-  userErrorMessage$ = this.store.select(state => state.user.error);
+  userLoading$ = this.store.select(selectUserLoading);
+  userError$ = this.store.select(selectUserError);
 
   constructor(
     private store: Store<any>

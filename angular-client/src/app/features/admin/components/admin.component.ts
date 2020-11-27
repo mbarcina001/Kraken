@@ -4,6 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { ToastrService } from 'ngx-toastr';
 import { Role, User } from 'src/app/store/models/user.model';
 import { UserEditionModalComponent } from './user-edition-modal/user-edition-modal.component';
 
@@ -25,6 +26,17 @@ export class AdminComponent {
     if (value && value.length > 0) {
       this.dataSource = new MatTableDataSource(value);
       this.sortAndPaginate();
+    }
+  }
+
+  error$: any;
+  get error(): any {
+    return this.error$;
+  }
+  @Input() set error(value: any) {
+    if (value) {
+      const message = value.error && value.error.error_description ? value.error.error_description : value.message;
+      this.toastr.error(message, 'An error happened');
     }
   }
 
@@ -54,7 +66,8 @@ export class AdminComponent {
 
   constructor(
     public dialog: MatDialog,
-    public cdRef: ChangeDetectorRef
+    public cdRef: ChangeDetectorRef,
+    private toastr: ToastrService
   ) { }
 
   sortAndPaginate() {

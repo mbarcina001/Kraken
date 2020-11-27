@@ -13,7 +13,7 @@ export class AdminContainerComponent implements OnInit {
   allRoles$ = this.store.select(selectRoles);
 
   userLoading$ = this.store.select(selectUserLoading);
-  userErrorMessage$ = this.store.select(selectUserError);
+  userError$ = this.store.select(selectUserError);
 
   constructor( private store: Store<any> ) { }
 

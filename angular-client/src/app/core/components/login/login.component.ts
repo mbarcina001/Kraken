@@ -15,13 +15,12 @@ export class LoginComponent implements AfterViewInit {
   @ViewChild('registerTmpl') registerTmpl: TemplateRef<any>;
 
   @Input() isLoading: boolean;
+  
   error$: any;
   get error(): any {
     return this.error$;
   }
   @Input() set error(value: any) {
-    console.log('error');
-    console.log(value);
     if (value) {
       const message = value.error && value.error.error_description ? value.error.error_description : value.message;
       this.toastr.error(message, 'Login error');
