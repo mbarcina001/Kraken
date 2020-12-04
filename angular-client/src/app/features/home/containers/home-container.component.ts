@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { selectUserError, selectUserLoading, selectUserMeetings } from 'src/app/store/selectors/user.selector';
+import { selectMeetings, selectMeetingsLoading, selectMeetingsError } from 'src/app/store/selectors/meeting.selector';
+import { ACTION_MEETING_GET_MEETINGS } from 'src/app/store/store.constants';
 
 @Component({
   selector: 'app-home-container',
@@ -9,10 +10,10 @@ import { selectUserError, selectUserLoading, selectUserMeetings } from 'src/app/
 })
 export class HomeContainerComponent implements OnInit {
 
-  userMeetings$ = this.store.select(selectUserMeetings);
+  userMeetings$ = this.store.select(selectMeetings);
 
-  userLoading$ = this.store.select(selectUserLoading);
-  userError$ = this.store.select(selectUserError);
+  meetingLoading$ = this.store.select(selectMeetingsLoading);
+  meetingError$ = this.store.select(selectMeetingsError);
 
   constructor(
     private store: Store<any>
@@ -23,7 +24,7 @@ export class HomeContainerComponent implements OnInit {
   }
 
   getUserMeetings() {
-    this.store.dispatch({ type: '[User] get meetings' });
+    this.store.dispatch({ type: ACTION_MEETING_GET_MEETINGS });
   }
 
 }

@@ -39,7 +39,7 @@ public class User {
 	@Column(name="email")
     private String email;
 	
-	@ManyToMany(fetch=FetchType.LAZY, cascade={CascadeType.PERSIST, CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH })
+	@ManyToMany(fetch=FetchType.LAZY, cascade={CascadeType.MERGE })
 	@JoinTable(
 		name = "user_role",
 		joinColumns = @JoinColumn(name="user_id"),

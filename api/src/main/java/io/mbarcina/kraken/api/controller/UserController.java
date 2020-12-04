@@ -3,9 +3,11 @@ package io.mbarcina.kraken.api.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -30,7 +32,7 @@ public class UserController {
 
 	@Secured({KrakenConstants.ROLE_ADMIN})
 	@RequestMapping(value= {"/list"})
-	public ResponseEntity<List<User>> hello() throws TestException {
+	public ResponseEntity<List<User>> getUserList() throws TestException {
 		List<User> users = userService.getUserList();
 		return ResponseEntity.ok(users);
 	}
@@ -48,5 +50,11 @@ public class UserController {
 	public ResponseEntity<List<Role>> getRoles() throws TestException {
 		List<Role> roles = userService.getRoleList();
 		return ResponseEntity.ok(roles);
+	}
+	
+	// @Secured({KrakenConstants.ROLE_ADMIN})
+	@RequestMapping(value= {"/edit"})
+	public ResponseEntity<String> editUser(@RequestBody User user) throws TestException {		
+		return userService.saveUser(user);
 	}
 }

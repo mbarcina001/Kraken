@@ -1,0 +1,27 @@
+<div>
+    <form [formGroup]="meetingEditionForm" class="form">
+        <h2 class="mb-4">Meeting edition</h2>
+
+        <mat-form-field>
+            <mat-label>Username</mat-label>
+            <input type="email" matInput formControlName="username">
+            <mat-error *ngIf="meetingEditionForm.get('username').errors && meetingEditionForm.get('username').touched">
+              Please enter a valid email address
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Email</mat-label>
+            <input type="email" matInput formControlName="email">
+            <mat-error *ngIf="meetingEditionForm.get('email').errors && meetingEditionForm.get('email').touched">
+              Please enter a valid email address
+            </mat-error>
+        </mat-form-field>
+
+        <div class="float-right mt-4">
+            <button type="button" class="btn btn-light mr-2" (click)="close()">Close</button>
+            <button type="button" class="btn btn-dark" (click)="onEditUser()">Submit</button>
+        </div>
+    
+    </form>
+</div>

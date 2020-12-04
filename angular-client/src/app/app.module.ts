@@ -6,16 +6,23 @@ import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
 import { TokenInterceptor } from './core/interceptors/token-interceptor';
 import { EffectsModule } from '@ngrx/effects';
-import { AuthEffects } from './store/effects/auth.effects';
+
 import { StoreModule } from '@ngrx/store';
-import { authReducer } from './store/reducers/auth.reducer';
-import { userReducer } from './store/reducers/user.reducer';
 import { HomeModule } from './features/home/home.module';
 import { AdminModule } from './features/admin/admin.module';
 import { SharedModule } from './shared/shared.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { UserEffects } from './store/effects/user.effects';
 import { ToastrModule } from 'ngx-toastr';
+
+// Effects
+import { AuthEffects } from './store/effects/auth.effects';
+import { MeetingEffects } from './store/effects/meeting.effects';
+import { UserEffects } from './store/effects/user.effects';
+
+// Reducers
+import { authReducer } from './store/reducers/auth.reducer';
+import { meetingReducer } from './store/reducers/meeting.reducer';
+import { userReducer } from './store/reducers/user.reducer';
 
 @NgModule({
   declarations: [
@@ -30,11 +37,13 @@ import { ToastrModule } from 'ngx-toastr';
     AdminModule,
     EffectsModule.forRoot([
       AuthEffects,
-      UserEffects
+      MeetingEffects,
+      UserEffects,
     ]),
     StoreModule.forRoot({
       auth: authReducer,
-      user: userReducer
+      meeting: meetingReducer,
+      user: userReducer,
     }),
     ToastrModule.forRoot({
       enableHtml: true

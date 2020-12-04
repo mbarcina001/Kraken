@@ -15,8 +15,12 @@ import { UserEditionModalComponent } from './user-edition-modal/user-edition-mod
 })
 export class AdminComponent {
 
+  @Input() roleList: Role[];
   @Input() loading: boolean;
   @Output() reloadUsers = new EventEmitter();
+  @Output() createUser = new EventEmitter<User>();
+  @Output() editUser = new EventEmitter<User>();
+  @Output() deleteUser = new EventEmitter<number>();
 
   userList$: User[];
   get userList(): User[] {
@@ -40,23 +44,7 @@ export class AdminComponent {
     }
   }
 
-  roleList$: Role[];
-  get roleList(): Role[] {
-    return this.roleList$;
-  }
-  @Input() set roleList(value: Role[]) {
-    if (value && value.length > 0) {
-      value.forEach(role => {
-        this.roles.push({
-          ...role,
-          name: this.getRoleName(role)
-        });
-      });
-    }
-  }
-
   dataSource: MatTableDataSource<User>;
-  roles: Role[] = [];
 
   displayedColumns: string[] = ['checked', 'username', 'email', 'roles'];
 
@@ -92,18 +80,42 @@ export class AdminComponent {
     this.reloadUsers.emit();
   }
 
-  editUser() {
+  onCreateUser() {
     const dialogRef = this.dialog.open(UserEditionModalComponent, {
       data: {
-        username: this.selection.selected[0].username,
-        email: this.selection.selected[0].email,
-        roles: this.selection.selected[0].roles,
-        allRoles: this.roles
+        id: '',
+        username: '',
+        email: '',
+        roles: [],
+        allRoles: this.roleList
       },
     });
     dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
+      if (result) {
+        this.createUser.emit(result);
+      }
     });
+  }
+
+  onEditUser() {
+    const dialogRef = this.dialog.open(UserEditionModalComponent, {
+      data: {
+        id: this.selection.selected[0].id,
+        username: this.selection.selected[0].username,
+        email: this.selection.selected[0].email,
+        roles: this.selection.selected[0].roles,
+        allRoles: this.roleList
+      },
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.editUser.emit(result);
+      }
+    });
+  }
+
+  onDeleteUser() {
+    // TODO
   }
 
   selectRow(row: any) {

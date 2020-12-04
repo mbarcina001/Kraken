@@ -1,6 +1,9 @@
+import { SelectionModel } from '@angular/cdk/collections';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
 import { Meeting } from 'src/app/store/models/meeting.model';
+import { MeetingEditionModalComponent } from './meeting-edition-modal/meeting-edition-modal.component';
 
 @Component({
   selector: 'app-home',
@@ -28,9 +31,9 @@ export class HomeComponent {
       );
 
       if (this.currentMeetings.length > 0) {
-        this.selectedIndex = 0;
+        this.selectedTabIndex = 0;
       } else {
-        this.selectedIndex = 1;
+        this.selectedTabIndex = 1;
       }
     }
   }
@@ -52,14 +55,47 @@ export class HomeComponent {
   currentMeetings: Meeting[];
   nextMeetings: Meeting[];
   pastMeetings: Meeting[];
-  selectedIndex: number;
+
+  selectedTabIndex: number;
+  selection = new SelectionModel<Meeting>(false, []);
 
   constructor(
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    public dialog: MatDialog
   ) { }
 
   onReloadMeetings() {
     this.reloadMeetings.emit();
+  }
+
+  createMeeting(): void {
+    const dialogRef = this.dialog.open(MeetingEditionModalComponent, {
+      data: {
+        id: ''
+      },
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        // TODO
+      }
+    });
+  }
+
+  editMeeting(): void {
+    const dialogRef = this.dialog.open(MeetingEditionModalComponent, {
+      data: {
+        id: this.selection.selected[0].id
+      },
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        // TODO
+      }
+    });
+  }
+
+  deleteMeeting(): void {
+
   }
 
 }

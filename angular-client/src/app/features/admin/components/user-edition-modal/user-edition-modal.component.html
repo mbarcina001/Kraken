@@ -20,8 +20,8 @@
 
         <mat-form-field appearance="fill">
             <mat-label>Roles</mat-label>
-            <mat-select formControlName="roles" multiple>
-                <mat-option *ngFor="let role of allRoles" [value]="role">{{role.name}}</mat-option>
+            <mat-select formControlName="roles" multiple [compareWith]="roleComparisonFunction">
+                <mat-option *ngFor="let role of allRoles" [value]="role">{{getRoleName(role)}}</mat-option>
             </mat-select>
             <mat-error *ngIf="userEditionForm.get('roles').errors && userEditionForm.get('roles').touched">
                 Please enter a valid email address
@@ -29,6 +29,7 @@
         </mat-form-field>
 
         <div class="float-right mt-4">
+            <button type="button" class="btn btn-light mr-2" (click)="close()">Close</button>
             <button type="button" class="btn btn-dark" (click)="onEditUser()">Submit</button>
         </div>
     

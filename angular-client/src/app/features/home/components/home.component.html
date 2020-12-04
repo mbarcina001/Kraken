@@ -5,12 +5,15 @@
     <div class="d-flex justify-content-between">
         <h2>Home</h2>
         <div>
+            <button type="button" class="btn btn-dark mr-2" (click)="createMeeting()">Create meeting</button>
+            <button type="button" class="btn btn-dark mr-2" (click)="onReloadMeetings()">Edit meeting</button>
+            <button type="button" class="btn btn-dark mr-2" (click)="onReloadMeetings()">Remove meeting</button>
             <button type="button" class="btn btn-dark" (click)="onReloadMeetings()"><i class="fa fas fa-sync-alt"></i> Update list</button>
         </div>
     </div>
     
 
-    <mat-tab-group mat-align-tabs="start" [(selectedIndex)]="selectedIndex">
+    <mat-tab-group mat-align-tabs="start" [(selectedIndex)]="selectedTabIndex">
         <mat-tab label="Current meetings">
             <app-meeting-table [data]="currentMeetings" *ngIf="currentMeetings && currentMeetings.length > 0"></app-meeting-table>
             <div class="no-records-found" *ngIf="currentMeetings && currentMeetings.length === 0"><h2>No records found</h2></div>

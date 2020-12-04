@@ -4,7 +4,9 @@
   <div class="d-flex justify-content-between">
       <h2>Admin</h2>
       <div>
-        <button type="button" class="btn btn-dark mr-2" (click)="editUser()" *ngIf="!selection.isEmpty()">Edit user</button>
+        <button type="button" class="btn btn-dark mr-2" (click)="onCreateUser()">Create user</button>
+        <button type="button" class="btn btn-dark mr-2" (click)="onEditUser()" *ngIf="!selection.isEmpty()">Edit user</button>
+        <button type="button" class="btn btn-dark mr-2" (click)="onDeleteUser()" *ngIf="!selection.isEmpty()">Delete user</button>
         <button type="button" class="btn btn-dark" (click)="onReloadUsers()"><i class="fa fas fa-sync-alt"></i> Update list</button>
       </div>
   </div>
