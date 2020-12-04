@@ -58,10 +58,10 @@ export class UserEffects {
     @Effect()
     getRoles$ = this.actions$.pipe(
       ofType(ACTION_USER_GET_ROLES),
-      switchMap(() => this.userService.getUsers()
+      switchMap(() => this.userService.getRoles()
         .pipe(
-          map((users: Role[]) => {
-            return { type: ACTION_USER_GET_ROLES_SUCCESS, users };
+          map((roles: Role[]) => {
+            return { type: ACTION_USER_GET_ROLES_SUCCESS, roles };
           }),
           catchError((err: any) => {
             return of({ type: ACTION_USER_GET_ROLES_ERROR, error: err });

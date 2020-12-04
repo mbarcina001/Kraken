@@ -25,6 +25,8 @@ const reducer = createReducer(
     on(AuthActions.auth, (state, { loginRequest }) => ({ ...state, loading: true, loginRequest, error: ''})),
     on(AuthActions.authSuccess, (state, { authenticatedUser }) => ({ ...state, loading: false, authenticatedUser, isAuthenticated: true })),
     on(AuthActions.authError, (state, { error }) => ({ ...state, loading: false, error })),
+    on(AuthActions.logout, (state, {}) => ({ ...state })),
+    on(AuthActions.logoutSuccess, (state, {}) => ({ ...state, authenticatedUser: null, isAuthenticated: false })),
 );
 
 export function authReducer(state: AuthState | undefined, action: Action) {

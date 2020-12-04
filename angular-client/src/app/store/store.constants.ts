@@ -13,3 +13,5 @@ export const ACTION_USER_GET_ROLES_ERROR = '[User] get roles error';
 export const ACTION_AUTH_LOGIN = '[Auth] login';
 export const ACTION_AUTH_LOGIN_SUCCESS = '[Auth] login success';
 export const ACTION_AUTH_LOGIN_ERROR = '[Auth] login error';
+export const ACTION_AUTH_LOGOUT = '[Auth] logout';
+export const ACTION_AUTH_LOGOUT_SUCCESS = '[Auth] logout success';

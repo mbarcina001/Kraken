@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { selectAuthenticatedUser, selectIsAuthenticated } from 'src/app/store/selectors/auth.selector';
+import { ACTION_AUTH_LOGOUT } from 'src/app/store/store.constants';
 import * as appConstants from '../../app.constants';
 
 @Component({
@@ -22,7 +23,7 @@ export class HeaderComponent implements OnInit{
     private router: Router
   ) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.getAuthenticatedUser$.subscribe(user => {
       if (user && user.roles.indexOf(appConstants.ADMIN_ROLE) !== -1) {
         this.isAdmin = true;
@@ -30,12 +31,16 @@ export class HeaderComponent implements OnInit{
     });
   }
 
-  userIsAdmin() {
+  userIsAdmin(): boolean {
     return this.isAdmin;
   }
 
-  getActiveRoute() {
+  getActiveRoute(): string {
     return this.router.url.replace('/', '');
+  }
+
+  logout(): void {
+    this.store.dispatch({type: ACTION_AUTH_LOGOUT});
   }
 
 }

@@ -28,7 +28,7 @@
 			float: left;
 			padding-left: 1em;
 		
-			a{
+			a {
 				display: inline-block;
 				padding: 0 5px;
 				text-decoration:none;
@@ -40,7 +40,7 @@
 				}
 			}
 		
-			.selected{
+			.selected {
 				color: #6675df;
 				pointer-events: none;
 				opacity: 1;
@@ -48,6 +48,21 @@
 		
 			&.user {
 				float: right
+			}
+
+			.dropdown {
+				.dropdown-menu {
+					line-height: 1em;
+				}
+
+				button {
+					background-color:#292c2f;
+					border-color:#292c2f;
+				}
+
+				a {
+					color: black;
+				}
 			}
 		}
 	}
