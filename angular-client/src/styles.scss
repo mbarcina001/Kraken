@@ -520,8 +520,9 @@ input.input100 {
 }
   
 .alert-validate::after {
-    content: "\f12a";
-    font-family: FontAwesome;
+    font-family: "Font Awesome 5 Free"; 
+    font-weight: 900; 
+    content: "\f06a";
     display: block;
     position: absolute;
     z-index: 110;
