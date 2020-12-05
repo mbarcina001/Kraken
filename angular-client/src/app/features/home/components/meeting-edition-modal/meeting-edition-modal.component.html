@@ -3,20 +3,27 @@
         <h2 class="mb-4">Meeting edition</h2>
 
         <mat-form-field>
-            <mat-label>Username</mat-label>
-            <input type="email" matInput formControlName="username">
-            <mat-error *ngIf="meetingEditionForm.get('username').errors && meetingEditionForm.get('username').touched">
+            <mat-label>Description</mat-label>
+            <input type="description" matInput formControlName="description">
+            <mat-error *ngIf="meetingEditionForm.get('description').errors && meetingEditionForm.get('description').touched">
               Please enter a valid email address
             </mat-error>
         </mat-form-field>
 
         <mat-form-field>
-            <mat-label>Email</mat-label>
-            <input type="email" matInput formControlName="email">
-            <mat-error *ngIf="meetingEditionForm.get('email').errors && meetingEditionForm.get('email').touched">
-              Please enter a valid email address
-            </mat-error>
+            <input matInput [ngxMatDatetimePicker]="pickerFrom" placeholder="Choose a date" formControlName="startDate">
+            <mat-datepicker-toggle matSuffix [for]="pickerFrom"></mat-datepicker-toggle>
+            <ngx-mat-datetime-picker #pickerFrom>
+            </ngx-mat-datetime-picker>
         </mat-form-field>
+
+        <mat-form-field>
+            <input matInput [ngxMatDatetimePicker]="pickerTo" placeholder="Choose a date" formControlName="endDate">
+            <mat-datepicker-toggle matSuffix [for]="pickerTo"></mat-datepicker-toggle>
+            <ngx-mat-datetime-picker #pickerTo>
+            </ngx-mat-datetime-picker>
+        </mat-form-field>
+
 
         <div class="float-right mt-4">
             <button type="button" class="btn btn-light mr-2" (click)="close()">Close</button>

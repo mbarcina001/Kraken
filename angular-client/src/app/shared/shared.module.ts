@@ -12,7 +12,13 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material/dialog';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
-
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatMomentDateModule } from '@angular/material-moment-adapter';
+import {
+    NgxMatDatetimePickerModule,
+    NgxMatNativeDateModule,
+    NgxMatTimepickerModule
+} from '@angular-material-components/datetime-picker';
 
 import { DatePipe } from './pipes/date.pipe';
 
@@ -22,7 +28,7 @@ import { DatePipe } from './pipes/date.pipe';
         DatePipe
     ],
     imports: [
-        CommonModule,
+        CommonModule
     ],
     exports: [
         // Components
@@ -40,7 +46,13 @@ import { DatePipe } from './pipes/date.pipe';
         MatTableModule,
         MatTabsModule,
         MatInputModule,
-        MatSelectModule
+        MatSelectModule,
+        MatDatepickerModule,
+
+        // Datetime picker
+        NgxMatDatetimePickerModule,
+        NgxMatTimepickerModule,
+        NgxMatNativeDateModule,
     ],
     providers: [
         {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: false}}
