@@ -57,7 +57,7 @@ export class HomeComponent {
   pastMeetings: Meeting[];
 
   selectedTabIndex: number;
-  selection = new SelectionModel<Meeting>(false, []);
+  meetingSelected: Meeting;
 
   constructor(
     private toastr: ToastrService,
@@ -71,7 +71,7 @@ export class HomeComponent {
   createMeeting(): void {
     const dialogRef = this.dialog.open(MeetingEditionModalComponent, {
       data: {
-        id: ''
+        id: -1
       },
     });
     dialogRef.afterClosed().subscribe(result => {
@@ -84,7 +84,7 @@ export class HomeComponent {
   editMeeting(): void {
     const dialogRef = this.dialog.open(MeetingEditionModalComponent, {
       data: {
-        id: this.selection.selected[0].id
+        id: this.meetingSelected.id
       },
     });
     dialogRef.afterClosed().subscribe(result => {
@@ -98,4 +98,15 @@ export class HomeComponent {
 
   }
 
+  selectedTabChange() {
+    this.meetingSelected = null;
+  }
+
+  selectMeeting(pMeeting: Meeting) {
+    if (this.meetingSelected === pMeeting) {
+      return this.meetingSelected = null;
+    }
+
+    this.meetingSelected = pMeeting;
+  }
 }

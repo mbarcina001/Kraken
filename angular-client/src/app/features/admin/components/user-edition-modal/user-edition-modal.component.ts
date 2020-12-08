@@ -1,6 +1,7 @@
 import {Component, Inject} from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { ToastrService } from 'ngx-toastr';
 import { Role } from 'src/app/store/models/user.model';
 
 @Component({
@@ -11,6 +12,7 @@ import { Role } from 'src/app/store/models/user.model';
 
 export class UserEditionModalComponent {
 
+  creatingUser = false;
   public userEditionForm: FormGroup;
   allRoles: Role[];
 
@@ -19,18 +21,37 @@ export class UserEditionModalComponent {
     @Inject(MAT_DIALOG_DATA)
     public data: {id: number, username: string, email: string, roles: Role[], allRoles: Role[]},
     private formBuilder: FormBuilder,
+    private toastrService: ToastrService
   ) {
     const userRoles = Array.isArray(data.roles) ? data.roles : [data.roles];
     this.userEditionForm = this.formBuilder.group({
-      id: data.id,
-      username: data.username,
-      email: data.email,
-      roles: [userRoles],
+      id: new FormControl(data.id),
+      username: new FormControl(data.username, [Validators.required]),
+      email: new FormControl(data.email, [Validators.required, Validators.email]),
+      roles: new FormControl([userRoles], [Validators.required]),
     });
+
+    if (!data.id || data.id === -1) {
+      this.creatingUser = true;
+      this.userEditionForm.addControl('password', new FormControl('', [Validators.required]))
+      this.userEditionForm.addControl('confirmPassword', new FormControl('', [Validators.required]))
+    }
+
     this.allRoles = data.allRoles;
   }
 
-  onEditUser() {
+  onSaveUser() {
+    if (this.userEditionForm.valid) {
+      this.dialogRef.close(this.userEditionForm.value);
+    } else {
+      // tslint:disable-next-line: forin
+      for (const i in this.userEditionForm.controls) {
+        this.userEditionForm.controls[i].updateValueAndValidity();
+        this.userEditionForm.controls[i].markAsTouched();
+      }
+      this.toastrService.error("NOK desc", "NOK title");
+    }
+
     this.dialogRef.close(this.userEditionForm.value);
   }
 

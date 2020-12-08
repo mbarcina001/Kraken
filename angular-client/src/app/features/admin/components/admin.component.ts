@@ -68,12 +68,12 @@ export class AdminComponent {
     });
   }
 
-  getStringRoles(elementRoles) {
-    return elementRoles.map(role => role.name.toLowerCase().replace('role_', '')).join(', ');
+  getStringRoles(pElementRoles) {
+    return pElementRoles.map(role => role.name.toLowerCase().replace('role_', '')).join(', ');
   }
 
-  getRoleName(role: Role) {
-    return role.name.toLowerCase().replace('role_', '');
+  getRoleName(pRole: Role) {
+    return pRole.name.toLowerCase().replace('role_', '');
   }
 
   onReloadUsers() {
@@ -83,7 +83,7 @@ export class AdminComponent {
   onCreateUser() {
     const dialogRef = this.dialog.open(UserEditionModalComponent, {
       data: {
-        id: '',
+        id: -1,
         username: '',
         email: '',
         roles: [],
@@ -118,8 +118,8 @@ export class AdminComponent {
     // TODO
   }
 
-  selectRow(row: any) {
-    this.selection.toggle(row);
+  selectRow(pRow: any) {
+    this.selection.toggle(pRow);
   }
 
 }

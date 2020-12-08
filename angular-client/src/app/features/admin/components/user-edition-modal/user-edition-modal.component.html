@@ -1,12 +1,15 @@
 <div>
     <form [formGroup]="userEditionForm" class="form">
         <h2 class="mb-4">User edition</h2>
+        
+        <h2 class="mb-4" *ngIf="!creatingUser">User edition</h2>
+        <h2 class="mb-4" *ngIf="creatingUser">User creation</h2>
 
         <mat-form-field>
             <mat-label>Username</mat-label>
             <input type="email" matInput formControlName="username">
             <mat-error *ngIf="userEditionForm.get('username').errors && userEditionForm.get('username').touched">
-              Please enter a valid email address
+              Please enter a username
             </mat-error>
         </mat-form-field>
 
@@ -18,19 +21,37 @@
             </mat-error>
         </mat-form-field>
 
+        <ng-container *ngIf="creatingUser">
+            <mat-form-field>
+                <mat-label>Username</mat-label>
+                <input type="email" matInput formControlName="password">
+                <mat-error *ngIf="userEditionForm.get('password').errors && userEditionForm.get('password').touched">
+                  Please enter a password
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Username</mat-label>
+                <input type="email" matInput formControlName="username">
+                <mat-error *ngIf="userEditionForm.get('confirmPassword').errors && userEditionForm.get('confirmPassword').touched">
+                  Please confirm password
+                </mat-error>
+            </mat-form-field>
+        </ng-container>
+
         <mat-form-field appearance="fill">
             <mat-label>Roles</mat-label>
             <mat-select formControlName="roles" multiple [compareWith]="roleComparisonFunction">
                 <mat-option *ngFor="let role of allRoles" [value]="role">{{getRoleName(role)}}</mat-option>
             </mat-select>
             <mat-error *ngIf="userEditionForm.get('roles').errors && userEditionForm.get('roles').touched">
-                Please enter a valid email address
+                Please select a role
             </mat-error>
         </mat-form-field>
 
         <div class="float-right mt-4">
             <button type="button" class="btn btn-light mr-2" (click)="close()">Close</button>
-            <button type="button" class="btn btn-dark" (click)="onEditUser()">Submit</button>
+            <button type="button" class="btn btn-dark" (click)="onSaveUser()">Submit</button>
         </div>
     
     </form>

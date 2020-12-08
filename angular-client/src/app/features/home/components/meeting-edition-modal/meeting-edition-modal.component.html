@@ -1,12 +1,13 @@
 <div>
     <form [formGroup]="meetingEditionForm" class="form">
-        <h2 class="mb-4">Meeting edition</h2>
+        <h2 class="mb-4" *ngIf="!creatingMeeting">Meeting edition</h2>
+        <h2 class="mb-4" *ngIf="creatingMeeting">Meeting creation</h2>
 
         <mat-form-field>
             <mat-label>Description</mat-label>
             <input type="description" matInput formControlName="description">
             <mat-error *ngIf="meetingEditionForm.get('description').errors && meetingEditionForm.get('description').touched">
-              Please enter a valid email address
+              Please enter a description
             </mat-error>
         </mat-form-field>
 
@@ -15,6 +16,9 @@
             <mat-datepicker-toggle matSuffix [for]="pickerFrom"></mat-datepicker-toggle>
             <ngx-mat-datetime-picker #pickerFrom>
             </ngx-mat-datetime-picker>
+            <mat-error *ngIf="meetingEditionForm.get('description').errors && meetingEditionForm.get('description').touched">
+              Please enter a start date
+            </mat-error>
         </mat-form-field>
 
         <mat-form-field>
@@ -22,12 +26,15 @@
             <mat-datepicker-toggle matSuffix [for]="pickerTo"></mat-datepicker-toggle>
             <ngx-mat-datetime-picker #pickerTo>
             </ngx-mat-datetime-picker>
+            <mat-error *ngIf="meetingEditionForm.get('description').errors && meetingEditionForm.get('description').touched">
+              Please enter an end date
+            </mat-error>
         </mat-form-field>
 
 
         <div class="float-right mt-4">
             <button type="button" class="btn btn-light mr-2" (click)="close()">Close</button>
-            <button type="button" class="btn btn-dark" (click)="onEditUser()">Submit</button>
+            <button type="button" class="btn btn-dark" (click)="onSaveMeeting()">Submit</button>
         </div>
     
     </form>

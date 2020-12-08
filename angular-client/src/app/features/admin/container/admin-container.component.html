@@ -1,4 +1,5 @@
 <app-admin 
     [userList]="users$ | async" [loading]="userLoading$ | async" [roleList]="allRoles$ |async"
-    [error]="userError$ | async" (reloadUsers)="getUsers()">
+    [error]="userError$ | async" (reloadUsers)="getUsers()" (createUser)="createUser($event)"
+    (editUser)="editUser($event)">
 </app-admin>

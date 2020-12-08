@@ -1,8 +1,9 @@
-import { Component, Input, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { Meeting } from 'src/app/store/models/meeting.model';
+import { SelectionModel } from '@angular/cdk/collections';
 
 @Component({
   selector: 'app-meeting-table',
@@ -22,11 +23,14 @@ export class MeetingTableComponent {
     }
   }
 
+  @Output() selectMeeting = new EventEmitter<Meeting>();
+
   dataSource: any;
-  displayedColumns: string[] = ['description', 'organiser', 'startDate', 'endDate'];
+  displayedColumns: string[] = ['checked', 'description', 'organiser', 'startDate', 'endDate'];
 
   @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: false}) sort: MatSort;
+  selection = new SelectionModel<Meeting>(false, []);
 
   constructor() { }
 
@@ -38,6 +42,11 @@ export class MeetingTableComponent {
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.paginator;
     });
+  }
+
+  selectRow(pRow: any) {
+    this.selection.toggle(pRow);
+    this.selectMeeting.emit(pRow);
   }
 
 }

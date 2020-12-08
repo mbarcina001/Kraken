@@ -2,11 +2,13 @@ import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
 import { switchMap, map, catchError } from 'rxjs/operators';
+import { ApiListResponse } from '../models/api-list-response';
 import { Meeting } from '../models/meeting.model';
 import { MeetingService } from '../services/meeting.service';
 import { ACTION_MEETING_GET_MEETINGS, ACTION_MEETING_GET_MEETINGS_SUCCESS, ACTION_MEETING_GET_MEETINGS_ERROR, ACTION_MEETING_CREATE_MEETING,
     ACTION_MEETING_CREATE_MEETING_SUCCESS, ACTION_MEETING_EDIT_MEETING_SUCCESS, ACTION_MEETING_DELETE_MEETING,
-    ACTION_MEETING_DELETE_MEETING_SUCCESS, ACTION_MEETING_EDIT_MEETING } from '../store.constants';
+    ACTION_MEETING_DELETE_MEETING_SUCCESS, ACTION_MEETING_EDIT_MEETING, ACTION_MEETING_CREATE_MEETING_ERROR,
+    ACTION_MEETING_DELETE_MEETING_ERROR, ACTION_MEETING_EDIT_MEETING_ERROR } from '../store.constants';
 
 @Injectable()
   export class MeetingEffects {
@@ -18,9 +20,9 @@ import { ACTION_MEETING_GET_MEETINGS, ACTION_MEETING_GET_MEETINGS_SUCCESS, ACTIO
     ofType(ACTION_MEETING_GET_MEETINGS),
     switchMap(() => this.meetingService.getUserMeetings()
       .pipe(
-        map((meetingsResult: Meeting[]) => {
+        map((meetingsResult: ApiListResponse<Meeting>) => {
           const meetings = [];
-          meetingsResult.forEach((meeting: Meeting) => {
+          meetingsResult.data.forEach((meeting: Meeting) => {
             meetings.push({
               ...meeting,
               meetingStartDate: meeting.meetingStartDate ?
@@ -44,7 +46,7 @@ import { ACTION_MEETING_GET_MEETINGS, ACTION_MEETING_GET_MEETINGS_SUCCESS, ACTIO
     switchMap((action: any) => this.meetingService.createMeeting(action.meeting)
       .pipe(
         map(() => {
-          return { type: ACTION_MEETING_CREATE_MEETING_SUCCESS }
+          return { type: ACTION_MEETING_CREATE_MEETING_SUCCESS };
         }),
         catchError((err: any) => {
           return of({ type: ACTION_MEETING_GET_MEETINGS_ERROR, error: err });
@@ -55,20 +57,27 @@ import { ACTION_MEETING_GET_MEETINGS, ACTION_MEETING_GET_MEETINGS_SUCCESS, ACTIO
 
   @Effect()
   createMeetingSuccess$ = this.actions$.pipe(
-    ofType(ACTION_MEETING_CREATE_MEETING),
+    ofType(ACTION_MEETING_CREATE_MEETING_SUCCESS),
     map(() => {
       // TODO: Show toast
-      return { type: ACTION_MEETING_GET_MEETINGS };
+    })
+  );
+
+  @Effect()
+  createMeetingError$ = this.actions$.pipe(
+    ofType(ACTION_MEETING_CREATE_MEETING_ERROR),
+    map(() => {
+      // TODO: Show toast
     })
   );
 
   @Effect()
   editMeeting$ = this.actions$.pipe(
-    ofType(ACTION_MEETING_CREATE_MEETING),
+    ofType(ACTION_MEETING_EDIT_MEETING),
     switchMap((action: any) => this.meetingService.editMeeting(action.meeting)
       .pipe(
         map(() => {
-          return { type: ACTION_MEETING_EDIT_MEETING_SUCCESS }
+          return { type: ACTION_MEETING_EDIT_MEETING_SUCCESS };
         }),
         catchError((err: any) => {
           return of({ type: ACTION_MEETING_GET_MEETINGS_ERROR, error: err });
@@ -79,20 +88,27 @@ import { ACTION_MEETING_GET_MEETINGS, ACTION_MEETING_GET_MEETINGS_SUCCESS, ACTIO
 
   @Effect()
   editMeetingSuccess$ = this.actions$.pipe(
-    ofType(ACTION_MEETING_EDIT_MEETING),
+    ofType(ACTION_MEETING_EDIT_MEETING_SUCCESS),
     map(() => {
       // TODO: Show toast
-      return { type: ACTION_MEETING_GET_MEETINGS };
+    })
+  );
+
+  @Effect()
+  editMeetingError$ = this.actions$.pipe(
+    ofType(ACTION_MEETING_EDIT_MEETING_ERROR),
+    map(() => {
+      // TODO: Show toast
     })
   );
 
   @Effect()
   deleteMeeting$ = this.actions$.pipe(
-    ofType(ACTION_MEETING_CREATE_MEETING),
-    switchMap((action: any) => this.meetingService.deleteMeeting(action.meeting.id)
+    ofType(ACTION_MEETING_DELETE_MEETING),
+    switchMap((action: any) => this.meetingService.deleteMeeting(action.meeting)
       .pipe(
         map(() => {
-          return { type: ACTION_MEETING_DELETE_MEETING_SUCCESS }
+          return { type: ACTION_MEETING_DELETE_MEETING_SUCCESS };
         }),
         catchError((err: any) => {
           return of({ type: ACTION_MEETING_GET_MEETINGS_ERROR, error: err });
@@ -103,10 +119,17 @@ import { ACTION_MEETING_GET_MEETINGS, ACTION_MEETING_GET_MEETINGS_SUCCESS, ACTIO
 
   @Effect()
   deleteMeetingSuccess$ = this.actions$.pipe(
-    ofType(ACTION_MEETING_DELETE_MEETING),
+    ofType(ACTION_MEETING_DELETE_MEETING_SUCCESS),
     map(() => {
       // TODO: Show toast
-      return { type: ACTION_MEETING_GET_MEETINGS };
+    })
+  );
+
+  @Effect()
+  deleteMeetingError$ = this.actions$.pipe(
+    ofType(ACTION_MEETING_DELETE_MEETING_ERROR),
+    map(() => {
+      // TODO: Show toast
     })
   );
 

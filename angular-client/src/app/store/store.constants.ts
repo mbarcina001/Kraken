@@ -1,3 +1,7 @@
+/* Response codes */
+export const RESPONSE_CODE_OK = 1;
+export const RESPONSE_CODE_NOK = -1;
+
 /* Meeting actions */
 export const ACTION_MEETING_GET_MEETINGS = '[Meeting] get meetings';
 export const ACTION_MEETING_GET_MEETINGS_SUCCESS = '[Meeting] get meetings success';

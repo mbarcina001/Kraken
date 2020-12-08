@@ -2,16 +2,16 @@ package io.mbarcina.kraken.api.repository;
 
 import java.util.List;
 
-import org.springframework.http.ResponseEntity;
-
+import io.mbarcina.kraken.api.response.ApiResponse;
 import io.mbarcina.kraken.auth.entity.Role;
 import io.mbarcina.kraken.auth.entity.User;
 
 public interface IUserService {
 	
-	public User getUserById(int pId);
-	public List<User> getUserList();
-	public List<Role> getRoleList();
-	public ResponseEntity<String> saveUser(User pUser);
+	public ApiResponse<List<User>> getUserList();
+	public ApiResponse<List<Role>> getRoleList();
+	public ApiResponse<List<User>> createUser(User pUser);
+	public ApiResponse<List<User>> editUser(User pUser);
+	public ApiResponse<List<User>> deleteUser(int pUserId);
 
 }
