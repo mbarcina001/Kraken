@@ -1,8 +1,11 @@
-import {Component, Inject} from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
+import { FormValidationService } from 'src/app/core/services/form-validation.service';
+import { validateConfirmPassword } from 'src/app/shared/validators/confirm-password.validator';
 import { Role } from 'src/app/store/models/user.model';
+import * as appConstants from '../../../../core/app.constants';
 
 @Component({
   selector: 'app-user-edition-modal',
@@ -16,16 +19,18 @@ export class UserEditionModalComponent {
   public userEditionForm: FormGroup;
   allRoles: Role[];
 
+  public EXPOSE_CONSTANTS = appConstants;
+
   constructor(
     private dialogRef: MatDialogRef<UserEditionModalComponent>,
     @Inject(MAT_DIALOG_DATA)
-    public data: {id: number, username: string, email: string, roles: Role[], allRoles: Role[]},
+    public data: {id: number, username: string, email: string, roles: Role[], allRoles: Role[], password?: string},
     private formBuilder: FormBuilder,
-    private toastrService: ToastrService
+    private toastrService: ToastrService,
+    public formValidationService: FormValidationService
   ) {
     const userRoles = Array.isArray(data.roles) ? data.roles : [data.roles];
     this.userEditionForm = this.formBuilder.group({
-      id: new FormControl(data.id),
       username: new FormControl(data.username, [Validators.required]),
       email: new FormControl(data.email, [Validators.required, Validators.email]),
       roles: new FormControl([userRoles], [Validators.required]),
@@ -33,8 +38,18 @@ export class UserEditionModalComponent {
 
     if (!data.id || data.id === -1) {
       this.creatingUser = true;
-      this.userEditionForm.addControl('password', new FormControl('', [Validators.required]))
-      this.userEditionForm.addControl('confirmPassword', new FormControl('', [Validators.required]))
+    } else {
+      this.userEditionForm.addControl('id', new FormControl(data.id));
+    }
+
+    if (data.password) {
+      this.userEditionForm.addControl('password', new FormControl(data.password, [Validators.required]));
+      this.userEditionForm.addControl('confirmPassword', new FormControl(data.password,
+        [Validators.required, validateConfirmPassword(this.userEditionForm)]));
+    } else {
+      this.userEditionForm.addControl('password', new FormControl('', [Validators.required]));
+      this.userEditionForm.addControl('confirmPassword', new FormControl('',
+        [Validators.required, validateConfirmPassword(this.userEditionForm)]));
     }
 
     this.allRoles = data.allRoles;
@@ -49,10 +64,8 @@ export class UserEditionModalComponent {
         this.userEditionForm.controls[i].updateValueAndValidity();
         this.userEditionForm.controls[i].markAsTouched();
       }
-      this.toastrService.error("NOK desc", "NOK title");
+      this.toastrService.error('Please fill all required fields', 'Error');
     }
-
-    this.dialogRef.close(this.userEditionForm.value);
   }
 
   close() {
@@ -63,7 +76,7 @@ export class UserEditionModalComponent {
     return role.name.toLowerCase().replace('role_', '');
   }
 
-  public roleComparisonFunction( option: Role, value: Role ): boolean {
-    return option.id === value.id;
+  public roleComparisonFunction( option: Role, value: Role[] ): boolean {
+    return value.find(role => role.id === option.id) != null;
   }
 }

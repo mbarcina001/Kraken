@@ -11,6 +11,7 @@ import { AuthService } from '../store/services/auth.service';
 import { LoginFormComponent } from './components/login/login-form/login-form.component';
 import { RegisterFormComponent } from './components/login/register-form/register-form.component';
 import { NoPermissionsComponent } from './components/no-permissions/no-permissions.component';
+import { MatInputModule } from '@angular/material/input';
 
 @NgModule({
     declarations: [
@@ -26,7 +27,8 @@ import { NoPermissionsComponent } from './components/no-permissions/no-permissio
         CommonModule,
         AppRoutingModule,
         FormsModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        MatInputModule
     ],
     providers: [
         AuthService

@@ -17,3 +17,18 @@ export const REGISTER_TEMPLATE = 'registerTmpl';
  */
 export const ADMIN_ROLE = 'ROLE_ADMIN';
 export const USER_ROLE = 'ROLE_USER';
+
+/**
+ * Toast messages
+ */
+export const SUCCESS_TITLE = 'SUCCESS';
+export const ERROR_TITLE = 'ERROR';
+
+/**
+ * Field error constants
+ */
+export const FIELD_ERROR_MESSAGES = {
+    'required': () => 'Field is required',
+    'email': () => 'Valid email is required: ex@abc.xyz',
+    'confirmPassword': () => 'Passwords must match'
+};

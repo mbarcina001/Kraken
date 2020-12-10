@@ -21,11 +21,13 @@ import {
 } from '@angular-material-components/datetime-picker';
 
 import { DatePipe } from './pipes/date.pipe';
+import { ModalConfirmComponent } from './modal-confirm/modal-confirm.component';
 
 @NgModule({
     declarations: [
         SpinnerComponent,
-        DatePipe
+        DatePipe,
+        ModalConfirmComponent,
     ],
     imports: [
         CommonModule

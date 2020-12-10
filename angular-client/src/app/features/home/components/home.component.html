@@ -5,9 +5,9 @@
     <div class="d-flex justify-content-between">
         <h2>Home</h2>
         <div>
-            <button type="button" class="btn btn-dark mr-2" (click)="createMeeting()">Create meeting</button>
-            <button type="button" class="btn btn-dark mr-2" (click)="onReloadMeetings()" *ngIf="meetingSelected">Edit meeting</button>
-            <button type="button" class="btn btn-dark mr-2" (click)="onReloadMeetings()" *ngIf="meetingSelected">Remove meeting</button>
+            <button type="button" class="btn btn-dark mr-2" (click)="onCreateMeeting()">Create meeting</button>
+            <button type="button" class="btn btn-dark mr-2" (click)="onEditMeeting()" *ngIf="meetingSelected">Edit meeting</button>
+            <button type="button" class="btn btn-dark mr-2" (click)="onDeleteMeeting()" *ngIf="meetingSelected">Remove meeting</button>
             <button type="button" class="btn btn-dark" (click)="onReloadMeetings()"><i class="fa fas fa-sync-alt"></i> Update list</button>
         </div>
     </div>

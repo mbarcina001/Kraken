@@ -1,10 +1,10 @@
 import { SelectionModel } from '@angular/cdk/collections';
 import { Component, Output, EventEmitter, Input, ViewChild, ChangeDetectorRef } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { ToastrService } from 'ngx-toastr';
+import { ModalConfirmComponent } from 'src/app/shared/modal-confirm/modal-confirm.component';
 import { Role, User } from 'src/app/store/models/user.model';
 import { UserEditionModalComponent } from './user-edition-modal/user-edition-modal.component';
 
@@ -20,7 +20,7 @@ export class AdminComponent {
   @Output() reloadUsers = new EventEmitter();
   @Output() createUser = new EventEmitter<User>();
   @Output() editUser = new EventEmitter<User>();
-  @Output() deleteUser = new EventEmitter<number>();
+  @Output() deleteUser = new EventEmitter<User>();
 
   userList$: User[];
   get userList(): User[] {
@@ -38,9 +38,8 @@ export class AdminComponent {
     return this.error$;
   }
   @Input() set error(value: any) {
-    if (value) {
-      const message = value.error && value.error.error_description ? value.error.error_description : value.message;
-      this.toastr.error(message, 'An error happened');
+    if (value && this.lastCreatedEditedUser) {
+      this.reOpenUserModal(this.lastCreatedEditedUser);
     }
   }
 
@@ -52,10 +51,12 @@ export class AdminComponent {
   @ViewChild(MatSort, {static: false}) sort: MatSort;
   selection = new SelectionModel<User>(false, []);
 
+  private dialogRef: MatDialogRef<UserEditionModalComponent>;
+  private lastCreatedEditedUser: User;
+
   constructor(
     public dialog: MatDialog,
-    public cdRef: ChangeDetectorRef,
-    private toastr: ToastrService
+    public cdRef: ChangeDetectorRef
   ) { }
 
   sortAndPaginate() {
@@ -81,7 +82,7 @@ export class AdminComponent {
   }
 
   onCreateUser() {
-    const dialogRef = this.dialog.open(UserEditionModalComponent, {
+    this.dialogRef = this.dialog.open(UserEditionModalComponent, {
       data: {
         id: -1,
         username: '',
@@ -90,15 +91,17 @@ export class AdminComponent {
         allRoles: this.roleList
       },
     });
-    dialogRef.afterClosed().subscribe(result => {
+    this.dialogRef.afterClosed().subscribe(result => {
       if (result) {
+        this.lastCreatedEditedUser = result;
+        delete result.confirmPassword;
         this.createUser.emit(result);
       }
     });
   }
 
   onEditUser() {
-    const dialogRef = this.dialog.open(UserEditionModalComponent, {
+    this.dialogRef = this.dialog.open(UserEditionModalComponent, {
       data: {
         id: this.selection.selected[0].id,
         username: this.selection.selected[0].username,
@@ -107,15 +110,44 @@ export class AdminComponent {
         allRoles: this.roleList
       },
     });
-    dialogRef.afterClosed().subscribe(result => {
+    this.dialogRef.afterClosed().subscribe(result => {
       if (result) {
+        this.lastCreatedEditedUser = result;
         this.editUser.emit(result);
       }
     });
   }
 
   onDeleteUser() {
-    // TODO
+    const confirmDialogRef = this.dialog.open(ModalConfirmComponent, {
+      data: {
+        message: 'Are you sure you want to delete user ' + this.selection.selected[0].username
+      }
+    });
+    confirmDialogRef.afterClosed().subscribe(result => {
+      console.log(result);
+      if (result) {
+        this.deleteUser.emit(this.selection.selected[0]);
+      }
+    });
+  }
+
+  reOpenUserModal(pUser: User) {
+    this.dialogRef = this.dialog.open(UserEditionModalComponent, {
+      data: {
+        id: pUser.id,
+        username: pUser.username,
+        email: pUser.email,
+        password: pUser.password,
+        roles: pUser.roles,
+        allRoles: this.roleList
+      },
+    });
+    this.dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.editUser.emit(result);
+      }
+    });
   }
 
   selectRow(pRow: any) {

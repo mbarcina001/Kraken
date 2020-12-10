@@ -10,6 +10,7 @@ import { ACTION_USER_GET_USERS, ACTION_USER_GET_ROLES, ACTION_USER_GET_USERS_SUC
 import { of } from 'rxjs';
 import { ApiListResponse } from '../models/api-list-response';
 import { ToastrService } from 'ngx-toastr';
+import { ERROR_TITLE, SUCCESS_TITLE } from 'src/app/core/app.constants';
 
 
 @Injectable()
@@ -64,31 +65,32 @@ export class UserEffects {
     switchMap((action: any) => this.userService.createUser(action.user)
       .pipe(
         map((userResponse: ApiListResponse<User>) => {
+          console.log(userResponse);
           if (userResponse.returnCode === RESPONSE_CODE_OK) {
             return { type: ACTION_USER_CREATE_USER_SUCCESS, users: userResponse.data };
           }
-          return of({ type: ACTION_USER_CREATE_USER_ERROR, error: userResponse.errorMessage });
+          return { type: ACTION_USER_CREATE_USER_ERROR, error: userResponse.errorMessage };
         }),
         catchError((err: any) => {
-          return of({ type: ACTION_USER_CREATE_USER_ERROR, error: err });
+          return of({ type: ACTION_USER_CREATE_USER_ERROR, error: err.statusText });
         }),
       )
     )
   );
 
-  @Effect()
+  @Effect({dispatch: false})
   createUserSuccess$ = this.actions$.pipe(
     ofType(ACTION_USER_CREATE_USER_SUCCESS),
     map(() => {
-      this.toastrService.success('title', 'desc');
+      this.toastrService.success('User created successfully', SUCCESS_TITLE);
     })
   );
 
-  @Effect()
+  @Effect({dispatch: false})
   createUserError$ = this.actions$.pipe(
     ofType(ACTION_USER_CREATE_USER_ERROR),
-    map(() => {
-      this.toastrService.error('title', 'desc');
+    map((action: any) => {
+      this.toastrService.error(action.error, ERROR_TITLE);
     })
   );
 
@@ -101,28 +103,28 @@ export class UserEffects {
           if (userResponse.returnCode === RESPONSE_CODE_OK) {
             return { type: ACTION_USER_EDIT_USER_SUCCESS };
           }
-          return of({ type: ACTION_USER_EDIT_USER_ERROR, users: userResponse.data });
+          return { type: ACTION_USER_EDIT_USER_ERROR, users: userResponse.data };
         }),
         catchError((err: any) => {
-          return of({ type: ACTION_USER_EDIT_USER_ERROR, error: err });
+          return of({ type: ACTION_USER_EDIT_USER_ERROR, error: err.statusText });
         }),
       )
     )
   );
 
-  @Effect()
+  @Effect({dispatch: false})
   editUserSuccess$ = this.actions$.pipe(
     ofType(ACTION_USER_EDIT_USER_SUCCESS),
     map(() => {
-      this.toastrService.success('title', 'desc');
+      this.toastrService.success('User edited successfully', SUCCESS_TITLE);
     })
   );
 
-  @Effect()
+  @Effect({dispatch: false})
   editUserError$ = this.actions$.pipe(
     ofType(ACTION_USER_EDIT_USER_ERROR),
-    map(() => {
-      this.toastrService.error('title', 'desc');
+    map((action: any) => {
+      this.toastrService.error(action.error, ERROR_TITLE);
     })
   );
 
@@ -135,28 +137,28 @@ export class UserEffects {
           if (userResponse.returnCode === RESPONSE_CODE_OK) {
             return { type: ACTION_USER_DELETE_USER_SUCCESS };
           }
-          return of({ type: ACTION_USER_DELETE_USER_ERROR, users: userResponse.data });
+          return { type: ACTION_USER_DELETE_USER_ERROR, users: userResponse.data };
         }),
         catchError((err: any) => {
-          return of({ type: ACTION_USER_DELETE_USER_ERROR, error: err });
+          return of({ type: ACTION_USER_DELETE_USER_ERROR, error: err.statusText });
         }),
       )
     )
   );
 
-  @Effect()
+  @Effect({dispatch: false})
   deleteUserSuccess$ = this.actions$.pipe(
     ofType(ACTION_USER_DELETE_USER_SUCCESS),
     map(() => {
-      this.toastrService.success('title', 'desc');
+      this.toastrService.success('User deleted successfully', SUCCESS_TITLE);
     })
   );
 
-  @Effect()
+  @Effect({dispatch: false})
   deleteUserError$ = this.actions$.pipe(
     ofType(ACTION_USER_DELETE_USER_ERROR),
-    map(() => {
-      this.toastrService.error('title', 'desc');
+    map((action: any) => {
+      this.toastrService.error(action.error, ERROR_TITLE);
     })
   );
 }

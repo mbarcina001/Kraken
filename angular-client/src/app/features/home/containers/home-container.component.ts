@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
+import { Meeting } from 'src/app/store/models/meeting.model';
 import { selectMeetings, selectMeetingsLoading, selectMeetingsError } from 'src/app/store/selectors/meeting.selector';
-import { ACTION_MEETING_GET_MEETINGS } from 'src/app/store/store.constants';
+import { ACTION_MEETING_CREATE_MEETING, ACTION_MEETING_DELETE_MEETING, ACTION_MEETING_EDIT_MEETING, ACTION_MEETING_GET_MEETINGS } from 'src/app/store/store.constants';
 
 @Component({
   selector: 'app-home-container',
@@ -11,9 +12,7 @@ import { ACTION_MEETING_GET_MEETINGS } from 'src/app/store/store.constants';
 export class HomeContainerComponent implements OnInit {
 
   userMeetings$ = this.store.select(selectMeetings);
-
   meetingLoading$ = this.store.select(selectMeetingsLoading);
-  meetingError$ = this.store.select(selectMeetingsError);
 
   constructor(
     private store: Store<any>
@@ -25,6 +24,18 @@ export class HomeContainerComponent implements OnInit {
 
   getUserMeetings() {
     this.store.dispatch({ type: ACTION_MEETING_GET_MEETINGS });
+  }
+
+  createMeeting(pMeeting: Meeting) {
+    this.store.dispatch({ type: ACTION_MEETING_CREATE_MEETING, meeting: pMeeting });
+  }
+
+  editMeeting(pMeeting: Meeting) {
+    this.store.dispatch({ type: ACTION_MEETING_EDIT_MEETING, meeting: pMeeting });
+  }
+
+  deleteMeeting(pMeeting: Meeting) {
+    this.store.dispatch({ type: ACTION_MEETING_DELETE_MEETING, meeting: pMeeting });
   }
 
 }

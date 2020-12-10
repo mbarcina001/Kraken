@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { User } from '../models/user.model';
 
@@ -20,16 +20,16 @@ export class UserService {
         return this.http.get<any>('/RESOURCE_API/user/roles');
     }
 
-    public createUser(user: User): Observable<any> {
-        return this.http.post<any>('/RESOURCE_API/user', user);
+    public createUser(pUser: User): Observable<any> {
+        return this.http.post<any>('/RESOURCE_API/user', pUser);
     }
 
-    public editUser(user: User): Observable<any> {
-        return this.http.put<any>('/RESOURCE_API/user', user);
+    public editUser(pUser: User): Observable<any> {
+        return this.http.put<any>('/RESOURCE_API/user', pUser);
     }
 
-    public deleteUser(user: User): Observable<any> {
-        // TODO: Establish param
-        return this.http.delete<any>('/RESOURCE_API/user');
+    public deleteUser(pUser: User): Observable<any> {
+        const params = new HttpParams().set('userId', pUser.id.toString());
+        return this.http.delete<any>('/RESOURCE_API/user', {params});
     }
 }

@@ -5,6 +5,7 @@ import { AdminComponent } from './components/admin.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { UserEditionModalComponent } from './components/user-edition-modal/user-edition-modal.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormValidationService } from 'src/app/core/services/form-validation.service';
 
 @NgModule({
     declarations: [
@@ -16,9 +17,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
         CommonModule,
         SharedModule,
         FormsModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
     ],
-    providers: [],
+    providers: [
+        FormValidationService
+    ],
     exports: []
 })
 

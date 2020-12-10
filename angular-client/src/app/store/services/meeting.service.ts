@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Meeting } from '../models/meeting.model';
@@ -12,16 +12,16 @@ export class MeetingService {
         return this.http.get<any>('/RESOURCE_API/meeting');
     }
 
-    public createMeeting(meeting: Meeting): Observable<any> {
-        return this.http.post<any>('/RESOURCE_API/meeting', meeting);
+    public createMeeting(pMeeting: Meeting): Observable<any> {
+        return this.http.post<any>('/RESOURCE_API/meeting', pMeeting);
     }
 
-    public editMeeting(meeting: Meeting): Observable<any> {
-        return this.http.put<any>('/RESOURCE_API/meeting', meeting);
+    public editMeeting(pMeeting: Meeting): Observable<any> {
+        return this.http.put<any>('/RESOURCE_API/meeting', pMeeting);
     }
 
-    public deleteMeeting(meeting: Meeting): Observable<any> {
-        // TODO: Establish param
-        return this.http.delete<any>('/RESOURCE_API/meeting');
+    public deleteMeeting(pMeeting: Meeting): Observable<any> {
+        const params = new HttpParams().set('meetingId', pMeeting.id.toString());
+        return this.http.delete<any>('/RESOURCE_API/meeting', {params});
     }
 }

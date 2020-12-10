@@ -2,6 +2,7 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
+import { ModalConfirmComponent } from 'src/app/shared/modal-confirm/modal-confirm.component';
 import { Meeting } from 'src/app/store/models/meeting.model';
 import { MeetingEditionModalComponent } from './meeting-edition-modal/meeting-edition-modal.component';
 
@@ -40,6 +41,9 @@ export class HomeComponent {
 
   @Input() loading: boolean;
   @Output() reloadMeetings: EventEmitter<void> = new EventEmitter();
+  @Output() createMeeting: EventEmitter<Meeting> = new EventEmitter();
+  @Output() editMeeting: EventEmitter<Meeting> = new EventEmitter();
+  @Output() deleteMeeting: EventEmitter<Meeting> = new EventEmitter();
 
   error$: any;
   get error(): any {
@@ -68,7 +72,7 @@ export class HomeComponent {
     this.reloadMeetings.emit();
   }
 
-  createMeeting(): void {
+  onCreateMeeting(): void {
     const dialogRef = this.dialog.open(MeetingEditionModalComponent, {
       data: {
         id: -1
@@ -76,12 +80,12 @@ export class HomeComponent {
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        // TODO
+        this.createMeeting.emit(this.meetingSelected);
       }
     });
   }
 
-  editMeeting(): void {
+  onEditMeeting(): void {
     const dialogRef = this.dialog.open(MeetingEditionModalComponent, {
       data: {
         id: this.meetingSelected.id
@@ -89,13 +93,22 @@ export class HomeComponent {
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        // TODO
+        this.editMeeting.emit(this.meetingSelected);
       }
     });
   }
 
-  deleteMeeting(): void {
-
+  onDeleteMeeting(): void {
+    const confirmDialogRef = this.dialog.open(ModalConfirmComponent, {
+      data: {
+        message: 'Are you sure you want to delete meeting ' + this.meetingSelected.description
+      }
+    });
+    confirmDialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.deleteMeeting.emit(this.meetingSelected);
+      }
+    });
   }
 
   selectedTabChange() {

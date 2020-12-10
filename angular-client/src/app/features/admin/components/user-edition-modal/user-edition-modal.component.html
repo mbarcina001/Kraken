@@ -1,51 +1,49 @@
 <div>
-    <form [formGroup]="userEditionForm" class="form">
-        <h2 class="mb-4">User edition</h2>
-        
+    <form [formGroup]="userEditionForm" class="form" autocomplete="off">        
         <h2 class="mb-4" *ngIf="!creatingUser">User edition</h2>
         <h2 class="mb-4" *ngIf="creatingUser">User creation</h2>
 
         <mat-form-field>
-            <mat-label>Username</mat-label>
-            <input type="email" matInput formControlName="username">
+            <mat-label>Username <span class="mandatory-field">*</span></mat-label>
+            <input id="usernameEditionModal" name="usernameEditionModal" ng-reflect-name="usernameEditionModal" type="text" matInput formControlName="username">
             <mat-error *ngIf="userEditionForm.get('username').errors && userEditionForm.get('username').touched">
-              Please enter a username
+                {{ formValidationService.getErrorMessage(userEditionForm.get('username')) }}
             </mat-error>
         </mat-form-field>
 
         <mat-form-field>
-            <mat-label>Email</mat-label>
-            <input type="email" matInput formControlName="email">
+            <mat-label>Email <span class="mandatory-field">*</span></mat-label>
+            <input id="emailEditionModal" name="emailEditionModal" ng-reflect-name="emailEditionModal" type="email" matInput formControlName="email">
             <mat-error *ngIf="userEditionForm.get('email').errors && userEditionForm.get('email').touched">
-              Please enter a valid email address
+                {{ formValidationService.getErrorMessage(userEditionForm.get('email')) }}
             </mat-error>
         </mat-form-field>
 
         <ng-container *ngIf="creatingUser">
             <mat-form-field>
-                <mat-label>Username</mat-label>
-                <input type="email" matInput formControlName="password">
+                <mat-label>Password <span class="mandatory-field">*</span></mat-label>
+                <input id="passwordEditionModal" name="passwordEditionModal" ng-reflect-name="passwordEditionModal"  type="password" matInput formControlName="password">
                 <mat-error *ngIf="userEditionForm.get('password').errors && userEditionForm.get('password').touched">
-                  Please enter a password
+                    {{ formValidationService.getErrorMessage(userEditionForm.get('password')) }}
                 </mat-error>
             </mat-form-field>
 
             <mat-form-field>
-                <mat-label>Username</mat-label>
-                <input type="email" matInput formControlName="username">
-                <mat-error *ngIf="userEditionForm.get('confirmPassword').errors && userEditionForm.get('confirmPassword').touched">
-                  Please confirm password
+                <mat-label>Repeat password <span class="mandatory-field">*</span></mat-label>
+                <input id="confirmPasswordEditionModal" name="confirmPasswordEditionModal" ng-reflect-name="confirmPasswordEditionModal"  type="password" matInput formControlName="confirmPassword">
+                <mat-error *ngIf="userEditionForm.get('confirmPassword') && userEditionForm.get('confirmPassword').errors && userEditionForm.get('confirmPassword').touched">
+                    {{ formValidationService.getErrorMessage(userEditionForm.get('confirmPassword')) }}
                 </mat-error>
             </mat-form-field>
         </ng-container>
 
         <mat-form-field appearance="fill">
-            <mat-label>Roles</mat-label>
-            <mat-select formControlName="roles" multiple [compareWith]="roleComparisonFunction">
+            <mat-label>Roles <span class="mandatory-field">*</span></mat-label>
+            <mat-select id="rolesSelectEditionModal" name="rolesSelectEditionModal" formControlName="roles" multiple [compareWith]="roleComparisonFunction">
                 <mat-option *ngFor="let role of allRoles" [value]="role">{{getRoleName(role)}}</mat-option>
             </mat-select>
             <mat-error *ngIf="userEditionForm.get('roles').errors && userEditionForm.get('roles').touched">
-                Please select a role
+                {{ formValidationService.getErrorMessage(userEditionForm.get('roles')) }}
             </mat-error>
         </mat-form-field>
 

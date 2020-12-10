@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
+import { ToastrService } from 'ngx-toastr';
 import { of } from 'rxjs';
 import { switchMap, map, catchError } from 'rxjs/operators';
+import { SUCCESS_TITLE, ERROR_TITLE } from 'src/app/core/app.constants';
 import { ApiListResponse } from '../models/api-list-response';
 import { Meeting } from '../models/meeting.model';
 import { MeetingService } from '../services/meeting.service';
@@ -13,7 +15,11 @@ import { ACTION_MEETING_GET_MEETINGS, ACTION_MEETING_GET_MEETINGS_SUCCESS, ACTIO
 @Injectable()
   export class MeetingEffects {
 
-  constructor(private actions$: Actions, private meetingService: MeetingService) {}
+  constructor(
+    private actions$: Actions,
+    private meetingService: MeetingService,
+    private toastrService: ToastrService
+  ) {}
 
   @Effect()
   getUserMeetings$ = this.actions$.pipe(
@@ -59,7 +65,7 @@ import { ACTION_MEETING_GET_MEETINGS, ACTION_MEETING_GET_MEETINGS_SUCCESS, ACTIO
   createMeetingSuccess$ = this.actions$.pipe(
     ofType(ACTION_MEETING_CREATE_MEETING_SUCCESS),
     map(() => {
-      // TODO: Show toast
+      this.toastrService.success(SUCCESS_TITLE, 'desc');
     })
   );
 
@@ -67,7 +73,7 @@ import { ACTION_MEETING_GET_MEETINGS, ACTION_MEETING_GET_MEETINGS_SUCCESS, ACTIO
   createMeetingError$ = this.actions$.pipe(
     ofType(ACTION_MEETING_CREATE_MEETING_ERROR),
     map(() => {
-      // TODO: Show toast
+      this.toastrService.error(ERROR_TITLE, 'desc');
     })
   );
 
@@ -90,7 +96,7 @@ import { ACTION_MEETING_GET_MEETINGS, ACTION_MEETING_GET_MEETINGS_SUCCESS, ACTIO
   editMeetingSuccess$ = this.actions$.pipe(
     ofType(ACTION_MEETING_EDIT_MEETING_SUCCESS),
     map(() => {
-      // TODO: Show toast
+      this.toastrService.success(SUCCESS_TITLE, 'desc');
     })
   );
 
@@ -98,7 +104,7 @@ import { ACTION_MEETING_GET_MEETINGS, ACTION_MEETING_GET_MEETINGS_SUCCESS, ACTIO
   editMeetingError$ = this.actions$.pipe(
     ofType(ACTION_MEETING_EDIT_MEETING_ERROR),
     map(() => {
-      // TODO: Show toast
+      this.toastrService.error(ERROR_TITLE, 'desc');
     })
   );
 
@@ -121,7 +127,7 @@ import { ACTION_MEETING_GET_MEETINGS, ACTION_MEETING_GET_MEETINGS_SUCCESS, ACTIO
   deleteMeetingSuccess$ = this.actions$.pipe(
     ofType(ACTION_MEETING_DELETE_MEETING_SUCCESS),
     map(() => {
-      // TODO: Show toast
+      this.toastrService.success(SUCCESS_TITLE, 'desc');
     })
   );
 
@@ -129,7 +135,7 @@ import { ACTION_MEETING_GET_MEETINGS, ACTION_MEETING_GET_MEETINGS_SUCCESS, ACTIO
   deleteMeetingError$ = this.actions$.pipe(
     ofType(ACTION_MEETING_DELETE_MEETING_ERROR),
     map(() => {
-      // TODO: Show toast
+      this.toastrService.error(ERROR_TITLE, 'desc');
     })
   );
 

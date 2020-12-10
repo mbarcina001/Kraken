@@ -1,1 +1,2 @@
-<app-home [userMeetings]="userMeetings$ | async" [loading]="meetingLoading$ | async" (reloadMeetings)="getUserMeetings()"></app-home>
+<app-home [userMeetings]="userMeetings$ | async" [loading]="meetingLoading$ | async" (reloadMeetings)="getUserMeetings()"
+    (createMeeting)="createMeeting($event)" (editMeeting)="editMeeting($event)" (deleteMeeting)="deleteMeeting($event)"></app-home>
