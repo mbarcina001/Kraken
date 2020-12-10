@@ -41,12 +41,9 @@ public class UserServiceImpl implements IUserService{
 	}
 
 	@Transactional
-	public ApiResponse<List<User>> createUser(User pUser) {		
-		try {
-			return new ApiResponse<List<User>>(userDAO.saveUser(pUser), KrakenConstants.CODE_OK, "");
-		} catch (DAOException e) {
-			return new ApiResponse<List<User>>(null, KrakenConstants.CODE_NOK, e.getMessage());
-		}
+	public ApiResponse<List<User>> createUser(User pUser) throws DAOException{
+		return new ApiResponse<List<User>>(null, KrakenConstants.CODE_NOK, "User not found");
+		// return new ApiResponse<List<User>>(userDAO.saveUser(pUser), KrakenConstants.CODE_OK, "");
 	}
 	
 	@Transactional

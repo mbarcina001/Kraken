@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.mbarcina.kraken.api.entity.Meeting;
-import io.mbarcina.kraken.api.exception.TestException;
+import io.mbarcina.kraken.api.exception.DAOException;
 import io.mbarcina.kraken.api.repository.IMeetingService;
 import io.mbarcina.kraken.api.response.ApiResponse;
 import io.mbarcina.kraken.api.utils.KrakenConstants;
@@ -24,25 +24,25 @@ public class MeetingController {
 	
 	@Secured({KrakenConstants.ROLE_ADMIN, KrakenConstants.ROLE_USER})
 	@RequestMapping(method = RequestMethod.GET)
-	public ApiResponse<List<Meeting>> getMeetings(OAuth2Authentication authentication) throws TestException {
+	public ApiResponse<List<Meeting>> getMeetings(OAuth2Authentication authentication) throws DAOException {
 		return meetingService.getUserMeetingList(authentication);
 	}
 	
 	@Secured({KrakenConstants.ROLE_ADMIN, KrakenConstants.ROLE_USER})
 	@RequestMapping(method = RequestMethod.POST)
-	public ApiResponse<List<Meeting>> createMeeting(OAuth2Authentication authentication, Meeting meeting) throws TestException {
+	public ApiResponse<List<Meeting>> createMeeting(OAuth2Authentication authentication, Meeting meeting) throws DAOException {
 		return meetingService.createMeeting(authentication, meeting);
 	}
 	
 	@Secured({KrakenConstants.ROLE_ADMIN, KrakenConstants.ROLE_USER})
 	@RequestMapping(method = RequestMethod.PUT)
-	public ApiResponse<List<Meeting>> editMeeting(OAuth2Authentication authentication, Meeting meeting) throws TestException {
+	public ApiResponse<List<Meeting>> editMeeting(OAuth2Authentication authentication, Meeting meeting) throws DAOException {
 		return meetingService.editMeeting(authentication, meeting);
 	}
 	
 	@Secured({KrakenConstants.ROLE_ADMIN, KrakenConstants.ROLE_USER})
 	@RequestMapping(method = RequestMethod.DELETE)
-	public ApiResponse<List<Meeting>> deleteMeeting(OAuth2Authentication authentication, Meeting meeting) throws TestException {
+	public ApiResponse<List<Meeting>> deleteMeeting(OAuth2Authentication authentication, Meeting meeting) throws DAOException {
 		return meetingService.deleteMeeting(authentication, meeting);
 	}
 

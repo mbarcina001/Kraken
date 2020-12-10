@@ -42,7 +42,7 @@ public class UserDAOImpl implements IUserDAO {
 
 			return users;
 		} catch (Exception e) {
-			throw new DAOException("Error retrieving meetings");
+			throw new DAOException("Error retrieving users");
 		}
 	}
 
@@ -57,7 +57,7 @@ public class UserDAOImpl implements IUserDAO {
 
 			return roles;
 		} catch (Exception e) {
-			throw new DAOException("Error retrieving meetings");
+			throw new DAOException("Error retrieving roles");
 		}
 	}
 
@@ -67,7 +67,7 @@ public class UserDAOImpl implements IUserDAO {
 			entityManager.persist(pUser);
 			return this.getUserList();
 		} catch (Exception e) {
-			throw new DAOException("Error retrieving meetings");
+			throw new DAOException("Error saving user");
 		}
 	}
 
@@ -77,7 +77,7 @@ public class UserDAOImpl implements IUserDAO {
 			entityManager.createQuery("DELETE FROM User where id=" + pUserId).executeUpdate();
 			return this.getUserList();
 		} catch (Exception e) {
-			throw new DAOException("Error retrieving meetings");
+			throw new DAOException("Error deleting user");
 		}
 	}
 
