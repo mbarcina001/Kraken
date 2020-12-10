@@ -125,7 +125,6 @@ export class AdminComponent {
       }
     });
     confirmDialogRef.afterClosed().subscribe(result => {
-      console.log(result);
       if (result) {
         this.deleteUser.emit(this.selection.selected[0]);
       }

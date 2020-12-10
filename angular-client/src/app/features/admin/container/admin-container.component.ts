@@ -36,7 +36,6 @@ export class AdminContainerComponent implements OnInit {
   }
 
   deleteUser(pUser: User) {
-    console.log('DISPATCH');
     this.store.dispatch({ type: ACTION_USER_DELETE_USER, user: pUser });
   }
 

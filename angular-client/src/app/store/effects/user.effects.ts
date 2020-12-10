@@ -65,7 +65,6 @@ export class UserEffects {
     switchMap((action: any) => this.userService.createUser(action.user)
       .pipe(
         map((userResponse: ApiListResponse<User>) => {
-          console.log(userResponse);
           if (userResponse.returnCode === RESPONSE_CODE_OK) {
             return { type: ACTION_USER_CREATE_USER_SUCCESS, users: userResponse.data };
           }
