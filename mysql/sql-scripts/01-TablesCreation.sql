@@ -1,5 +1,5 @@
 CREATE TABLE if not exists user(
-    id int NOT NULL PRIMARY KEY,
+    id int PRIMARY KEY AUTO_INCREMENT,
     email varchar(50),
     password varchar(60),
     name varchar(50),
@@ -21,7 +21,7 @@ CREATE TABLE if not exists user_role(
 );
 
 CREATE TABLE if not exists meeting(
-    id int NOT NULL PRIMARY KEY,
+    id int PRIMARY KEY AUTO_INCREMENT,
     description varchar(50),
     organiser_id int,
     meeting_start_date DATETIME,
