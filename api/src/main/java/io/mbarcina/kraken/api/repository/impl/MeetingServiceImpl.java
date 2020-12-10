@@ -51,17 +51,23 @@ public class MeetingServiceImpl implements IMeetingService{
 	
 	@Transactional
 	public ApiResponse<List<Meeting>> editMeeting(OAuth2Authentication pAuthentication, Meeting pMeeting){
-		int authedUserId = ((CustomUserDetails) pAuthentication.getPrincipal()).getId();
-		if (pMeeting.getOrganiser().getId() == authedUserId) {
-			try {
-				return new ApiResponse<List<Meeting>>(meetingDAO.persistMeeting(pMeeting, authedUserId), KrakenConstants.CODE_OK, "");
-			} catch (DAOException e) {
-				return new ApiResponse<List<Meeting>>(null, KrakenConstants.CODE_NOK, e.getMessage());
-			}
-		}
-		
 		try {
-			return new ApiResponse<List<Meeting>>(this._getUserMeetingList(pAuthentication), KrakenConstants.CODE_NOK, "No permissions to edit this meeting");
+			Meeting meetingToSave = this._getMeetingById(pMeeting.getId());
+			
+			if (meetingToSave == null) {
+				return new ApiResponse<List<Meeting>>(null, KrakenConstants.CODE_NOK, "Meeting not found");
+			}
+			
+			meetingToSave.setDescription(pMeeting.getDescription());
+			meetingToSave.setMeetingStartDate(pMeeting.getMeetingStartDate());
+			meetingToSave.setMeetingEndDate(pMeeting.getMeetingEndDate());
+			
+			int authedUserId = ((CustomUserDetails) pAuthentication.getPrincipal()).getId();
+			if (pMeeting.getOrganiser().getId() != authedUserId) {
+				return new ApiResponse<List<Meeting>>(null, KrakenConstants.CODE_NOK, "No permissions to edit this meeting");
+			}
+			
+			return new ApiResponse<List<Meeting>>(meetingDAO.persistMeeting(pMeeting, authedUserId), KrakenConstants.CODE_OK, "");
 		} catch (DAOException e) {
 			return new ApiResponse<List<Meeting>>(null, KrakenConstants.CODE_NOK, e.getMessage());
 		}
@@ -69,20 +75,27 @@ public class MeetingServiceImpl implements IMeetingService{
 	
 	@Transactional
 	public ApiResponse<List<Meeting>> deleteMeeting(OAuth2Authentication pAuthentication, Meeting pMeeting){
-		int authedUserId = ((CustomUserDetails) pAuthentication.getPrincipal()).getId();
-		if (pMeeting.getOrganiser().getId() == authedUserId) {
-			try {
-				return new ApiResponse<List<Meeting>>(meetingDAO.deleteMeeting(pMeeting, authedUserId), KrakenConstants.CODE_OK, "");
-			} catch (DAOException e) {
-				return new ApiResponse<List<Meeting>>(null, KrakenConstants.CODE_NOK, e.getMessage());
-			}
-		}
-		
 		try {
-			return new ApiResponse<List<Meeting>>(this._getUserMeetingList(pAuthentication), KrakenConstants.CODE_NOK, "No permissions to delete this meeting");
+			Meeting meetingToSave = this._getMeetingById(pMeeting.getId());
+			
+			if (meetingToSave == null) {
+				return new ApiResponse<List<Meeting>>(null, KrakenConstants.CODE_NOK, "Meeting not found");
+			}
+			
+			int authedUserId = ((CustomUserDetails) pAuthentication.getPrincipal()).getId();
+			if (pMeeting.getOrganiser().getId() != authedUserId) {
+				return new ApiResponse<List<Meeting>>(null, KrakenConstants.CODE_NOK, "No permissions to delete this meeting");
+			}
+			
+			return new ApiResponse<List<Meeting>>(meetingDAO.deleteMeeting(pMeeting, authedUserId), KrakenConstants.CODE_OK, "");
 		} catch (DAOException e) {
 			return new ApiResponse<List<Meeting>>(null, KrakenConstants.CODE_NOK, e.getMessage());
 		}
+	}
+	
+	@Transactional
+	private Meeting _getMeetingById(int pId) throws DAOException {
+		return meetingDAO.getMeetingById(pId);
 	}
 
 }

@@ -46,7 +46,7 @@ public class UserController {
 	
 	@RequestMapping(method = RequestMethod.DELETE)
 	// @Secured({KrakenConstants.ROLE_ADMIN})
-	public ApiResponse<List<User>> deleteUser(@RequestParam int userId) throws DAOException {		
+	public ApiResponse<List<User>> deleteUser(@RequestParam(name = "userId") int userId) throws DAOException {		
 		return userService.deleteUser(userId);
 	}
 	

@@ -18,6 +18,17 @@ public class MeetingDAOImpl implements IMeetingDAO{
 	
 	@Autowired
 	private EntityManager entityManager;
+
+	@Transactional
+	public Meeting getMeetingById(int pId) throws DAOException {
+		// Create a query
+		TypedQuery<Meeting> theQuery = entityManager.createQuery("from Meeting WHERE id=" + pId, Meeting.class);
+
+		// Get the result list
+		Meeting meeting = theQuery.getSingleResult();
+
+		return meeting;
+	}
 	
 	@Transactional
 	public List<Meeting> getUserMeetingList(int pUserId) throws DAOException {
