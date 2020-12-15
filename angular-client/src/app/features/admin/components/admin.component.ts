@@ -15,12 +15,13 @@ import { UserEditionModalComponent } from './user-edition-modal/user-edition-mod
 })
 export class AdminComponent {
 
+  @Input() authedUser: User;
   @Input() roleList: Role[];
   @Input() loading: boolean;
   @Output() reloadUsers = new EventEmitter();
   @Output() createUser = new EventEmitter<User>();
-  @Output() editUser = new EventEmitter<User>();
-  @Output() deleteUser = new EventEmitter<User>();
+  @Output() editUser = new EventEmitter<any>();
+  @Output() deleteUser = new EventEmitter<any>();
 
   userList$: User[];
   get userList(): User[] {
@@ -113,7 +114,10 @@ export class AdminComponent {
     this.dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.lastCreatedEditedUser = result;
-        this.editUser.emit(result);
+        this.editUser.emit({
+          user: result,
+          forceLogout: result.id === this.authedUser.id
+        });
       }
     });
   }
@@ -121,12 +125,16 @@ export class AdminComponent {
   onDeleteUser() {
     const confirmDialogRef = this.dialog.open(ModalConfirmComponent, {
       data: {
-        message: 'Are you sure you want to delete user ' + this.selection.selected[0].username
+        message: 'Are you sure you want to delete user ' + this.selection.selected[0].username + '?'
       }
     });
     confirmDialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.deleteUser.emit(this.selection.selected[0]);
+        this.deleteUser.emit({
+          user: this.selection.selected[0],
+          forceLogout: this.selection.selected[0].id === this.authedUser.id
+        });
+        this.selection = new SelectionModel<User>(false, []);
       }
     });
   }

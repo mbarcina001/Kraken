@@ -13,5 +13,4 @@ export class FormValidationService {
     private getMessage(type: string, params: any) {
         return FIELD_ERROR_MESSAGES[type](params);
     }
-
 }

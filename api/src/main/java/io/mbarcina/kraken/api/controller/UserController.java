@@ -31,23 +31,21 @@ public class UserController {
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)
-	// @Secured({KrakenConstants.ROLE_ADMIN})
-	public ApiResponse<List<User>> createUser(@RequestBody User user) throws DAOException {
-		System.out.println(user);
-		return userService.createUser(user);
+	@Secured({KrakenConstants.ROLE_ADMIN})
+	public ApiResponse<List<User>> createUser(@RequestBody User pUser) throws DAOException {
+		return userService.createUser(pUser);
 	}
 	
 	@RequestMapping(method = RequestMethod.PUT)
-	// @Secured({KrakenConstants.ROLE_ADMIN})DAOException
-	public ApiResponse<List<User>> editUser(@RequestBody User user) throws DAOException {	
-		System.out.println(user);	
-		return userService.editUser(user);
+	@Secured({KrakenConstants.ROLE_ADMIN})
+	public ApiResponse<List<User>> editUser(@RequestBody User pUser) throws DAOException {
+		return userService.editUser(pUser);
 	}
 	
 	@RequestMapping(method = RequestMethod.DELETE)
-	// @Secured({KrakenConstants.ROLE_ADMIN})
-	public ApiResponse<List<User>> deleteUser(@RequestParam(name = "userId") int userId) throws DAOException {		
-		return userService.deleteUser(userId);
+	@Secured({KrakenConstants.ROLE_ADMIN})
+	public ApiResponse<List<User>> deleteUser(@RequestParam(name = "userId") int pUserId) throws DAOException {		
+		return userService.deleteUser(pUserId);
 	}
 	
 	@Secured({KrakenConstants.ROLE_ADMIN, KrakenConstants.ROLE_USER})

@@ -12,6 +12,6 @@ public interface IMeetingService {
 	public ApiResponse<List<Meeting>> getUserMeetingList(OAuth2Authentication pAuthentication);
 	public ApiResponse<List<Meeting>> createMeeting(OAuth2Authentication pAuthentication, Meeting pMeeting);
 	public ApiResponse<List<Meeting>> editMeeting(OAuth2Authentication pAuthentication, Meeting pMeeting);
-	public ApiResponse<List<Meeting>> deleteMeeting(OAuth2Authentication pAuthentication, Meeting pMeeting);
+	public ApiResponse<List<Meeting>> deleteMeeting(OAuth2Authentication pAuthentication, int pMeetingId);
 
 }

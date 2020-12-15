@@ -2,6 +2,7 @@ import { Component, Inject } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
+import { FormValidationService } from 'src/app/core/services/form-validation.service';
 
 @Component({
   selector: 'app-meeting-edition-modal',
@@ -16,15 +17,16 @@ export class MeetingEditionModalComponent {
   constructor(
     private dialogRef: MatDialogRef<MeetingEditionModalComponent>,
     @Inject(MAT_DIALOG_DATA)
-    public data: {id: number, description: string, startDate: Date, endDate: Date},
+    public data: {id: number, description: string, meetingStartDate: Date, meetingEndDate: Date},
     private formBuilder: FormBuilder,
-    private toastrService: ToastrService
+    private toastrService: ToastrService,
+    public formValidationService: FormValidationService
   ) {
     this.meetingEditionForm = this.formBuilder.group({
       id: new FormControl(data.id),
       description: new FormControl(data.description, [Validators.required]),
-      startDate: new FormControl(data.startDate, [Validators.required]),
-      endDate: new FormControl(data.endDate, [Validators.required]),
+      meetingStartDate: new FormControl(data.meetingStartDate, [Validators.required]),
+      meetingEndDate: new FormControl(data.meetingEndDate, [Validators.required]),
     });
 
     if (!data.id || data.id === -1) {

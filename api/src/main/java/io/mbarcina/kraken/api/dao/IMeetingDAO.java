@@ -10,6 +10,6 @@ public interface IMeetingDAO {
 	public Meeting getMeetingById(int pMeetingId) throws DAOException;
 	public List<Meeting> getUserMeetingList(int pUserId) throws DAOException;
 	public List<Meeting> persistMeeting(Meeting pMeeting, int pUserId) throws DAOException;
-	public List<Meeting> deleteMeeting(Meeting pMeeting, int pUserId) throws DAOException;
+	public List<Meeting> deleteMeeting(int pMeetingId, int pUserId) throws DAOException;
 	
 }

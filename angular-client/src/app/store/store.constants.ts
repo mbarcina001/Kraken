@@ -31,10 +31,12 @@ export const ACTION_USER_CREATE_USER_ERROR = '[User] create user error';
 
 export const ACTION_USER_EDIT_USER = '[User] edit user';
 export const ACTION_USER_EDIT_USER_SUCCESS = '[User] edit user success';
+export const ACTION_USER_EDIT_USER_SUCCESS_FORCE_LOGOUT = '[User] edit user success force logout';
 export const ACTION_USER_EDIT_USER_ERROR = '[User] edit user error';
 
 export const ACTION_USER_DELETE_USER = '[User] delete user';
 export const ACTION_USER_DELETE_USER_SUCCESS = '[User] delete user success';
+export const ACTION_USER_DELETE_USER_SUCCESS_FORCE_LOGOUT = '[User] delete user success force logout';
 export const ACTION_USER_DELETE_USER_ERROR = '[User] delete user error';
 
 export const ACTION_USER_GET_ROLES = '[User] get roles';

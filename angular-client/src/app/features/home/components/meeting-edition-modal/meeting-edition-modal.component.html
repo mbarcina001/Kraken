@@ -7,27 +7,27 @@
             <mat-label>Description</mat-label>
             <input type="description" matInput formControlName="description">
             <mat-error *ngIf="meetingEditionForm.get('description').errors && meetingEditionForm.get('description').touched">
-              Please enter a description
+              {{ formValidationService.getErrorMessage(meetingEditionForm.get('description')) }}
             </mat-error>
         </mat-form-field>
 
         <mat-form-field>
-            <input matInput [ngxMatDatetimePicker]="pickerFrom" placeholder="Choose a date" formControlName="startDate">
+            <input matInput [ngxMatDatetimePicker]="pickerFrom" placeholder="Choose a date" formControlName="meetingStartDate">
             <mat-datepicker-toggle matSuffix [for]="pickerFrom"></mat-datepicker-toggle>
             <ngx-mat-datetime-picker #pickerFrom>
             </ngx-mat-datetime-picker>
-            <mat-error *ngIf="meetingEditionForm.get('description').errors && meetingEditionForm.get('description').touched">
-              Please enter a start date
+            <mat-error *ngIf="meetingEditionForm.get('meetingStartDate').errors && meetingEditionForm.get('meetingStartDate').touched">
+              {{ formValidationService.getErrorMessage(meetingEditionForm.get('meetingStartDate')) }}
             </mat-error>
         </mat-form-field>
 
         <mat-form-field>
-            <input matInput [ngxMatDatetimePicker]="pickerTo" placeholder="Choose a date" formControlName="endDate">
+            <input matInput [ngxMatDatetimePicker]="pickerTo" placeholder="Choose a date" formControlName="meetingEndDate">
             <mat-datepicker-toggle matSuffix [for]="pickerTo"></mat-datepicker-toggle>
             <ngx-mat-datetime-picker #pickerTo>
             </ngx-mat-datetime-picker>
-            <mat-error *ngIf="meetingEditionForm.get('description').errors && meetingEditionForm.get('description').touched">
-              Please enter an end date
+            <mat-error *ngIf="meetingEditionForm.get('meetingEndDate').errors && meetingEditionForm.get('meetingEndDate').touched">
+              {{ formValidationService.getErrorMessage(meetingEditionForm.get('meetingEndDate')) }}
             </mat-error>
         </mat-form-field>
 

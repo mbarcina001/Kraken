@@ -21,9 +21,5 @@ export class AuthService {
             });
 
         return this.http.post<any>('/AUTH_API/oauth/token', params.toString(), {headers});
-
-        // return this.http.post<any>(environment.authUrl + 'oauth/token', body, {headers});
-        // return this.http.get<any>('/test', { headers });
-        // return this.http.get<any>('http://localhost:9600/api/users');
     }
 }

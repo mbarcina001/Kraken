@@ -30,26 +30,29 @@ export class UserEditionModalComponent {
     public formValidationService: FormValidationService
   ) {
     const userRoles = Array.isArray(data.roles) ? data.roles : [data.roles];
+
     this.userEditionForm = this.formBuilder.group({
-      username: new FormControl(data.username, [Validators.required]),
-      email: new FormControl(data.email, [Validators.required, Validators.email]),
-      roles: new FormControl([userRoles], [Validators.required]),
+      username: new FormControl(data.username, [Validators.required, Validators.minLength(5), Validators.maxLength(50)]),
+      email: new FormControl(data.email, [Validators.required, Validators.email, Validators.maxLength(50)]),
+      roles: new FormControl(userRoles, [Validators.required]),
     });
 
     if (!data.id || data.id === -1) {
       this.creatingUser = true;
+
+      if (data.password) {
+        this.userEditionForm.addControl('password', new FormControl(data.password,
+          [Validators.required, Validators.minLength(5), Validators.maxLength(15)]));
+        this.userEditionForm.addControl('confirmPassword', new FormControl(data.password,
+          [Validators.required, Validators.minLength(5), Validators.maxLength(15), validateConfirmPassword(this.userEditionForm)]));
+      } else {
+        this.userEditionForm.addControl('password', new FormControl('',
+          [Validators.required, Validators.minLength(5), Validators.maxLength(15)]));
+        this.userEditionForm.addControl('confirmPassword', new FormControl('',
+          [Validators.required, Validators.minLength(5), Validators.maxLength(15), validateConfirmPassword(this.userEditionForm)]));
+      }
     } else {
       this.userEditionForm.addControl('id', new FormControl(data.id));
-    }
-
-    if (data.password) {
-      this.userEditionForm.addControl('password', new FormControl(data.password, [Validators.required]));
-      this.userEditionForm.addControl('confirmPassword', new FormControl(data.password,
-        [Validators.required, validateConfirmPassword(this.userEditionForm)]));
-    } else {
-      this.userEditionForm.addControl('password', new FormControl('', [Validators.required]));
-      this.userEditionForm.addControl('confirmPassword', new FormControl('',
-        [Validators.required, validateConfirmPassword(this.userEditionForm)]));
     }
 
     this.allRoles = data.allRoles;
@@ -76,7 +79,7 @@ export class UserEditionModalComponent {
     return role.name.toLowerCase().replace('role_', '');
   }
 
-  public roleComparisonFunction( option: Role, value: Role[] ): boolean {
-    return value.find(role => role.id === option.id) != null;
+  public roleComparisonFunction(option: Role, value: Role): boolean {
+    return value.id === option.id;
   }
 }

@@ -102,8 +102,8 @@ public class Meeting {
 
 	@Override
 	public String toString() {
-		return "Meeting [id=" + id + ", meetingStartDate=" + meetingStartDate + ", meetingEndDate=" + meetingEndDate
-				+ ", organiser=" + organiser + ", attendantList=" + attendantList + "]";
+		return "Meeting [id=" + id + ", description=" + description + ", meetingStartDate=" + meetingStartDate + ", "
+				+ "meetingEndDate=" + meetingEndDate + ", organiser=" + organiser + ", attendantList=" + attendantList + "]";
 	}
 
 	public void addAttendant(User pAttendant) {

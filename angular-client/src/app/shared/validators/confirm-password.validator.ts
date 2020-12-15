@@ -1,8 +1,11 @@
 import { FormGroup, ValidatorFn } from '@angular/forms';
 
 export function validateConfirmPassword(form: FormGroup): ValidatorFn {
-  var password = form.get('password');
-  var confirmPassword = form.get('confirmPassword');
+  const password = form.get('password');
+  const confirmPassword = form.get('confirmPassword');
+
+  console.log(password);
+  console.log(confirmPassword);
 
   return (): { [key: string]: any } | null =>
     password && confirmPassword && password.value === confirmPassword.value

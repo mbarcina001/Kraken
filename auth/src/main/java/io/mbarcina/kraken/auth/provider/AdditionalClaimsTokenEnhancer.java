@@ -18,7 +18,9 @@ public class AdditionalClaimsTokenEnhancer implements TokenEnhancer {
 	public OAuth2AccessToken enhance(OAuth2AccessToken accessToken, OAuth2Authentication authentication) {
 		Map<String, Object> additional = new HashMap<>();
 		CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+		additional.put("id", userDetails.getId());
 		additional.put("email", userDetails.getUsername());
+		System.out.println(additional);
 		DefaultOAuth2AccessToken token = (DefaultOAuth2AccessToken) accessToken;
 		token.setAdditionalInformation(additional);
 		return accessToken;

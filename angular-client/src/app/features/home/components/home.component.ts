@@ -1,4 +1,3 @@
-import { SelectionModel } from '@angular/cdk/collections';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
@@ -80,7 +79,7 @@ export class HomeComponent {
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.createMeeting.emit(this.meetingSelected);
+        this.createMeeting.emit(result);
       }
     });
   }
@@ -88,7 +87,10 @@ export class HomeComponent {
   onEditMeeting(): void {
     const dialogRef = this.dialog.open(MeetingEditionModalComponent, {
       data: {
-        id: this.meetingSelected.id
+        id: this.meetingSelected.id,
+        description: this.meetingSelected.description,
+        meetingStartDate: this.meetingSelected.meetingStartDate,
+        meetingEndDate: this.meetingSelected.meetingEndDate,
       },
     });
     dialogRef.afterClosed().subscribe(result => {
@@ -101,7 +103,7 @@ export class HomeComponent {
   onDeleteMeeting(): void {
     const confirmDialogRef = this.dialog.open(ModalConfirmComponent, {
       data: {
-        message: 'Are you sure you want to delete meeting ' + this.meetingSelected.description
+        message: 'Are you sure you want to delete meeting ' + this.meetingSelected.description + '?'
       }
     });
     confirmDialogRef.afterClosed().subscribe(result => {

@@ -48,7 +48,7 @@ public class UserServiceImpl implements IUserService{
 	@Transactional
 	public ApiResponse<List<User>> editUser(User pUser) {	
 		try {
-			User userToSave = this._getUserById(pUser.getId());
+			User userToSave = this.getUserById(pUser.getId());
 			
 			if (userToSave == null) {
 				return new ApiResponse<List<User>>(null, KrakenConstants.CODE_NOK, "User not found");
@@ -74,7 +74,7 @@ public class UserServiceImpl implements IUserService{
 	}
 	
 	@Transactional
-	private User _getUserById(int pId) throws DAOException {
+	public User getUserById(int pId) throws DAOException {
 		return userDAO.getUserById(pId);
 	}
 }

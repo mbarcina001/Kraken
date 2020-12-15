@@ -3,15 +3,17 @@ import { Actions, ofType, Effect } from '@ngrx/effects';
 import { catchError, map, switchMap } from 'rxjs/operators';
 import { UserService } from '../services/user.service';
 import { Role, User } from '../models/user.model';
-import { ACTION_USER_GET_USERS, ACTION_USER_GET_ROLES, ACTION_USER_GET_USERS_SUCCESS, ACTION_USER_GET_ROLES_SUCCESS,
+import {
+  ACTION_USER_GET_USERS, ACTION_USER_GET_ROLES, ACTION_USER_GET_USERS_SUCCESS, ACTION_USER_GET_ROLES_SUCCESS,
   ACTION_USER_GET_ROLES_ERROR, ACTION_USER_GET_USERS_ERROR, ACTION_USER_CREATE_USER, ACTION_USER_CREATE_USER_ERROR,
   ACTION_USER_CREATE_USER_SUCCESS, ACTION_USER_DELETE_USER, ACTION_USER_DELETE_USER_ERROR, ACTION_USER_DELETE_USER_SUCCESS,
-  ACTION_USER_EDIT_USER, ACTION_USER_EDIT_USER_ERROR, ACTION_USER_EDIT_USER_SUCCESS, RESPONSE_CODE_OK } from '../store.constants';
+  ACTION_USER_EDIT_USER, ACTION_USER_EDIT_USER_ERROR, ACTION_USER_EDIT_USER_SUCCESS, RESPONSE_CODE_OK, ACTION_AUTH_LOGOUT,
+  ACTION_USER_EDIT_USER_SUCCESS_FORCE_LOGOUT, ACTION_USER_DELETE_USER_SUCCESS_FORCE_LOGOUT
+} from '../store.constants';
 import { of } from 'rxjs';
 import { ApiListResponse } from '../models/api-list-response';
 import { ToastrService } from 'ngx-toastr';
 import { ERROR_TITLE, SUCCESS_TITLE } from 'src/app/core/app.constants';
-
 
 @Injectable()
 export class UserEffects {
@@ -19,8 +21,8 @@ export class UserEffects {
   constructor(
     private actions$: Actions,
     private userService: UserService,
-    private toastrService: ToastrService
-  ) {}
+    private toastrService: ToastrService,
+  ) { }
 
   @Effect()
   getUsers$ = this.actions$.pipe(
@@ -77,7 +79,7 @@ export class UserEffects {
     )
   );
 
-  @Effect({dispatch: false})
+  @Effect({ dispatch: false })
   createUserSuccess$ = this.actions$.pipe(
     ofType(ACTION_USER_CREATE_USER_SUCCESS),
     map(() => {
@@ -85,7 +87,7 @@ export class UserEffects {
     })
   );
 
-  @Effect({dispatch: false})
+  @Effect({ dispatch: false })
   createUserError$ = this.actions$.pipe(
     ofType(ACTION_USER_CREATE_USER_ERROR),
     map((action: any) => {
@@ -100,9 +102,11 @@ export class UserEffects {
       .pipe(
         map((userResponse: ApiListResponse<User>) => {
           if (userResponse.returnCode === RESPONSE_CODE_OK) {
-            return { type: ACTION_USER_EDIT_USER_SUCCESS };
+            return action.forceLogout ?
+              { type: ACTION_USER_EDIT_USER_SUCCESS_FORCE_LOGOUT, users: userResponse.data } :
+              { type: ACTION_USER_EDIT_USER_SUCCESS, users: userResponse.data };
           }
-          return { type: ACTION_USER_EDIT_USER_ERROR, users: userResponse.data };
+          return { type: ACTION_USER_EDIT_USER_ERROR, error: userResponse.errorMessage };
         }),
         catchError((err: any) => {
           return of({ type: ACTION_USER_EDIT_USER_ERROR, error: err.statusText });
@@ -111,7 +115,7 @@ export class UserEffects {
     )
   );
 
-  @Effect({dispatch: false})
+  @Effect({ dispatch: false })
   editUserSuccess$ = this.actions$.pipe(
     ofType(ACTION_USER_EDIT_USER_SUCCESS),
     map(() => {
@@ -119,7 +123,16 @@ export class UserEffects {
     })
   );
 
-  @Effect({dispatch: false})
+  @Effect()
+  editUserSuccessForceLogout$ = this.actions$.pipe(
+    ofType(ACTION_USER_EDIT_USER_SUCCESS_FORCE_LOGOUT),
+    map(() => {
+      this.toastrService.success('User edited successfully', SUCCESS_TITLE);
+      return { type: ACTION_AUTH_LOGOUT };
+    })
+  );
+
+  @Effect({ dispatch: false })
   editUserError$ = this.actions$.pipe(
     ofType(ACTION_USER_EDIT_USER_ERROR),
     map((action: any) => {
@@ -134,9 +147,11 @@ export class UserEffects {
       .pipe(
         map((userResponse: ApiListResponse<User>) => {
           if (userResponse.returnCode === RESPONSE_CODE_OK) {
-            return { type: ACTION_USER_DELETE_USER_SUCCESS };
+            return action.forceLogout ?
+              { type: ACTION_USER_DELETE_USER_SUCCESS_FORCE_LOGOUT, users: userResponse.data } :
+              { type: ACTION_USER_DELETE_USER_SUCCESS, users: userResponse.data };
           }
-          return { type: ACTION_USER_DELETE_USER_ERROR, users: userResponse.data };
+          return { type: ACTION_USER_DELETE_USER_ERROR, error: userResponse.errorMessage };
         }),
         catchError((err: any) => {
           return of({ type: ACTION_USER_DELETE_USER_ERROR, error: err.statusText });
@@ -145,7 +160,7 @@ export class UserEffects {
     )
   );
 
-  @Effect({dispatch: false})
+  @Effect({ dispatch: false })
   deleteUserSuccess$ = this.actions$.pipe(
     ofType(ACTION_USER_DELETE_USER_SUCCESS),
     map(() => {
@@ -153,7 +168,16 @@ export class UserEffects {
     })
   );
 
-  @Effect({dispatch: false})
+  @Effect()
+  deleteUserSuccessForceLogout$ = this.actions$.pipe(
+    ofType(ACTION_USER_DELETE_USER_SUCCESS_FORCE_LOGOUT),
+    map(() => {
+      this.toastrService.success('User deleted successfully', SUCCESS_TITLE);
+      return { type: ACTION_AUTH_LOGOUT };
+    })
+  );
+
+  @Effect({ dispatch: false })
   deleteUserError$ = this.actions$.pipe(
     ofType(ACTION_USER_DELETE_USER_ERROR),
     map((action: any) => {

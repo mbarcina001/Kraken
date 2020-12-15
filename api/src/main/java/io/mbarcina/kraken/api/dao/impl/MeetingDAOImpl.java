@@ -32,14 +32,8 @@ public class MeetingDAOImpl implements IMeetingDAO{
 	
 	@Transactional
 	public List<Meeting> getUserMeetingList(int pUserId) throws DAOException {
-		try {
-			// Create a query
-			TypedQuery<Meeting> theQuery = entityManager.createQuery("SELECT m FROM Meeting m JOIN m.attendantList a WHERE (a.id = " + pUserId + " OR m.organiser.id = " + pUserId + ") GROUP BY m.id", Meeting.class);
-			
-			// Get the result list
-			List<Meeting> meetings = theQuery.getResultList();
-			
-			return meetings;
+		try {TypedQuery<Meeting> theQuery = entityManager.createQuery("SELECT m FROM Meeting m JOIN m.attendantList a WHERE (a.id = " + pUserId + " OR m.organiser.id = " + pUserId + ") GROUP BY m.id", Meeting.class);
+			return theQuery.getResultList();
 		} catch (Exception e) {
 			throw new DAOException("Error retrieving meetings");
 		}
@@ -56,9 +50,9 @@ public class MeetingDAOImpl implements IMeetingDAO{
 	}
 	
 	@Transactional
-	public List<Meeting> deleteMeeting(Meeting pMeeting, int pUserId) throws DAOException {
+	public List<Meeting> deleteMeeting(int pMeetingId, int pUserId) throws DAOException {
 		try {
-			entityManager.createQuery("DELETE FROM Meeting where id=" + pMeeting.getId()).executeUpdate();
+			entityManager.createQuery("DELETE FROM Meeting where id=" + pMeetingId).executeUpdate();
 			return this.getUserMeetingList(pUserId);
 		} catch (Exception e) {
 			throw new DAOException("Error retrieving meetings");

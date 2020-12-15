@@ -8,6 +8,7 @@ export interface UserState {
     user: User;
     users: User[];
     roles: Role[];
+    forceLogout: boolean;
     error: string;
 }
 
@@ -16,6 +17,7 @@ export const initialState: UserState = {
     user: null,
     users: [],
     roles: [],
+    forceLogout: false,
     error: '',
 };
 
@@ -30,11 +32,13 @@ const reducer = createReducer(
     on(UserActions.createUser, (state, { user }) => ({ ...state, user, loading: true, error: ''})),
     on(UserActions.createUserSuccess, (state, { users }) => ({ ...state, loading: false, users })),
     on(UserActions.createUserError, (state, { error }) => ({ ...state, loading: false, error })),
-    on(UserActions.editUser, (state, { user }) => ({ ...state, user, loading: true, error: ''})),
+    on(UserActions.editUser, (state, { user, forceLogout }) => ({ ...state, user, forceLogout, loading: true, error: ''})),
     on(UserActions.editUserSuccess, (state, { users }) => ({ ...state, loading: false, users })),
+    on(UserActions.editUserSuccessForceLogout, (state, { users }) => ({ ...state, loading: false, users })),
     on(UserActions.editUserError, (state, { error }) => ({ ...state, loading: false, error })),
-    on(UserActions.deleteUser, (state, { user }) => ({ ...state, user, loading: true, error: ''})),
+    on(UserActions.deleteUser, (state, { user, forceLogout }) => ({ ...state, user, forceLogout, loading: true, error: ''})),
     on(UserActions.deleteUserSuccess, (state, { users }) => ({ ...state, loading: false, users })),
+    on(UserActions.deleteUserSuccessForceLogout, (state, { users }) => ({ ...state, loading: false, users })),
     on(UserActions.deleteUserError, (state, { error }) => ({ ...state, loading: false, error })),
 );
 

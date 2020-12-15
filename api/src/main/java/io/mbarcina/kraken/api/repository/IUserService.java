@@ -14,5 +14,6 @@ public interface IUserService {
 	public ApiResponse<List<User>> createUser(User pUser) throws DAOException;
 	public ApiResponse<List<User>> editUser(User pUser);
 	public ApiResponse<List<User>> deleteUser(int pUserId);
+	public User getUserById(int pUserid) throws DAOException;
 
 }
