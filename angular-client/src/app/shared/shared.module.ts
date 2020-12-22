@@ -16,6 +16,7 @@ import { NgxMatMomentModule, NgxMatMomentAdapter, NGX_MAT_MOMENT_DATE_ADAPTER_OP
 import { NgxMatDatetimePickerModule, NgxMatTimepickerModule, NGX_MAT_DATE_FORMATS, NgxMatDateAdapter, NgxMatDateFormats } from '@angular-material-components/datetime-picker';
 import { DatePipe } from './pipes/date.pipe';
 import { ModalConfirmComponent } from './modal-confirm/modal-confirm.component';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 const MY_FORMATS: NgxMatDateFormats = {
     parse: {
@@ -47,15 +48,16 @@ const MY_FORMATS: NgxMatDateFormats = {
 
         // Angular Material
         MatCheckboxModule,
+        MatDatepickerModule,
         MatDialogModule,
         MatExpansionModule,
+        MatInputModule,
         MatPaginatorModule,
+        MatSelectModule,
         MatSortModule,
         MatTableModule,
         MatTabsModule,
-        MatInputModule,
-        MatSelectModule,
-        MatDatepickerModule,
+        MatTooltipModule,
 
         // Datetime picker
         NgxMatMomentModule,

@@ -5,30 +5,31 @@
     <div class="d-flex justify-content-between">
         <h2>Home</h2>
         <div>
-            <button type="button" class="btn btn-dark mr-2" (click)="onCreateMeeting()">Create meeting</button>
-            <button type="button" class="btn btn-dark mr-2" (click)="onEditMeeting()" *ngIf="meetingSelected">Edit meeting</button>
-            <button type="button" class="btn btn-dark mr-2" (click)="onDeleteMeeting()" *ngIf="meetingSelected">Remove meeting</button>
+            <button type="button" class="btn btn-add mr-2" (click)="onCreateMeeting()"><i class="fas fa-plus"></i> Create meeting</button>
             <button type="button" class="btn btn-dark" (click)="onReloadMeetings()"><i class="fa fas fa-sync-alt"></i> Update list</button>
         </div>
     </div>
     
 
-    <mat-tab-group mat-align-tabs="start" [(selectedIndex)]="selectedTabIndex" (selectedTabChange)="selectedTabChange()">
+    <mat-tab-group mat-align-tabs="start" [(selectedIndex)]="selectedTabIndex">
         <mat-tab label="Current meetings">
             <app-meeting-table [data]="currentMeetings" *ngIf="currentMeetings && currentMeetings.length > 0"
-                (selectMeeting)="selectMeeting($event)"></app-meeting-table>
+                (viewMeeting)="viewMeeting($event)" (editMeeting)="onEditMeeting($event)" (deleteMeeting)="onDeleteMeeting($event)">
+            </app-meeting-table>
             <div class="no-records-found" *ngIf="currentMeetings && currentMeetings.length === 0"><h2>No records found</h2></div>
         </mat-tab>
 
         <mat-tab label="Next meetings">
             <app-meeting-table [data]="nextMeetings" *ngIf="nextMeetings && nextMeetings.length > 0"
-                (selectMeeting)="selectMeeting($event)"></app-meeting-table>
+                ((viewMeeting)="viewMeeting($event)" (editMeeting)="onEditMeeting($event)" (deleteMeeting)="onDeleteMeeting($event)">
+            </app-meeting-table>
             <div class="no-records-found" *ngIf="nextMeetings && nextMeetings.length === 0"><h2>No records found</h2></div>
         </mat-tab>
 
         <mat-tab label="Ended meetings">
             <app-meeting-table [data]="pastMeetings" *ngIf="pastMeetings && pastMeetings.length > 0"
-                (selectMeeting)="selectMeeting($event)"></app-meeting-table>
+                (viewMeeting)="viewMeeting($event)" (editMeeting)="onEditMeeting($event)" (deleteMeeting)="onDeleteMeeting($event)">
+            </app-meeting-table>
             <div class="no-records-found" *ngIf="pastMeetings && pastMeetings.length === 0"><h2>No records found</h2></div>
         </mat-tab>
     </mat-tab-group>

@@ -23,10 +23,12 @@ export class MeetingTableComponent {
     }
   }
 
-  @Output() selectMeeting = new EventEmitter<Meeting>();
+  @Output() viewMeeting = new EventEmitter<Meeting>();
+  @Output() editMeeting = new EventEmitter<Meeting>();
+  @Output() deleteMeeting = new EventEmitter<Meeting>();
 
   dataSource: any;
-  displayedColumns: string[] = ['checked', 'description', 'organiser', 'startDate', 'endDate'];
+  displayedColumns: string[] = ['description', 'organiser', 'startDate', 'endDate', 'actions'];
 
   @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: false}) sort: MatSort;
@@ -44,9 +46,16 @@ export class MeetingTableComponent {
     });
   }
 
-  selectRow(pRow: any) {
-    this.selection.toggle(pRow);
-    this.selectMeeting.emit(pRow);
+  onViewMeeting(pSelectedMeeting: Meeting) {
+    this.viewMeeting.emit(pSelectedMeeting);
+  }
+
+  onEditMeeting(pSelectedMeeting: Meeting) {
+    this.editMeeting.emit(pSelectedMeeting);
+  }
+
+  onDeleteMeeting(pSelectedMeeting: Meeting) {
+    this.deleteMeeting.emit(pSelectedMeeting);
   }
 
 }

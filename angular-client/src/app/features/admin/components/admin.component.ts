@@ -157,8 +157,4 @@ export class AdminComponent {
     });
   }
 
-  selectRow(pRow: any) {
-    this.selection.toggle(pRow);
-  }
-
 }

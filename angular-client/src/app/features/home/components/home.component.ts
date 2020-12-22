@@ -60,7 +60,6 @@ export class HomeComponent {
   pastMeetings: Meeting[];
 
   selectedTabIndex: number;
-  meetingSelected: Meeting;
 
   constructor(
     private toastr: ToastrService,
@@ -84,44 +83,36 @@ export class HomeComponent {
     });
   }
 
-  onEditMeeting(): void {
+  viewMeeting(pMeeting: Meeting): void {
+    // TODO
+  }
+
+  onEditMeeting(pMeeting: Meeting): void {
     const dialogRef = this.dialog.open(MeetingEditionModalComponent, {
       data: {
-        id: this.meetingSelected.id,
-        description: this.meetingSelected.description,
-        meetingStartDate: this.meetingSelected.meetingStartDate,
-        meetingEndDate: this.meetingSelected.meetingEndDate,
+        id: pMeeting.id,
+        description: pMeeting.description,
+        meetingStartDate: pMeeting.meetingStartDate,
+        meetingEndDate: pMeeting.meetingEndDate,
       },
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.editMeeting.emit(this.meetingSelected);
+        this.editMeeting.emit(pMeeting);
       }
     });
   }
 
-  onDeleteMeeting(): void {
+  onDeleteMeeting(pMeeting: Meeting): void {
     const confirmDialogRef = this.dialog.open(ModalConfirmComponent, {
       data: {
-        message: 'Are you sure you want to delete meeting ' + this.meetingSelected.description + '?'
+        message: 'Are you sure you want to delete meeting ' + pMeeting.description + '?'
       }
     });
     confirmDialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.deleteMeeting.emit(this.meetingSelected);
+        this.deleteMeeting.emit(pMeeting);
       }
     });
-  }
-
-  selectedTabChange() {
-    this.meetingSelected = null;
-  }
-
-  selectMeeting(pMeeting: Meeting) {
-    if (this.meetingSelected === pMeeting) {
-      return this.meetingSelected = null;
-    }
-
-    this.meetingSelected = pMeeting;
   }
 }
