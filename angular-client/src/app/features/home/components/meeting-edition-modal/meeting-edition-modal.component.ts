@@ -23,7 +23,6 @@ export class MeetingEditionModalComponent {
     public formValidationService: FormValidationService
   ) {
     this.meetingEditionForm = this.formBuilder.group({
-      id: new FormControl(data.id),
       description: new FormControl(data.description, [Validators.required]),
       meetingStartDate: new FormControl(data.meetingStartDate, [Validators.required]),
       meetingEndDate: new FormControl(data.meetingEndDate, [Validators.required]),

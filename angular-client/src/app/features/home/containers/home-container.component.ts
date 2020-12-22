@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Meeting } from 'src/app/store/models/meeting.model';
-import { selectMeetings, selectMeetingsLoading, selectMeetingsError } from 'src/app/store/selectors/meeting.selector';
-import { ACTION_MEETING_CREATE_MEETING, ACTION_MEETING_DELETE_MEETING, ACTION_MEETING_EDIT_MEETING, ACTION_MEETING_GET_MEETINGS } from 'src/app/store/store.constants';
+import { selectMeetings, selectMeetingsLoading } from 'src/app/store/selectors/meeting.selector';
+import { ACTION_MEETING_CREATE_MEETING, ACTION_MEETING_DELETE_MEETING, ACTION_MEETING_EDIT_MEETING, ACTION_MEETING_GET_MEETINGS,
+  ACTION_USER_GET_USERS } from 'src/app/store/store.constants';
 
 @Component({
   selector: 'app-home-container',
@@ -20,10 +21,15 @@ export class HomeContainerComponent implements OnInit {
 
   ngOnInit(): void {
     this.getUserMeetings();
+    this.getUserList();
   }
 
   getUserMeetings() {
     this.store.dispatch({ type: ACTION_MEETING_GET_MEETINGS });
+  }
+
+  getUserList() {
+    this.store.dispatch({ type: ACTION_USER_GET_USERS });
   }
 
   createMeeting(pMeeting: Meeting) {

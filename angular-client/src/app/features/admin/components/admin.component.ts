@@ -46,7 +46,7 @@ export class AdminComponent {
 
   dataSource: MatTableDataSource<User>;
 
-  displayedColumns: string[] = ['checked', 'username', 'email', 'roles'];
+  displayedColumns: string[] = ['username', 'email', 'roles', 'actions'];
 
   @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: false}) sort: MatSort;
@@ -101,13 +101,13 @@ export class AdminComponent {
     });
   }
 
-  onEditUser() {
+  onEditUser(selectedUser: User) {
     this.dialogRef = this.dialog.open(UserEditionModalComponent, {
       data: {
-        id: this.selection.selected[0].id,
-        username: this.selection.selected[0].username,
-        email: this.selection.selected[0].email,
-        roles: this.selection.selected[0].roles,
+        id: selectedUser.id,
+        username: selectedUser.username,
+        email: selectedUser.email,
+        roles: selectedUser.roles,
         allRoles: this.roleList
       },
     });
@@ -122,17 +122,17 @@ export class AdminComponent {
     });
   }
 
-  onDeleteUser() {
+  onDeleteUser(selectedUser: User) {
     const confirmDialogRef = this.dialog.open(ModalConfirmComponent, {
       data: {
-        message: 'Are you sure you want to delete user ' + this.selection.selected[0].username + '?'
+        message: 'Are you sure you want to delete user ' + selectedUser.username + '?'
       }
     });
     confirmDialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.deleteUser.emit({
-          user: this.selection.selected[0],
-          forceLogout: this.selection.selected[0].id === this.authedUser.id
+          user: selectedUser,
+          forceLogout: selectedUser.id === this.authedUser.id
         });
         this.selection = new SelectionModel<User>(false, []);
       }

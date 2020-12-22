@@ -10,8 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import io.mbarcina.kraken.api.dao.IMeetingDAO;
-import io.mbarcina.kraken.api.entity.Meeting;
 import io.mbarcina.kraken.api.exception.DAOException;
+import io.mbarcina.kraken.auth.entity.Meeting;
 
 @Repository
 public class MeetingDAOImpl implements IMeetingDAO{

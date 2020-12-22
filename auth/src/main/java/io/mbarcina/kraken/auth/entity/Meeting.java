@@ -1,4 +1,4 @@
-package io.mbarcina.kraken.api.entity;
+package io.mbarcina.kraken.auth.entity;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -8,6 +8,8 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -16,13 +18,13 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
-import io.mbarcina.kraken.auth.entity.User;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name = "meeting")
 public class Meeting {
 	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name = "id")
 	private int id;
 
@@ -40,11 +42,12 @@ public class Meeting {
 	@JoinColumn(name="organiser_id")
 	private User organiser;
 	
-	@ManyToMany(fetch=FetchType.LAZY, cascade={CascadeType.PERSIST, CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH })
+    @JsonManagedReference
+	@ManyToMany(fetch=FetchType.LAZY, cascade={CascadeType.MERGE })
 	@JoinTable(
 		name = "meeting_attendant",
-		joinColumns = @JoinColumn(name="meeting_id"),
-		inverseJoinColumns = @JoinColumn(name="user_id")
+		joinColumns = @JoinColumn(name="meeting_id", referencedColumnName="id"),
+		inverseJoinColumns = @JoinColumn(name="user_id", referencedColumnName="id")
 	)
 	private List<User> attendantList;
 

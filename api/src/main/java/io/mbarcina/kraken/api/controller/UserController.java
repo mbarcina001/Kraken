@@ -48,8 +48,8 @@ public class UserController {
 		return userService.deleteUser(pUserId);
 	}
 	
-	@Secured({KrakenConstants.ROLE_ADMIN, KrakenConstants.ROLE_USER})
 	@RequestMapping(value= "/roles", method = RequestMethod.GET)
+	@Secured({KrakenConstants.ROLE_ADMIN, KrakenConstants.ROLE_USER})
 	public ApiResponse<List<Role>> getRoles() throws DAOException {
 		return userService.getRoleList();
 	}

@@ -35,12 +35,19 @@ export class UserEditionModalComponent {
       username: new FormControl(data.username, [Validators.required, Validators.minLength(5), Validators.maxLength(50)]),
       email: new FormControl(data.email, [Validators.required, Validators.email, Validators.maxLength(50)]),
       roles: new FormControl(userRoles, [Validators.required]),
+      password: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(15)]),
+      confirmPassword: new FormControl('',
+        [Validators.required, Validators.minLength(5), Validators.maxLength(15)]),
+    },
+    {
+      validators: [validateConfirmPassword()],
+      updateOn: 'blur',
     });
 
     if (!data.id || data.id === -1) {
       this.creatingUser = true;
 
-      if (data.password) {
+      /*if (data.password) {
         this.userEditionForm.addControl('password', new FormControl(data.password,
           [Validators.required, Validators.minLength(5), Validators.maxLength(15)]));
         this.userEditionForm.addControl('confirmPassword', new FormControl(data.password,
@@ -50,7 +57,7 @@ export class UserEditionModalComponent {
           [Validators.required, Validators.minLength(5), Validators.maxLength(15)]));
         this.userEditionForm.addControl('confirmPassword', new FormControl('',
           [Validators.required, Validators.minLength(5), Validators.maxLength(15), validateConfirmPassword(this.userEditionForm)]));
-      }
+      }*/
     } else {
       this.userEditionForm.addControl('id', new FormControl(data.id));
     }

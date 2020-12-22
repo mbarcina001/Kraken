@@ -27,7 +27,7 @@ export class HomeComponent {
         meeting => meeting.meetingStartDate.getTime() > currentTime
       );
       this.pastMeetings = value.filter(
-        meeting => meeting.meetingStartDate.getTime() < currentTime
+        meeting => meeting.meetingEndDate.getTime() < currentTime
       );
 
       if (this.currentMeetings.length > 0) {

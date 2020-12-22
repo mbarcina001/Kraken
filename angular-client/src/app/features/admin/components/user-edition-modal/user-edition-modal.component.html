@@ -19,7 +19,7 @@
             </mat-error>
         </mat-form-field>
 
-        <ng-container *ngIf="creatingUser">
+        <div class="password-inputs" *ngIf="creatingUser">
             <mat-form-field>
                 <mat-label>Password <span class="mandatory-field">*</span></mat-label>
                 <input id="passwordEditionModal" name="passwordEditionModal" ng-reflect-name="passwordEditionModal"  type="password" matInput formControlName="password">
@@ -31,11 +31,15 @@
             <mat-form-field>
                 <mat-label>Repeat password <span class="mandatory-field">*</span></mat-label>
                 <input id="confirmPasswordEditionModal" name="confirmPasswordEditionModal" ng-reflect-name="confirmPasswordEditionModal"  type="password" matInput formControlName="confirmPassword">
-                <mat-error *ngIf="userEditionForm.get('confirmPassword') && userEditionForm.get('confirmPassword').errors && userEditionForm.get('confirmPassword').touched">
+                <mat-error *ngIf="userEditionForm.get('confirmPassword').errors && userEditionForm.get('confirmPassword').touched">
                     {{ formValidationService.getErrorMessage(userEditionForm.get('confirmPassword')) }}
                 </mat-error>
             </mat-form-field>
-        </ng-container>
+
+            <p class="pass-match-error" *ngIf="userEditionForm.errors?.passwordsMatch && !(userEditionForm.get('password').errors && userEditionForm.get('password').touched) &&
+                !(userEditionForm.get('confirmPassword').errors && userEditionForm.get('confirmPassword').touched)">Password do not match</p>
+        </div>
+
 
         <mat-form-field appearance="fill">
             <mat-label>Roles <span class="mandatory-field">*</span></mat-label>

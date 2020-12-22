@@ -16,6 +16,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sun.istack.NotNull;
 
 @Entity
@@ -34,6 +36,7 @@ public class User {
 	
 	@NotNull
 	@NotBlank
+	@JsonIgnore
 	@Column(name="password")
     private String password;
 	
@@ -49,6 +52,15 @@ public class User {
 		inverseJoinColumns = @JoinColumn(name="role_id")
 	)
 	private List<Role> roles = new ArrayList<Role>();
+	
+    @JsonBackReference
+	@ManyToMany(fetch=FetchType.LAZY, cascade={CascadeType.MERGE })
+	@JoinTable(
+		name = "meeting_attendant",
+		joinColumns = @JoinColumn(name="user_id", referencedColumnName="id"),
+		inverseJoinColumns = @JoinColumn(name="meeting_id", referencedColumnName="id")
+	)
+	private List<Meeting> meetings = new ArrayList<Meeting>();
     
 	public int getId() {
 		return id;
@@ -88,6 +100,14 @@ public class User {
 
 	public void setRoles(List<Role> userAuthorities) {
 		this.roles = userAuthorities;
+	}
+
+	public List<Meeting> getMeetings() {
+		return meetings;
+	}
+
+	public void setMeetings(List<Meeting> meetings) {
+		this.meetings = meetings;
 	}
 
 	@Override
@@ -154,5 +174,7 @@ public class User {
 		this.roles = roles;
 	}
 
-	
+	public void addMeeting(Meeting pMeeting) {
+		this.meetings.add(pMeeting);
+	}
 }

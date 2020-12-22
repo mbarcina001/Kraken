@@ -11,11 +11,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import io.mbarcina.kraken.api.entity.Meeting;
 import io.mbarcina.kraken.api.exception.DAOException;
 import io.mbarcina.kraken.api.repository.IMeetingService;
 import io.mbarcina.kraken.api.response.ApiResponse;
 import io.mbarcina.kraken.api.utils.KrakenConstants;
+import io.mbarcina.kraken.auth.entity.Meeting;
 
 @RestController
 @RequestMapping("/meeting")

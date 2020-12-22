@@ -16,8 +16,8 @@ CREATE TABLE if not exists role(
 CREATE TABLE if not exists user_role(
     user_id int,
     role_id int,
-    FOREIGN KEY (user_id) REFERENCES user (id) ON DELETE CASCADE ON UPDATE CASCADE,
-    FOREIGN KEY (role_id) REFERENCES role (id) ON DELETE CASCADE ON UPDATE CASCADE
+    FOREIGN KEY (user_id) REFERENCES user (id),
+    FOREIGN KEY (role_id) REFERENCES role (id)
 );
 
 CREATE TABLE if not exists meeting(
@@ -32,8 +32,8 @@ CREATE TABLE if not exists meeting(
 CREATE TABLE if not exists meeting_attendant(
     user_id int,
     meeting_id int,
-    FOREIGN KEY (user_id) REFERENCES user (id) ON DELETE CASCADE ON UPDATE CASCADE,
-    FOREIGN KEY (meeting_id) REFERENCES meeting (id) ON DELETE CASCADE ON UPDATE CASCADE
+    FOREIGN KEY (user_id) REFERENCES user (id),
+    FOREIGN KEY (meeting_id) REFERENCES meeting (id)
 );
 
 CREATE TABLE oauth_client_details (
