@@ -1,4 +1,4 @@
 <app-home [userMeetings]="userMeetings$ | async" [loading]="meetingLoading$ | async" [userList]="userList$ | async"
-    [userListLoading]="userListLoading$ | async" (reloadMeetings)="getUserMeetings()" (createMeeting)="createMeeting($event)"
-    (editMeeting)="editMeeting($event)" (deleteMeeting)="deleteMeeting($event)">
+    [userListLoading]="userListLoading$ | async" [authedUser]="getAuthenticatedUser$ | async" (reloadMeetings)="getUserMeetings()"
+    (createMeeting)="createMeeting($event)" (editMeeting)="editMeeting($event)" (deleteMeeting)="deleteMeeting($event)">
 </app-home>

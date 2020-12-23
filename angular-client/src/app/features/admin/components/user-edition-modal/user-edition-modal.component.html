@@ -36,7 +36,7 @@
                 </mat-error>
             </mat-form-field>
 
-            <p class="pass-match-error" *ngIf="userEditionForm.errors?.passwordsMatch && !(userEditionForm.get('password').errors && userEditionForm.get('password').touched) &&
+            <p class="custom-error" *ngIf="userEditionForm.errors?.passwordsMatch && !(userEditionForm.get('password').errors && userEditionForm.get('password').touched) &&
                 !(userEditionForm.get('confirmPassword').errors && userEditionForm.get('confirmPassword').touched)">Password do not match</p>
         </div>
 

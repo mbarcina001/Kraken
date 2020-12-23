@@ -16,7 +16,6 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sun.istack.NotNull;
 
@@ -53,7 +52,7 @@ public class User {
 	)
 	private List<Role> roles = new ArrayList<Role>();
 	
-    @JsonBackReference
+	@JsonIgnore
 	@ManyToMany(fetch=FetchType.LAZY, cascade={CascadeType.MERGE })
 	@JoinTable(
 		name = "meeting_attendant",

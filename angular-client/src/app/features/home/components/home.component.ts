@@ -39,6 +39,7 @@ export class HomeComponent {
     }
   }
 
+  @Input() authedUser: User;
   @Input() userList: User[];
   @Input() userListLoading: boolean;
   @Input() loading: boolean;
@@ -80,6 +81,7 @@ export class HomeComponent {
         attendantList: [],
         userList: this.userList,
         disabled: false,
+        organiser: this.authedUser
       },
     });
     dialogRef.afterClosed().subscribe(result => {

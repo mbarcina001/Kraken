@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Meeting } from 'src/app/store/models/meeting.model';
+import { selectAuthenticatedUser } from 'src/app/store/selectors/auth.selector';
 import { selectMeetings, selectMeetingsLoading } from 'src/app/store/selectors/meeting.selector';
 import { selectUsers, selectUserLoading } from 'src/app/store/selectors/user.selector';
 import { ACTION_MEETING_CREATE_MEETING, ACTION_MEETING_DELETE_MEETING, ACTION_MEETING_EDIT_MEETING, ACTION_MEETING_GET_MEETINGS,
@@ -13,6 +14,7 @@ import { ACTION_MEETING_CREATE_MEETING, ACTION_MEETING_DELETE_MEETING, ACTION_ME
 })
 export class HomeContainerComponent implements OnInit {
 
+  getAuthenticatedUser$ = this.store.select(selectAuthenticatedUser);
   userList$ = this.store.select(selectUsers);
   userListLoading$ = this.store.select(selectUserLoading);
   userMeetings$ = this.store.select(selectMeetings);

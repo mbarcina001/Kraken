@@ -32,7 +32,8 @@ export const FIELD_ERROR_MESSAGES = {
     maxlength: (params) => 'Field allows ' + params.requiredLength + ' characters maximum',
     minlength: (params) => 'Field allows ' + params.requiredLength + ' characters minimum',
     email: () => 'Valid email is required: ex@abc.xyz',
-    confirmPassword: () => 'Passwords must match'
+    confirmPassword: () => 'Passwords must match',
+    endDate: (params) => 'Test',
 };
 
 

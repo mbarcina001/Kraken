@@ -46,18 +46,6 @@ export class UserEditionModalComponent {
 
     if (!data.id || data.id === -1) {
       this.creatingUser = true;
-
-      /*if (data.password) {
-        this.userEditionForm.addControl('password', new FormControl(data.password,
-          [Validators.required, Validators.minLength(5), Validators.maxLength(15)]));
-        this.userEditionForm.addControl('confirmPassword', new FormControl(data.password,
-          [Validators.required, Validators.minLength(5), Validators.maxLength(15), validateConfirmPassword(this.userEditionForm)]));
-      } else {
-        this.userEditionForm.addControl('password', new FormControl('',
-          [Validators.required, Validators.minLength(5), Validators.maxLength(15)]));
-        this.userEditionForm.addControl('confirmPassword', new FormControl('',
-          [Validators.required, Validators.minLength(5), Validators.maxLength(15), validateConfirmPassword(this.userEditionForm)]));
-      }*/
     } else {
       this.userEditionForm.addControl('id', new FormControl(data.id));
     }

@@ -18,7 +18,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name = "meeting")
@@ -42,7 +41,6 @@ public class Meeting {
 	@JoinColumn(name="organiser_id")
 	private User organiser;
 	
-    @JsonManagedReference
 	@ManyToMany(fetch=FetchType.LAZY, cascade={CascadeType.MERGE })
 	@JoinTable(
 		name = "meeting_attendant",

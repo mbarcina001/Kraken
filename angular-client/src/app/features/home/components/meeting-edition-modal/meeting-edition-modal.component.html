@@ -6,7 +6,7 @@
     <div class="row">
       <div class="col-8">
         <mat-form-field>
-          <mat-label>Description</mat-label>
+          <mat-label>Description <span class="mandatory-field">*</span></mat-label>
           <input type="description" matInput formControlName="description">
           <mat-error
             *ngIf="meetingEditionForm.get('description').errors && meetingEditionForm.get('description').touched">
@@ -14,29 +14,36 @@
           </mat-error>
         </mat-form-field>
 
-        <mat-form-field>
-          <input matInput [ngxMatDatetimePicker]="pickerFrom" placeholder="Choose a date"
-            formControlName="meetingStartDate">
-          <mat-datepicker-toggle matSuffix [for]="pickerFrom"></mat-datepicker-toggle>
-          <ngx-mat-datetime-picker #pickerFrom>
-          </ngx-mat-datetime-picker>
-          <mat-error
-            *ngIf="meetingEditionForm.get('meetingStartDate').errors && meetingEditionForm.get('meetingStartDate').touched">
-            {{ formValidationService.getErrorMessage(meetingEditionForm.get('meetingStartDate')) }}
-          </mat-error>
-        </mat-form-field>
+        <div class="date-inputs">
 
-        <mat-form-field>
-          <input matInput [ngxMatDatetimePicker]="pickerTo" placeholder="Choose a date"
-            formControlName="meetingEndDate">
-          <mat-datepicker-toggle matSuffix [for]="pickerTo"></mat-datepicker-toggle>
-          <ngx-mat-datetime-picker #pickerTo>
-          </ngx-mat-datetime-picker>
-          <mat-error
-            *ngIf="meetingEditionForm.get('meetingEndDate').errors && meetingEditionForm.get('meetingEndDate').touched">
-            {{ formValidationService.getErrorMessage(meetingEditionForm.get('meetingEndDate')) }}
-          </mat-error>
-        </mat-form-field>
+          <mat-form-field>
+            <mat-label>Start date <span class="mandatory-field">*</span></mat-label>
+            <input matInput [ngxMatDatetimePicker]="pickerFrom" formControlName="meetingStartDate">
+            <mat-datepicker-toggle matSuffix [for]="pickerFrom"></mat-datepicker-toggle>
+            <ngx-mat-datetime-picker #pickerFrom>
+            </ngx-mat-datetime-picker>
+            <mat-error
+              *ngIf="meetingEditionForm.get('meetingStartDate').errors && meetingEditionForm.get('meetingStartDate').touched">
+              {{ formValidationService.getErrorMessage(meetingEditionForm.get('meetingStartDate')) }}
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>End date <span class="mandatory-field">*</span></mat-label>
+            <input matInput [ngxMatDatetimePicker]="pickerTo" formControlName="meetingEndDate">
+            <mat-datepicker-toggle matSuffix [for]="pickerTo"></mat-datepicker-toggle>
+            <ngx-mat-datetime-picker #pickerTo>
+            </ngx-mat-datetime-picker>
+            <mat-error
+              *ngIf="meetingEditionForm.get('meetingEndDate').errors && meetingEditionForm.get('meetingEndDate').touched">
+              {{ formValidationService.getErrorMessage(meetingEditionForm.get('meetingEndDate')) }}
+            </mat-error>
+          </mat-form-field>
+          <p class="custom-error"
+            *ngIf="meetingEditionForm.errors?.endDate && !(meetingEditionForm.get('meetingStartDate').errors && meetingEditionForm.get('meetingStartDate').touched) &&
+                  !(meetingEditionForm.get('meetingEndDate').errors && meetingEditionForm.get('meetingEndDate').touched)">
+            {{meetingEditionForm.errors.endDate}}</p>
+        </div>
       </div>
       <div class="col-4">
         <p>Attendants</p>
@@ -44,14 +51,15 @@
         <div class="row" *ngIf="!data.disabled">
           <div class="col-9">
             <mat-form-field appearance="fill">
-              <mat-select id="attendantsSelectEditionModal" name="attendantsSelectEditionModal" [compareWith]="userComparisonFunction" 
-                [(value)]="selectedAttendant">
-                  <mat-option *ngFor="let user of getUsersNotAttendants()" [value]="user">{{user.username}}</mat-option>
+              <mat-select id="attendantsSelectEditionModal" name="attendantsSelectEditionModal"
+                [compareWith]="userComparisonFunction" [(value)]="selectedAttendant">
+                <mat-option *ngFor="let user of getUsersNotAttendants()" [value]="user">{{user.username}}</mat-option>
               </mat-select>
             </mat-form-field>
           </div>
           <div class="col-3">
-            <button type="button" class="btn btn-add mr-2 mt-2" (click)="addAttendant()"><i class="fas fa-plus"></i></button>
+            <button type="button" class="btn btn-add mr-2 mt-2" (click)="addAttendant()"><i
+                class="fas fa-plus"></i></button>
           </div>
         </div>
 

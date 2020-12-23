@@ -65,7 +65,7 @@ const MY_FORMATS: NgxMatDateFormats = {
         NgxMatTimepickerModule,
     ],
     providers: [
-        { provide: NGX_MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: { useUtc: true } },
+        { provide: NGX_MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: { useUtc: false } },
         { provide: NGX_MAT_DATE_FORMATS, useValue: MY_FORMATS },
         { provide: NgxMatDateAdapter, useClass: NgxMatMomentAdapter },
     ]

@@ -563,3 +563,10 @@ input.input100 {
 .pointer {
     cursor: pointer
 }
+
+.custom-error {
+    font-size: 75%;
+    color: red;
+    position: relative;
+    margin-top: -1.75em !important;
+}
