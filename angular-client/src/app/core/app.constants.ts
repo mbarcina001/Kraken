@@ -40,4 +40,10 @@ export const FIELD_ERROR_MESSAGES = {
 /**
  * Cookies
  */
-export const ATTENDANT_DELETE_CONFIRM_COOKIE = 'attendantDeleteConfirm'
+export const ATTENDANT_DELETE_CONFIRM_COOKIE = 'attendantDeleteConfirm';
+
+/**
+ * Actions (Not store)
+ */
+export const ACTION_CREATE = 'create';
+export const ACTION_EDIT = 'edit';

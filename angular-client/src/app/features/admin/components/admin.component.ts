@@ -4,6 +4,7 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { ACTION_CREATE, ACTION_EDIT } from 'src/app/core/app.constants';
 import { ModalConfirmComponent } from 'src/app/shared/modal-confirm/modal-confirm.component';
 import { Role, User } from 'src/app/store/models/user.model';
 import { UserEditionModalComponent } from './user-edition-modal/user-edition-modal.component';
@@ -54,6 +55,7 @@ export class AdminComponent {
 
   private dialogRef: MatDialogRef<UserEditionModalComponent>;
   private lastCreatedEditedUser: User;
+  private lastAction: string;
 
   constructor(
     public dialog: MatDialog,
@@ -95,6 +97,7 @@ export class AdminComponent {
     this.dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.lastCreatedEditedUser = result;
+        this.lastAction = ACTION_CREATE;
         delete result.confirmPassword;
         this.createUser.emit(result);
       }
@@ -114,6 +117,7 @@ export class AdminComponent {
     this.dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.lastCreatedEditedUser = result;
+        this.lastAction = ACTION_EDIT;
         this.editUser.emit({
           user: result,
           forceLogout: result.id === this.authedUser.id
@@ -152,7 +156,11 @@ export class AdminComponent {
     });
     this.dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.editUser.emit(result);
+        if (this.lastAction === ACTION_CREATE) {
+          this.editUser.emit(result);
+        } else {
+          this.editUser.emit(result);
+        }
       }
     });
   }

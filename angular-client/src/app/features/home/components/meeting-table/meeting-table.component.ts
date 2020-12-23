@@ -1,5 +1,5 @@
-import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
-import { MatSort } from '@angular/material/sort';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { MatSort, MatSortable } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { Meeting } from 'src/app/store/models/meeting.model';
@@ -10,7 +10,7 @@ import { SelectionModel } from '@angular/cdk/collections';
   templateUrl: './meeting-table.component.html',
   styleUrls: ['./meeting-table.component.scss']
 })
-export class MeetingTableComponent {
+export class MeetingTableComponent implements OnInit {
 
   data$: Meeting[];
   get data(): Meeting[] {
@@ -34,7 +34,12 @@ export class MeetingTableComponent {
   @ViewChild(MatSort, {static: false}) sort: MatSort;
   selection = new SelectionModel<Meeting>(false, []);
 
-  constructor() { }
+  constructor() {}
+
+  ngOnInit() {
+    this.sort.sort(({ id: 'description', start: 'asc'}) as MatSortable);
+    this.sortAndPaginate();
+  }
 
   sortAndPaginate() {
     /*

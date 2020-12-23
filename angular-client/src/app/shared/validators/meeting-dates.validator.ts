@@ -3,7 +3,6 @@ import * as moment from 'moment';
 
 export function validateMeetingDates(): ValidatorFn {
   return (formGroup: FormGroup) => {
-    console.log(formGroup);
     const startDate = formGroup.get('meetingStartDate');
     const endDate = formGroup.get('meetingEndDate');
 
@@ -11,8 +10,10 @@ export function validateMeetingDates(): ValidatorFn {
         return null;
     }
 
-    const startDateVal = formGroup.get('meetingStartDate').value;
-    const endDateVal = formGroup.get('meetingEndDate').value;
+    const startDateVal = moment.isMoment(formGroup.get('meetingStartDate').value) ?
+        formGroup.get('meetingStartDate').value : moment(formGroup.get('meetingStartDate').value);
+    const endDateVal = moment.isMoment(formGroup.get('meetingEndDate').value) ?
+        formGroup.get('meetingEndDate').value : moment(formGroup.get('meetingEndDate').value);
 
     if (startDateVal.dayOfYear() !== endDateVal.dayOfYear()) {
         return { meetingDates: 'Meeting must start and finish at the same day' };
@@ -30,15 +31,7 @@ export function validateMeetingDates(): ValidatorFn {
         return { meetingDates: 'Meeting can\'t last 0 mins' };
     }
 
-    if (startDateVal.hour() < new Date().getHours()){
-        return { meetingDates: 'Meeting start date is before current date' };
-    }
-
-    if (startDateVal.dayOfYear() < moment(new Date()).dayOfYear()) {
-        return { meetingDates: 'Meeting start date is before current date' };
-    }
-
-    if (startDateVal.hour() === new Date().getHours() && startDateVal.minute() < new Date().getMinutes()) {
+    if (startDateVal.valueOf() < new Date().getTime()) {
         return { meetingDates: 'Meeting start date is before current date' };
     }
 

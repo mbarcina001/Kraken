@@ -43,7 +43,7 @@ import { ACTION_MEETING_GET_MEETINGS, ACTION_MEETING_GET_MEETINGS_SUCCESS, ACTIO
           return { type: ACTION_MEETING_GET_MEETINGS_ERROR, error: meetingResponse.errorMessage };
         }),
         catchError((err: any) => {
-          return of({ type: ACTION_MEETING_GET_MEETINGS_ERROR, error: err });
+          return of({ type: ACTION_MEETING_GET_MEETINGS_ERROR, error: err.statusText });
         }),
       )
     )
@@ -61,7 +61,7 @@ import { ACTION_MEETING_GET_MEETINGS, ACTION_MEETING_GET_MEETINGS_SUCCESS, ACTIO
           return { type: ACTION_MEETING_CREATE_MEETING_ERROR, error: meetingResponse.errorMessage };
         }),
         catchError((err: any) => {
-          return of({ type: ACTION_MEETING_CREATE_MEETING_ERROR, error: err });
+          return of({ type: ACTION_MEETING_CREATE_MEETING_ERROR, error: err.statusText });
         }),
       )
     )
@@ -95,7 +95,7 @@ import { ACTION_MEETING_GET_MEETINGS, ACTION_MEETING_GET_MEETINGS_SUCCESS, ACTIO
           return { type: ACTION_MEETING_EDIT_MEETING_ERROR, error: meetingResponse.errorMessage };
         }),
         catchError((err: any) => {
-          return of({ type: ACTION_MEETING_EDIT_MEETING_ERROR, error: err });
+          return of({ type: ACTION_MEETING_EDIT_MEETING_ERROR, error: err.statusText });
         }),
       )
     )
@@ -127,6 +127,9 @@ import { ACTION_MEETING_GET_MEETINGS, ACTION_MEETING_GET_MEETINGS_SUCCESS, ACTIO
             return { type: ACTION_MEETING_DELETE_MEETING_SUCCESS, meeting: meetingResponse.data };
           }
           return { type: ACTION_MEETING_DELETE_MEETING_ERROR, error: meetingResponse.errorMessage };
+        }),
+        catchError((err: any) => {
+          return of({ type: ACTION_MEETING_DELETE_MEETING_ERROR, error: err.statusText });
         }),
       )
     )

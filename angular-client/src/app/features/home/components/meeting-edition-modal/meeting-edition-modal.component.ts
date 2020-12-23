@@ -49,6 +49,8 @@ export class MeetingEditionModalComponent {
 
     if (!data.id || data.id === -1) {
       this.creatingMeeting = true;
+    } else {
+      this.meetingEditionForm.addControl('id', new FormControl(data.id));
     }
 
     if (data.disabled) {
@@ -58,7 +60,9 @@ export class MeetingEditionModalComponent {
 
   onSaveMeeting() {
     if (this.meetingEditionForm.valid) {
+      console.log(this.attendantListCopy);
       this.meetingEditionForm.addControl('attendantList', new FormControl(this.attendantListCopy));
+      this.meetingEditionForm.addControl('organiser', new FormControl(this.data.organiser));
       this.dialogRef.close(this.meetingEditionForm.value);
     } else {
       // tslint:disable-next-line: forin
@@ -101,7 +105,7 @@ export class MeetingEditionModalComponent {
   }
 
   public userComparisonFunction(option: User, value: User): boolean {
-    return value.id === option.id;
+    return value && option && value.id === option.id;
   }
 
   public getUsersNotAttendants(): User[] {

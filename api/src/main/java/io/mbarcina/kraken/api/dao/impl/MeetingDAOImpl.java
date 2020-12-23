@@ -21,13 +21,18 @@ public class MeetingDAOImpl implements IMeetingDAO{
 
 	@Transactional
 	public Meeting getMeetingById(int pId) throws DAOException {
-		// Create a query
+		try {
+		// Create a query		
 		TypedQuery<Meeting> theQuery = entityManager.createQuery("from Meeting WHERE id=" + pId, Meeting.class);
 
 		// Get the result list
 		Meeting meeting = theQuery.getSingleResult();
 
 		return meeting;
+		} catch (Exception e) {
+			throw new DAOException("Error retrieving meeting with id " + pId + ": " +  e.getMessage());
+		}
+		
 	}
 	
 	@Transactional
@@ -35,7 +40,7 @@ public class MeetingDAOImpl implements IMeetingDAO{
 		try {TypedQuery<Meeting> theQuery = entityManager.createQuery("SELECT m FROM Meeting m JOIN m.attendantList a WHERE (a.id = " + pUserId + " OR m.organiser.id = " + pUserId + ") GROUP BY m.id", Meeting.class);
 			return theQuery.getResultList();
 		} catch (Exception e) {
-			throw new DAOException("Error retrieving meetings");
+			throw new DAOException("Error retrieving meetings: " + e.getMessage());
 		}
 	}
 	
@@ -45,7 +50,7 @@ public class MeetingDAOImpl implements IMeetingDAO{
 			entityManager.persist(pMeeting);
 			return this.getUserMeetingList(pUserId);
 		} catch (Exception e) {
-			throw new DAOException("Error retrieving meetings");
+			throw new DAOException("Error saving meeting: " + e.getMessage());
 		}
 	}
 	
@@ -55,7 +60,7 @@ public class MeetingDAOImpl implements IMeetingDAO{
 			entityManager.createQuery("DELETE FROM Meeting where id=" + pMeetingId).executeUpdate();
 			return this.getUserMeetingList(pUserId);
 		} catch (Exception e) {
-			throw new DAOException("Error retrieving meetings");
+			throw new DAOException("Error deleting meeting: " + e.getMessage());
 		}
 	}
 }

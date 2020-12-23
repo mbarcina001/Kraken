@@ -38,7 +38,7 @@ public class MeetingController {
 	
 	@Secured({KrakenConstants.ROLE_ADMIN, KrakenConstants.ROLE_USER})
 	@RequestMapping(method = RequestMethod.PUT)
-	public ApiResponse<List<Meeting>> editMeeting(OAuth2Authentication pAuthentication, Meeting pMeeting) throws DAOException {
+	public ApiResponse<List<Meeting>> editMeeting(OAuth2Authentication pAuthentication, @RequestBody Meeting pMeeting) throws DAOException {
 		return meetingService.editMeeting(pAuthentication, pMeeting);
 	}
 	

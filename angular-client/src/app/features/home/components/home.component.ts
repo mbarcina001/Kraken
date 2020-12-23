@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { ToastrService } from 'ngx-toastr';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { ACTION_CREATE, ACTION_EDIT } from 'src/app/core/app.constants';
 import { ModalConfirmComponent } from 'src/app/shared/modal-confirm/modal-confirm.component';
 import { Meeting } from 'src/app/store/models/meeting.model';
 import { User } from 'src/app/store/models/user.model';
@@ -53,9 +53,8 @@ export class HomeComponent {
     return this.error$;
   }
   @Input() set error(value: any) {
-    if (value) {
-      const message = value.error && value.error.error_description ? value.error.error_description : value.message;
-      this.toastr.error(message, 'An error happened');
+    if (value && this.lastCreatedEditedMeeting) {
+      this.reOpenMeetingModal(this.lastCreatedEditedMeeting);
     }
   }
 
@@ -65,8 +64,11 @@ export class HomeComponent {
 
   selectedTabIndex: number;
 
+  private dialogRef: MatDialogRef<MeetingEditionModalComponent>;
+  private lastCreatedEditedMeeting: Meeting;
+  private lastAction: string;
+
   constructor(
-    private toastr: ToastrService,
     public dialog: MatDialog
   ) { }
 
@@ -75,7 +77,7 @@ export class HomeComponent {
   }
 
   onCreateMeeting(): void {
-    const dialogRef = this.dialog.open(MeetingEditionModalComponent, {
+    this.dialogRef = this.dialog.open(MeetingEditionModalComponent, {
       data: {
         id: -1,
         attendantList: [],
@@ -84,8 +86,10 @@ export class HomeComponent {
         organiser: this.authedUser
       },
     });
-    dialogRef.afterClosed().subscribe(result => {
+    this.dialogRef.afterClosed().subscribe(result => {
       if (result) {
+        this.lastCreatedEditedMeeting = result;
+        this.lastAction = ACTION_CREATE;
         this.createMeeting.emit(result);
       }
     });
@@ -96,7 +100,7 @@ export class HomeComponent {
   }
 
   onEditMeeting(pMeeting: Meeting, disabled?: boolean): void {
-    const dialogRef = this.dialog.open(MeetingEditionModalComponent, {
+    this.dialogRef = this.dialog.open(MeetingEditionModalComponent, {
       data: {
         id: pMeeting.id,
         description: pMeeting.description,
@@ -108,9 +112,11 @@ export class HomeComponent {
         organiser: pMeeting.organiser
       },
     });
-    dialogRef.afterClosed().subscribe(result => {
+    this.dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.editMeeting.emit(pMeeting);
+        this.lastCreatedEditedMeeting = result;
+        this.lastAction = ACTION_EDIT;
+        this.editMeeting.emit(result);
       }
     });
   }
@@ -124,6 +130,30 @@ export class HomeComponent {
     confirmDialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.deleteMeeting.emit(pMeeting);
+      }
+    });
+  }
+
+  reOpenMeetingModal(pMeeting: Meeting) {
+    this.dialogRef = this.dialog.open(MeetingEditionModalComponent, {
+      data: {
+        id: pMeeting.id,
+        description: pMeeting.description,
+        meetingStartDate: pMeeting.meetingStartDate,
+        meetingEndDate: pMeeting.meetingEndDate,
+        attendantList: pMeeting.attendantList,
+        userList: this.userList,
+        disabled: false,
+        organiser: pMeeting.organiser
+      },
+    });
+    this.dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        if (this.lastAction === ACTION_CREATE) {
+          this.createMeeting.emit(result);
+        } else {
+          this.editMeeting.emit(result);
+        }
       }
     });
   }

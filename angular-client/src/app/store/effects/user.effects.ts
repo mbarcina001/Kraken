@@ -36,7 +36,7 @@ export class UserEffects {
           return of({ type: ACTION_USER_GET_USERS_ERROR, error: usersResponse.errorMessage });
         }),
         catchError((err: any) => {
-          return of({ type: ACTION_USER_GET_USERS_ERROR, error: err });
+          return of({ type: ACTION_USER_GET_USERS_ERROR, error: err.statusText });
         }),
       )
     )
@@ -55,7 +55,7 @@ export class UserEffects {
           return of({ type: ACTION_USER_GET_ROLES_ERROR, roles: rolesResponse.errorMessage });
         }),
         catchError((err: any) => {
-          return of({ type: ACTION_USER_GET_ROLES_ERROR, error: err });
+          return of({ type: ACTION_USER_GET_ROLES_ERROR, error: err.statusText });
         }),
       )
     )

@@ -59,6 +59,7 @@ public class MeetingServiceImpl implements IMeetingService{
 	@Transactional
 	public ApiResponse<List<Meeting>> editMeeting(OAuth2Authentication pAuthentication, Meeting pMeeting){
 		try {
+			System.out.println(pMeeting);
 			Meeting meetingToSave = this._getMeetingById(pMeeting.getId());
 			
 			if (meetingToSave == null) {
@@ -68,13 +69,14 @@ public class MeetingServiceImpl implements IMeetingService{
 			meetingToSave.setDescription(pMeeting.getDescription());
 			meetingToSave.setMeetingStartDate(pMeeting.getMeetingStartDate());
 			meetingToSave.setMeetingEndDate(pMeeting.getMeetingEndDate());
+			meetingToSave.setAttendantList(pMeeting.getAttendantList());
 			
 			int authedUserId = ((CustomUserDetails) pAuthentication.getPrincipal()).getId();
 			if (pMeeting.getOrganiser().getId() != authedUserId) {
 				return new ApiResponse<List<Meeting>>(null, KrakenConstants.CODE_NOK, "No permissions to edit this meeting");
 			}
 			
-			return new ApiResponse<List<Meeting>>(meetingDAO.persistMeeting(pMeeting, authedUserId), KrakenConstants.CODE_OK, "");
+			return new ApiResponse<List<Meeting>>(meetingDAO.persistMeeting(meetingToSave, authedUserId), KrakenConstants.CODE_OK, "");
 		} catch (DAOException e) {
 			return new ApiResponse<List<Meeting>>(null, KrakenConstants.CODE_NOK, e.getMessage());
 		}
