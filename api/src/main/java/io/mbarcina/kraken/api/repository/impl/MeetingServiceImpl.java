@@ -59,7 +59,6 @@ public class MeetingServiceImpl implements IMeetingService{
 	@Transactional
 	public ApiResponse<List<Meeting>> editMeeting(OAuth2Authentication pAuthentication, Meeting pMeeting){
 		try {
-			System.out.println(pMeeting);
 			Meeting meetingToSave = this._getMeetingById(pMeeting.getId());
 			
 			if (meetingToSave == null) {
