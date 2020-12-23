@@ -1,5 +1,13 @@
 <div>{{data.message}}</div>
-<div class="float-right mt-2">
+
+<div class="contact100-form-checkbox mt-2" *ngIf="showCookieCheckbox()">
+    <input class="input-checkbox100" id="ckb1" type="checkbox" name="remember-me" [checked]="doNotAskAgain" (change)="doNotAskAgain = !doNotAskAgain">
+    <label class="label-checkbox100" for="ckb1">
+        Do not ask again
+    </label>
+</div>
+
+<div class="modal-buttons float-right mt-3">
     <button type="button" class="btn btn-light mr-2" (click)="confirm(false)">Cancel</button>
     <button type="button" class="btn btn-dark" id="delete" (click)="confirm(true)">Confirm</button>
 </div>

@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
 import { ModalConfirmComponent } from 'src/app/shared/modal-confirm/modal-confirm.component';
 import { Meeting } from 'src/app/store/models/meeting.model';
+import { User } from 'src/app/store/models/user.model';
 import { MeetingEditionModalComponent } from './meeting-edition-modal/meeting-edition-modal.component';
 
 @Component({
@@ -38,6 +39,8 @@ export class HomeComponent {
     }
   }
 
+  @Input() userList: User[];
+  @Input() userListLoading: boolean;
   @Input() loading: boolean;
   @Output() reloadMeetings: EventEmitter<void> = new EventEmitter();
   @Output() createMeeting: EventEmitter<Meeting> = new EventEmitter();
@@ -73,7 +76,10 @@ export class HomeComponent {
   onCreateMeeting(): void {
     const dialogRef = this.dialog.open(MeetingEditionModalComponent, {
       data: {
-        id: -1
+        id: -1,
+        attendantList: [],
+        userList: this.userList,
+        disabled: false,
       },
     });
     dialogRef.afterClosed().subscribe(result => {
@@ -83,17 +89,21 @@ export class HomeComponent {
     });
   }
 
-  viewMeeting(pMeeting: Meeting): void {
-    // TODO
+  onViewMeeting(pMeeting: Meeting): void {
+    this.onEditMeeting(pMeeting, true);
   }
 
-  onEditMeeting(pMeeting: Meeting): void {
+  onEditMeeting(pMeeting: Meeting, disabled?: boolean): void {
     const dialogRef = this.dialog.open(MeetingEditionModalComponent, {
       data: {
         id: pMeeting.id,
         description: pMeeting.description,
         meetingStartDate: pMeeting.meetingStartDate,
         meetingEndDate: pMeeting.meetingEndDate,
+        attendantList: pMeeting.attendantList,
+        userList: this.userList,
+        disabled: disabled ? disabled : false,
+        organiser: pMeeting.organiser
       },
     });
     dialogRef.afterClosed().subscribe(result => {

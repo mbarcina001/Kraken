@@ -34,3 +34,9 @@ export const FIELD_ERROR_MESSAGES = {
     email: () => 'Valid email is required: ex@abc.xyz',
     confirmPassword: () => 'Passwords must match'
 };
+
+
+/**
+ * Cookies
+ */
+export const ATTENDANT_DELETE_CONFIRM_COOKIE = 'attendantDeleteConfirm'

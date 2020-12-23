@@ -2,7 +2,7 @@ export class User {
     id: number;
     email: string;
     username: string;
-    password: string;
+    password?: string;
     roles: Role[];
 }
 
