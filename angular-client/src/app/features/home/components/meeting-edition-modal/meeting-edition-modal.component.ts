@@ -6,7 +6,7 @@ import { ToastrService } from 'ngx-toastr';
 import { ATTENDANT_DELETE_CONFIRM_COOKIE } from 'src/app/core/app.constants';
 import { FormValidationService } from 'src/app/core/services/form-validation.service';
 import { ModalConfirmComponent } from 'src/app/shared/modal-confirm/modal-confirm.component';
-import { validateEndDate } from 'src/app/shared/validators/end-date.validator';
+import { validateMeetingDates } from 'src/app/shared/validators/meeting-dates.validator';
 import { User } from 'src/app/store/models/user.model';
 
 @Component({
@@ -41,7 +41,7 @@ export class MeetingEditionModalComponent {
       meetingEndDate: new FormControl(data.meetingEndDate, [Validators.required]),
     },
     {
-      validators: [validateEndDate()],
+      validators: [validateMeetingDates()],
       updateOn: 'blur',
     });
 

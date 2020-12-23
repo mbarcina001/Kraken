@@ -40,9 +40,9 @@
             </mat-error>
           </mat-form-field>
           <p class="custom-error"
-            *ngIf="meetingEditionForm.errors?.endDate && !(meetingEditionForm.get('meetingStartDate').errors && meetingEditionForm.get('meetingStartDate').touched) &&
+            *ngIf="meetingEditionForm.errors?.meetingDates && !(meetingEditionForm.get('meetingStartDate').errors && meetingEditionForm.get('meetingStartDate').touched) &&
                   !(meetingEditionForm.get('meetingEndDate').errors && meetingEditionForm.get('meetingEndDate').touched)">
-            {{meetingEditionForm.errors.endDate}}</p>
+            {{meetingEditionForm.errors.meetingDates}}</p>
         </div>
       </div>
       <div class="col-4">
