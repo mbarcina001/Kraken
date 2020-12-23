@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { MatSort, MatSortable } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
@@ -10,7 +10,7 @@ import { SelectionModel } from '@angular/cdk/collections';
   templateUrl: './meeting-table.component.html',
   styleUrls: ['./meeting-table.component.scss']
 })
-export class MeetingTableComponent implements OnInit {
+export class MeetingTableComponent implements AfterViewInit {
 
   data$: Meeting[];
   get data(): Meeting[] {
@@ -19,6 +19,13 @@ export class MeetingTableComponent implements OnInit {
   @Input() set data(value: Meeting[]) {
     if (value && value.length > 0) {
       this.dataSource = new MatTableDataSource(value);
+      this.dataSource.sortingDataAccessor = (item, property) => {
+        switch (property) {
+          case 'startDate': return new Date(item.meetingStartDate);
+          case 'endDate': return new Date(item.meetingEndDate);
+          default: return item[property];
+        }
+      };
       this.sortAndPaginate();
     }
   }
@@ -36,8 +43,8 @@ export class MeetingTableComponent implements OnInit {
 
   constructor() {}
 
-  ngOnInit() {
-    this.sort.sort(({ id: 'description', start: 'asc'}) as MatSortable);
+  ngAfterViewInit() {
+    this.sort.sort(({ id: 'startDate', start: 'asc'}) as MatSortable);
     this.sortAndPaginate();
   }
 

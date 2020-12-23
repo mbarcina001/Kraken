@@ -1,21 +1,32 @@
-<form [formGroup]="registerForm" class="custom100-form validate-form" action="javascript:void(0);">
+<form [formGroup]="registerForm" class="custom100-form validate-form register-form" action="javascript:void(0);">
     <img width="120px" class="mx-auto d-block mb-4" src="/assets/images/logo/kraken.png">
 
     <span class="custom100-form-title pb-5">
         Register
     </span>
     
+    <div class="wrap-input100 validate-input" [ngClass]="{'alert-validate' : showErrors('username')}" data-validate="Username is required">
+        <input class="input100" [ngClass]="{'has-val' : this.registerForm.controls['username'].value}" type="text" name="username" formControlName="username">
+        <span class="focus-input100"></span>
+        <span class="label-input100">Username</span>
+    </div>
+    
     <div class="wrap-input100 validate-input" [ngClass]="{'alert-validate' : showErrors('email')}" data-validate="Valid email is required: ex@abc.xyz">
         <input class="input100" [ngClass]="{'has-val' : this.registerForm.controls['email'].value}" type="text" name="email" formControlName="email">
         <span class="focus-input100"></span>
         <span class="label-input100">Email</span>
     </div>
-    
-    
+  
     <div class="wrap-input100 validate-input" [ngClass]="{'alert-validate' : showErrors('password')}" data-validate="Password is required">
         <input class="input100" [ngClass]="{'has-val' : this.registerForm.controls['password'].value}" type="password" name="pass" formControlName="password">
         <span class="focus-input100"></span>
         <span class="label-input100">Password</span>
+    </div>
+    
+    <div class="wrap-input100 validate-input" [ngClass]="{'alert-validate' : showErrors('confirmPassword') || registerForm.errors?.passwordsMatch}" data-validate="Password confirmation is empty or incorrect">
+        <input class="input100" [ngClass]="{'has-val' : this.registerForm.controls['confirmPassword'].value}" type="password" name="confirmPassword" formControlName="confirmPassword">
+        <span class="focus-input100"></span>
+        <span class="label-input100">Confirm Password</span>
     </div>
 
     <div class="container-custom100-form-btn">

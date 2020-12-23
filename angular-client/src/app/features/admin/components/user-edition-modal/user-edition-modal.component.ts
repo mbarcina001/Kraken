@@ -33,7 +33,7 @@ export class UserEditionModalComponent {
 
     this.userEditionForm = this.formBuilder.group({
       username: new FormControl(data.username, [Validators.required, Validators.minLength(5), Validators.maxLength(50)]),
-      email: new FormControl(data.email, [Validators.required, Validators.email, Validators.maxLength(50)]),
+      email: new FormControl(data.email, [Validators.required, Validators.email, Validators.minLength(5), Validators.maxLength(50)]),
       roles: new FormControl(userRoles, [Validators.required]),
       password: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(15)]),
       confirmPassword: new FormControl('',

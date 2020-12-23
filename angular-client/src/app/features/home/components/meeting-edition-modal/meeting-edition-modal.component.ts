@@ -36,7 +36,7 @@ export class MeetingEditionModalComponent {
     private cookieService: CookieService
   ) {
     this.meetingEditionForm = this.formBuilder.group({
-      description: new FormControl(data.description, [Validators.required]),
+      description: new FormControl(data.description, [Validators.required, Validators.minLength(5), Validators.maxLength(50)]),
       meetingStartDate: new FormControl(data.meetingStartDate, [Validators.required]),
       meetingEndDate: new FormControl(data.meetingEndDate, [Validators.required]),
     },

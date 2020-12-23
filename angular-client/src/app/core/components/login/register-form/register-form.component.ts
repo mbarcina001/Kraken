@@ -1,5 +1,6 @@
 import { Component, Output, EventEmitter, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { validateConfirmPassword } from 'src/app/shared/validators/confirm-password.validator';
 
 @Component({
   selector: 'app-register-form',
@@ -17,8 +18,14 @@ export class RegisterFormComponent implements OnInit {
 
   ngOnInit() {
     this.registerForm = new FormGroup({
-      email: new FormControl('', [Validators.required, Validators.email]),
-      password: new FormControl('', Validators.required),
+      username: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(50)]),
+      email: new FormControl('', [Validators.required, Validators.email, Validators.minLength(5), Validators.maxLength(50)]),
+      password: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(15)]),
+      confirmPassword: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(15)]),
+    },
+    {
+      validators: [validateConfirmPassword()],
+      updateOn: 'blur',
     });
   }
 
