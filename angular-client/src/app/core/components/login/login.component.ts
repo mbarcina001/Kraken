@@ -23,6 +23,9 @@ export class LoginComponent implements AfterViewInit {
   @Input() set error(pValue: any) {
     if (pValue) {
       this.enableForm.next(true);
+    } else {
+      this.showingTemplate = LOGIN_TEMPLATE;
+      this.resetForm.next(true);
     }
   }
 
@@ -31,8 +34,9 @@ export class LoginComponent implements AfterViewInit {
 
   private showingTemplate = LOGIN_TEMPLATE;
   public enableForm = new Subject();
+  public resetForm = new Subject();
 
-  constructor(private cdRef: ChangeDetectorRef, private toastr: ToastrService){}
+  constructor(private cdRef: ChangeDetectorRef){}
 
   ngAfterViewInit() {
     this.cdRef.detectChanges();

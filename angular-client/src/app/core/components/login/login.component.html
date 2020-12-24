@@ -14,5 +14,5 @@
 </ng-template>
 
 <ng-template #registerTmpl>
-    <app-register-form (doRegister)="doRegister.emit($event)" (showLoginTemplate)="showLoginTemplate()"></app-register-form>
+    <app-register-form (doRegister)="doRegister.emit($event)" (showLoginTemplate)="showLoginTemplate()" [resetForm]="resetForm"></app-register-form>
 </ng-template>

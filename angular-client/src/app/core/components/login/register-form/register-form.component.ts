@@ -1,5 +1,6 @@
-import { Component, Output, EventEmitter, OnInit } from '@angular/core';
+import { Component, Output, EventEmitter, OnInit, Input } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Observable } from 'rxjs';
 import { validateConfirmPassword } from 'src/app/shared/validators/confirm-password.validator';
 
 @Component({
@@ -9,6 +10,7 @@ import { validateConfirmPassword } from 'src/app/shared/validators/confirm-passw
 })
 export class RegisterFormComponent implements OnInit {
 
+  @Input() resetForm: Observable<any>;
   @Output() showLoginTemplate = new EventEmitter<any>();
   @Output() doRegister = new EventEmitter<any>();
 
@@ -17,6 +19,10 @@ export class RegisterFormComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    this.createRegisterForm();
+  }
+
+  createRegisterForm() {
     this.registerForm = new FormGroup({
       username: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(50)]),
       email: new FormControl('', [Validators.required, Validators.email, Validators.minLength(5), Validators.maxLength(50)]),
@@ -36,6 +42,10 @@ export class RegisterFormComponent implements OnInit {
 
   validateAndRegister(): void {
     if (this.registerForm.valid) {
+      const sub = this.resetForm.subscribe(x => {
+        sub.unsubscribe();
+        this.createRegisterForm();
+      });
       this.doRegister.emit(this.registerForm.value);
     } else {
       this.registerForm.markAllAsTouched();

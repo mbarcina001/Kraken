@@ -35,7 +35,7 @@ export class LoginFormComponent implements OnInit{
       const sub = this.enableForm.subscribe(x => {
         sub.unsubscribe();
         this.loginForm.enable();
-    });
+      });
       this.doLogin.emit(this.loginForm.value);
     } else {
       this.loginForm.markAllAsTouched();
