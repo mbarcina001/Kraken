@@ -67,7 +67,7 @@
           <ul>
             <li>{{data.organiser.username}} <i class="fas fa-crown"></i></li>
             <li *ngFor="let attendant of attendantListCopy" (click)="removeAttendant(attendant)">
-              <span class="attendant pointer">{{attendant.username}}</span>
+              <span [class.attendant]="!data.disabled" [class.pointer]="!data.disabled">{{attendant.username}}</span>
             </li>
           </ul>
         </div>

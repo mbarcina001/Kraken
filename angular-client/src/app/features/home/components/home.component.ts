@@ -53,6 +53,7 @@ export class HomeComponent {
     return this.error$;
   }
   @Input() set error(value: any) {
+    console.log(this.lastCreatedEditedMeeting);
     if (value && this.lastCreatedEditedMeeting) {
       this.reOpenMeetingModal(this.lastCreatedEditedMeeting);
     }

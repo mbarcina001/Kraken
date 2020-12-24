@@ -23,7 +23,7 @@ public class UserDAOImpl implements IUserDAO {
 	@Transactional
 	public Attendant getUserById(int pId) throws DAOException {
 		// Create a query
-		TypedQuery<Attendant> theQuery = entityManager.createQuery("from User WHERE id=" + pId, Attendant.class);
+		TypedQuery<Attendant> theQuery = entityManager.createQuery("from Attendant WHERE id=" + pId, Attendant.class);
 
 		// Get the result list
 		Attendant user = theQuery.getSingleResult();
@@ -35,7 +35,7 @@ public class UserDAOImpl implements IUserDAO {
 	public List<Attendant> getUserList() throws DAOException {
 		try {
 			// Create a query
-			TypedQuery<Attendant> theQuery = entityManager.createQuery("from User", Attendant.class);
+			TypedQuery<Attendant> theQuery = entityManager.createQuery("from Attendant", Attendant.class);
 
 			// Get the result list
 			List<Attendant> users = theQuery.getResultList();
@@ -74,7 +74,7 @@ public class UserDAOImpl implements IUserDAO {
 	@Transactional
 	public List<Attendant> deleteUser(int pUserId) throws DAOException {
 		try {
-			entityManager.createQuery("DELETE FROM User where id=" + pUserId).executeUpdate();
+			entityManager.createQuery("DELETE FROM Attendant where id=" + pUserId).executeUpdate();
 			return this.getUserList();
 		} catch (Exception e) {
 			throw new DAOException("Error deleting user");

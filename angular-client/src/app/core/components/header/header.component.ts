@@ -25,7 +25,7 @@ export class HeaderComponent implements OnInit{
 
   ngOnInit(): void {
     this.getAuthenticatedUser$.subscribe(user => {
-      if (user && user.roles.indexOf(appConstants.ADMIN_ROLE) !== -1) {
+      if (user && user.roles.find(role => role.name === appConstants.ADMIN_ROLE)) {
         this.isAdmin = true;
       }
     });

@@ -45,6 +45,10 @@ export class MeetingEditionModalComponent {
       updateOn: 'blur',
     });
 
+    console.log(this.data.organiser);
+    console.log(this.data.attendantList);
+    console.log(this.data.userList);
+
     this.attendantListCopy = Object.assign([], this.data.attendantList);
 
     if (!data.id || data.id === -1) {
@@ -60,7 +64,6 @@ export class MeetingEditionModalComponent {
 
   onSaveMeeting() {
     if (this.meetingEditionForm.valid) {
-      console.log(this.attendantListCopy);
       this.meetingEditionForm.addControl('attendantList', new FormControl(this.attendantListCopy));
       this.meetingEditionForm.addControl('organiser', new FormControl(this.data.organiser));
       this.dialogRef.close(this.meetingEditionForm.value);
@@ -79,7 +82,9 @@ export class MeetingEditionModalComponent {
   }
 
   addAttendant() {
-    this.attendantListCopy.push(this.selectedAttendant);
+    if (this.selectedAttendant) {
+      this.attendantListCopy.push(this.selectedAttendant);
+    }
   }
 
   removeAttendant(pUser: User) {
@@ -101,7 +106,9 @@ export class MeetingEditionModalComponent {
   }
 
   doRemoveAttendant(pUser: User){
-    this.attendantListCopy.splice(this.attendantListCopy.findIndex(user => user.id === pUser.id), 1);
+    if (!this.data.disabled) {
+      this.attendantListCopy.splice(this.attendantListCopy.findIndex(user => user.id === pUser.id), 1);
+    }
   }
 
   public userComparisonFunction(option: User, value: User): boolean {

@@ -28,6 +28,7 @@ export class AuthEffects {
         this.authService.auth(action.loginRequest.email, action.loginRequest.password).pipe(
           map((result: any) => {
             const decoded: any = jwt_decode(result.access_token);
+            console.log(decoded);
             const authenticatedUser = new Auth(decoded.id, decoded.email, decoded.user_name, result.access_token, decoded.authorities);
             return { type: ACTION_AUTH_LOGIN_SUCCESS, authenticatedUser };
           }),
