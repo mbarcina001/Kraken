@@ -1,4 +1,4 @@
-package io.mbarcina.kraken.auth.entity;
+package io.mbarcina.kraken.api.entity;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -39,7 +39,7 @@ public class Meeting {
 	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 	@ManyToOne(fetch = FetchType.LAZY, optional=false)
 	@JoinColumn(name="organiser_id")
-	private User organiser;
+	private Attendant organiser;
 	
 	@ManyToMany(fetch=FetchType.LAZY, cascade={CascadeType.MERGE })
 	@JoinTable(
@@ -47,10 +47,10 @@ public class Meeting {
 		joinColumns = @JoinColumn(name="meeting_id", referencedColumnName="id"),
 		inverseJoinColumns = @JoinColumn(name="user_id", referencedColumnName="id")
 	)
-	private List<User> attendantList;
+	private List<Attendant> attendantList;
 
 	public Meeting() {
-		this.attendantList = new ArrayList<User>();
+		this.attendantList = new ArrayList<Attendant>();
 	}
 
 	public int getId() {
@@ -85,19 +85,19 @@ public class Meeting {
 		this.meetingEndDate = meetingEndDate;
 	}
 
-	public User getOrganiser() {
+	public Attendant getOrganiser() {
 		return organiser;
 	}
 
-	public void setOrganiser(User organiser) {
+	public void setOrganiser(Attendant organiser) {
 		this.organiser = organiser;
 	}
 
-	public List<User> getAttendantList() {
+	public List<Attendant> getAttendantList() {
 		return attendantList;
 	}
 
-	public void setAttendantList(List<User> attendantList) {
+	public void setAttendantList(List<Attendant> attendantList) {
 		this.attendantList = attendantList;
 	}
 
@@ -107,7 +107,7 @@ public class Meeting {
 				+ "meetingEndDate=" + meetingEndDate + ", organiser=" + organiser + ", attendantList=" + attendantList + "]";
 	}
 
-	public void addAttendant(User pAttendant) {
+	public void addAttendant(Attendant pAttendant) {
 		this.attendantList.add(pAttendant);
 	}
 }

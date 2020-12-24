@@ -1,4 +1,4 @@
-package io.mbarcina.kraken.auth.entity;
+package io.mbarcina.kraken.api.entity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,9 +19,11 @@ import javax.validation.constraints.NotBlank;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sun.istack.NotNull;
 
+import io.mbarcina.kraken.auth.entity.Role;
+
 @Entity
 @Table(name="user")
-public class User {
+public class Attendant {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -51,6 +53,15 @@ public class User {
 		inverseJoinColumns = @JoinColumn(name="role_id")
 	)
 	private List<Role> roles = new ArrayList<Role>();
+	
+	@JsonIgnore
+	@ManyToMany(fetch=FetchType.LAZY, cascade={CascadeType.MERGE })
+	@JoinTable(
+		name = "meeting_attendant",
+		joinColumns = @JoinColumn(name="user_id", referencedColumnName="id"),
+		inverseJoinColumns = @JoinColumn(name="meeting_id", referencedColumnName="id")
+	)
+	private List<Meeting> meetings = new ArrayList<Meeting>();
     
 	public int getId() {
 		return id;
@@ -92,6 +103,14 @@ public class User {
 		this.roles = userAuthorities;
 	}
 
+	public List<Meeting> getMeetings() {
+		return meetings;
+	}
+
+	public void setMeetings(List<Meeting> meetings) {
+		this.meetings = meetings;
+	}
+
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", username=" + username + ", password=" + password + ", email=" + email + ", roles="
@@ -118,7 +137,7 @@ public class User {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		User other = (User) obj;
+		Attendant other = (Attendant) obj;
 		if (email == null) {
 			if (other.email != null)
 				return false;
@@ -144,9 +163,9 @@ public class User {
 		return true;
 	}
 	
-	public User() {  }
+	public Attendant() {  }
 
-	public User(int id, @NotBlank String username, @NotBlank String password, @NotBlank String email,
+	public Attendant(int id, @NotBlank String username, @NotBlank String password, @NotBlank String email,
 			List<Role> roles) {
 		super();
 		this.id = id;
@@ -158,5 +177,9 @@ public class User {
 
 	public void addRole(Role pRole) {
 		this.roles.add(pRole);
+	}
+
+	public void addMeeting(Meeting pMeeting) {
+		this.meetings.add(pMeeting);
 	}
 }

@@ -10,7 +10,7 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import io.mbarcina.kraken.api.response.ApiResponse;
-import io.mbarcina.kraken.api.utils.KrakenConstants;
+import io.mbarcina.kraken.auth.utils.KrakenConstants;
 
 @SuppressWarnings({"unchecked","rawtypes"})
 @ControllerAdvice

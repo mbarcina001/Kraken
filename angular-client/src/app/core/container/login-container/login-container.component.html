@@ -1,1 +1,2 @@
-<app-login [isLoading]="authLoading$ | async" [error]="authError$ | async" (doLogin)="login($event)"></app-login>
+<app-login [isLoading]="authLoading$ | async" [error]="authError$ | async" (doLogin)="login($event)"
+    (doRegister)="register($event)"></app-login>

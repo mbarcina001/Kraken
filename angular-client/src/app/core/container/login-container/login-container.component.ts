@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AuthRequest } from 'src/app/store/models/auth-request.model';
 import { selectAuthenticatedUser, selectAuthError, selectAuthLoading } from 'src/app/store/selectors/auth.selector';
-import { ACTION_AUTH_LOGIN } from 'src/app/store/store.constants';
+import { ACTION_AUTH_LOGIN, ACTION_AUTH_REGISTER } from 'src/app/store/store.constants';
 
 
 @Component({
@@ -25,6 +25,6 @@ export class LoginContainerComponent {
   }
 
   register($event: any) {
-    // TODO
+    this.store.dispatch({type: ACTION_AUTH_REGISTER, registerRequest: $event});
   }
 }

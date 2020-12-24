@@ -4,8 +4,8 @@ import java.util.List;
 
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 
+import io.mbarcina.kraken.api.entity.Meeting;
 import io.mbarcina.kraken.api.response.ApiResponse;
-import io.mbarcina.kraken.auth.entity.Meeting;
 
 public interface IMeetingService {
 	

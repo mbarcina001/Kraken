@@ -10,9 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import io.mbarcina.kraken.api.dao.IUserDAO;
+import io.mbarcina.kraken.api.entity.Attendant;
 import io.mbarcina.kraken.api.exception.DAOException;
 import io.mbarcina.kraken.auth.entity.Role;
-import io.mbarcina.kraken.auth.entity.User;
 
 @Repository
 public class UserDAOImpl implements IUserDAO {
@@ -21,24 +21,24 @@ public class UserDAOImpl implements IUserDAO {
 	private EntityManager entityManager;
 
 	@Transactional
-	public User getUserById(int pId) throws DAOException {
+	public Attendant getUserById(int pId) throws DAOException {
 		// Create a query
-		TypedQuery<User> theQuery = entityManager.createQuery("from User WHERE id=" + pId, User.class);
+		TypedQuery<Attendant> theQuery = entityManager.createQuery("from User WHERE id=" + pId, Attendant.class);
 
 		// Get the result list
-		User user = theQuery.getSingleResult();
+		Attendant user = theQuery.getSingleResult();
 
 		return user;
 	}
 
 	@Transactional
-	public List<User> getUserList() throws DAOException {
+	public List<Attendant> getUserList() throws DAOException {
 		try {
 			// Create a query
-			TypedQuery<User> theQuery = entityManager.createQuery("from User", User.class);
+			TypedQuery<Attendant> theQuery = entityManager.createQuery("from User", Attendant.class);
 
 			// Get the result list
-			List<User> users = theQuery.getResultList();
+			List<Attendant> users = theQuery.getResultList();
 
 			return users;
 		} catch (Exception e) {
@@ -62,7 +62,7 @@ public class UserDAOImpl implements IUserDAO {
 	}
 
 	@Transactional
-	public List<User> saveUser(User pUser) throws DAOException {
+	public List<Attendant> saveUser(Attendant pUser) throws DAOException {
 		try {
 			entityManager.persist(pUser);
 			return this.getUserList();
@@ -72,7 +72,7 @@ public class UserDAOImpl implements IUserDAO {
 	}
 
 	@Transactional
-	public List<User> deleteUser(int pUserId) throws DAOException {
+	public List<Attendant> deleteUser(int pUserId) throws DAOException {
 		try {
 			entityManager.createQuery("DELETE FROM User where id=" + pUserId).executeUpdate();
 			return this.getUserList();

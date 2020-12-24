@@ -1,4 +1,4 @@
-package io.mbarcina.kraken.api.utils;
+package io.mbarcina.kraken.auth.utils;
 
 public class KrakenConstants {
 	   public static final String ROLE_USER = "ROLE_USER";

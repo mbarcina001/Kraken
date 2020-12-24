@@ -22,8 +22,6 @@ export class LoginComponent implements AfterViewInit {
   }
   @Input() set error(pValue: any) {
     if (pValue) {
-      const message = pValue.error && pValue.error.error_description ? pValue.error.error_description : pValue.message;
-      this.toastr.error(message, 'Login error');
       this.enableForm.next(true);
     }
   }

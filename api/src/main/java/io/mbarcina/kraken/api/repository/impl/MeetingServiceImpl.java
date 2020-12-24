@@ -9,14 +9,14 @@ import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.stereotype.Repository;
 
 import io.mbarcina.kraken.api.dao.IMeetingDAO;
+import io.mbarcina.kraken.api.entity.Attendant;
+import io.mbarcina.kraken.api.entity.Meeting;
 import io.mbarcina.kraken.api.exception.DAOException;
 import io.mbarcina.kraken.api.repository.IMeetingService;
 import io.mbarcina.kraken.api.repository.IUserService;
 import io.mbarcina.kraken.api.response.ApiResponse;
-import io.mbarcina.kraken.api.utils.KrakenConstants;
 import io.mbarcina.kraken.auth.entity.CustomUserDetails;
-import io.mbarcina.kraken.auth.entity.Meeting;
-import io.mbarcina.kraken.auth.entity.User;
+import io.mbarcina.kraken.auth.utils.KrakenConstants;
 
 @Repository
 public class MeetingServiceImpl implements IMeetingService{
@@ -46,7 +46,7 @@ public class MeetingServiceImpl implements IMeetingService{
 	@Transactional
 	public ApiResponse<List<Meeting>> createMeeting(OAuth2Authentication pAuthentication, Meeting pMeeting){
 		try {
-			User authedUser = userService.getUserById(((CustomUserDetails) pAuthentication.getPrincipal()).getId());
+			Attendant authedUser = userService.getUserById(((CustomUserDetails) pAuthentication.getPrincipal()).getId());
 			pMeeting.setOrganiser(authedUser);
 			List<Meeting> meetings = meetingDAO.persistMeeting(pMeeting, authedUser.getId());
 			pMeeting.addAttendant(authedUser);

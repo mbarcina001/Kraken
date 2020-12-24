@@ -49,5 +49,9 @@ export const ACTION_AUTH_LOGIN = '[Auth] login';
 export const ACTION_AUTH_LOGIN_SUCCESS = '[Auth] login success';
 export const ACTION_AUTH_LOGIN_ERROR = '[Auth] login error';
 
+export const ACTION_AUTH_REGISTER = '[Auth] register';
+export const ACTION_AUTH_REGISTER_SUCCESS = '[Auth] register success';
+export const ACTION_AUTH_REGISTER_ERROR = '[Auth] register error';
+
 export const ACTION_AUTH_LOGOUT = '[Auth] logout';
 export const ACTION_AUTH_LOGOUT_SUCCESS = '[Auth] logout success';
