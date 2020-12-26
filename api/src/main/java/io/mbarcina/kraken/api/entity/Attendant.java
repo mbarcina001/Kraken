@@ -37,7 +37,6 @@ public class Attendant {
 	
 	@NotNull
 	@NotBlank
-	@JsonIgnore
 	@Column(name="password")
     private String password;
 	

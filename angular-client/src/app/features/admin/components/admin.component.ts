@@ -156,8 +156,11 @@ export class AdminComponent {
     });
     this.dialogRef.afterClosed().subscribe(result => {
       if (result) {
+        this.lastCreatedEditedUser = result;
+        delete result.confirmPassword;
+
         if (this.lastAction === ACTION_CREATE) {
-          this.editUser.emit(result);
+          this.createUser.emit(result);
         } else {
           this.editUser.emit(result);
         }

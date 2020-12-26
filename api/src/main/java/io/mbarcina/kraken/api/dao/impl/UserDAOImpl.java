@@ -22,13 +22,17 @@ public class UserDAOImpl implements IUserDAO {
 
 	@Transactional
 	public Attendant getUserById(int pId) throws DAOException {
-		// Create a query
-		TypedQuery<Attendant> theQuery = entityManager.createQuery("from Attendant WHERE id=" + pId, Attendant.class);
-
-		// Get the result list
-		Attendant user = theQuery.getSingleResult();
-
-		return user;
+		try {
+			// Create a query
+			TypedQuery<Attendant> theQuery = entityManager.createQuery("from Attendant WHERE id=" + pId, Attendant.class);
+	
+			// Get the result list
+			Attendant user = theQuery.getSingleResult();
+	
+			return user;
+		} catch (Exception e) {
+			throw new DAOException("Error retrieving user with id " + pId + ": " + e.getMessage());
+		}
 	}
 
 	@Transactional
@@ -42,7 +46,7 @@ public class UserDAOImpl implements IUserDAO {
 
 			return users;
 		} catch (Exception e) {
-			throw new DAOException("Error retrieving users");
+			throw new DAOException("Error retrieving users: " + e.getMessage());
 		}
 	}
 
@@ -57,7 +61,7 @@ public class UserDAOImpl implements IUserDAO {
 
 			return roles;
 		} catch (Exception e) {
-			throw new DAOException("Error retrieving roles");
+			throw new DAOException("Error retrieving roles: " + e.getMessage());
 		}
 	}
 
@@ -67,7 +71,7 @@ public class UserDAOImpl implements IUserDAO {
 			entityManager.persist(pUser);
 			return this.getUserList();
 		} catch (Exception e) {
-			throw new DAOException("Error saving user");
+			throw new DAOException("Error saving user: " + e.getMessage());
 		}
 	}
 
@@ -77,7 +81,7 @@ public class UserDAOImpl implements IUserDAO {
 			entityManager.createQuery("DELETE FROM Attendant where id=" + pUserId).executeUpdate();
 			return this.getUserList();
 		} catch (Exception e) {
-			throw new DAOException("Error deleting user");
+			throw new DAOException("Error deleting user with id " + pUserId + ": " + e.getMessage());
 		}
 	}
 

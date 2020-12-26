@@ -28,17 +28,7 @@ import { ACTION_MEETING_GET_MEETINGS, ACTION_MEETING_GET_MEETINGS_SUCCESS, ACTIO
       .pipe(
         map((meetingResponse: ApiListResponse<Meeting>) => {
           if (meetingResponse.returnCode === RESPONSE_CODE_OK) {
-            const meetings = [];
-            meetingResponse.data.forEach((meeting: Meeting) => {
-              meetings.push({
-                ...meeting,
-                meetingStartDate: meeting.meetingStartDate ?
-                  new Date(meeting.meetingStartDate) : null,
-                meetingEndDate: meeting.meetingEndDate ?
-                  new Date(meeting.meetingEndDate) : null,
-              });
-            });
-            return { type: ACTION_MEETING_GET_MEETINGS_SUCCESS, meetings };
+            return { type: ACTION_MEETING_GET_MEETINGS_SUCCESS, meetings: this.transformMeetings(meetingResponse.data) };
           }
           return { type: ACTION_MEETING_GET_MEETINGS_ERROR, error: meetingResponse.errorMessage };
         }),
@@ -56,7 +46,7 @@ import { ACTION_MEETING_GET_MEETINGS, ACTION_MEETING_GET_MEETINGS_SUCCESS, ACTIO
       .pipe(
         map((meetingResponse: ApiListResponse<Meeting>) => {
           if (meetingResponse.returnCode === RESPONSE_CODE_OK) {
-            return { type: ACTION_MEETING_CREATE_MEETING_SUCCESS, meetings: meetingResponse.data };
+            return { type: ACTION_MEETING_CREATE_MEETING_SUCCESS, meetings: this.transformMeetings(meetingResponse.data) };
           }
           return { type: ACTION_MEETING_CREATE_MEETING_ERROR, error: meetingResponse.errorMessage };
         }),
@@ -90,7 +80,7 @@ import { ACTION_MEETING_GET_MEETINGS, ACTION_MEETING_GET_MEETINGS_SUCCESS, ACTIO
       .pipe(
         map((meetingResponse: ApiListResponse<Meeting>) => {
           if (meetingResponse.returnCode === RESPONSE_CODE_OK) {
-            return { type: ACTION_MEETING_EDIT_MEETING_SUCCESS, meetings: meetingResponse.data };
+            return { type: ACTION_MEETING_EDIT_MEETING_SUCCESS, meetings: this.transformMeetings(meetingResponse.data) };
           }
           return { type: ACTION_MEETING_EDIT_MEETING_ERROR, error: meetingResponse.errorMessage };
         }),
@@ -124,7 +114,7 @@ import { ACTION_MEETING_GET_MEETINGS, ACTION_MEETING_GET_MEETINGS_SUCCESS, ACTIO
       .pipe(
         map((meetingResponse: ApiListResponse<Meeting>) => {
           if (meetingResponse.returnCode === RESPONSE_CODE_OK) {
-            return { type: ACTION_MEETING_DELETE_MEETING_SUCCESS, meeting: meetingResponse.data };
+            return { type: ACTION_MEETING_DELETE_MEETING_SUCCESS, meetings: this.transformMeetings(meetingResponse.data) };
           }
           return { type: ACTION_MEETING_DELETE_MEETING_ERROR, error: meetingResponse.errorMessage };
         }),
@@ -150,5 +140,20 @@ import { ACTION_MEETING_GET_MEETINGS, ACTION_MEETING_GET_MEETINGS_SUCCESS, ACTIO
       this.toastrService.error(action.error, ERROR_TITLE);
     })
   );
+
+  private transformMeetings(data: Meeting[]): Meeting[] {
+    const meetings = [];
+    data.forEach((meeting: Meeting) => {
+      meetings.push({
+        ...meeting,
+        meetingStartDate: meeting.meetingStartDate ?
+          new Date(meeting.meetingStartDate) : null,
+        meetingEndDate: meeting.meetingEndDate ?
+          new Date(meeting.meetingEndDate) : null,
+      });
+    });
+    console.log(meetings);
+    return meetings;
+  }
 
 }

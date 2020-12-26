@@ -21,6 +21,7 @@ export class UserService {
     }
 
     public createUser(pUser: User): Observable<any> {
+        console.log(pUser);
         return this.http.post<any>('/RESOURCE_API/user', pUser);
     }
 

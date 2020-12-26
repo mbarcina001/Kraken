@@ -10,13 +10,14 @@ import { SelectionModel } from '@angular/cdk/collections';
   templateUrl: './meeting-table.component.html',
   styleUrls: ['./meeting-table.component.scss']
 })
-export class MeetingTableComponent implements AfterViewInit {
+export class MeetingTableComponent {
 
   data$: Meeting[];
   get data(): Meeting[] {
     return this.data$;
   }
   @Input() set data(value: Meeting[]) {
+    console.log(value);
     if (value && value.length > 0) {
       this.dataSource = new MatTableDataSource(value);
       this.dataSource.sortingDataAccessor = (item, property) => {
@@ -42,11 +43,6 @@ export class MeetingTableComponent implements AfterViewInit {
   selection = new SelectionModel<Meeting>(false, []);
 
   constructor() {}
-
-  ngAfterViewInit() {
-    this.sort.sort(({ id: 'startDate', start: 'asc'}) as MatSortable);
-    this.sortAndPaginate();
-  }
 
   sortAndPaginate() {
     /*

@@ -7,6 +7,6 @@ export class User {
 }
 
 export class Role {
-    id: number;
+    id?: number;
     name: string;
 }

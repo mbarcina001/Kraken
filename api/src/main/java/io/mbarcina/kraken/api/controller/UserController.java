@@ -33,6 +33,7 @@ public class UserController {
 	@RequestMapping(method = RequestMethod.POST)
 	@Secured({KrakenConstants.ROLE_ADMIN})
 	public ApiResponse<List<Attendant>> createUser(@RequestBody Attendant pUser) throws DAOException {
+		System.out.println(pUser);
 		return userService.createUser(pUser);
 	}
 	

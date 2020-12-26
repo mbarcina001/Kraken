@@ -49,7 +49,7 @@ public class MeetingServiceImpl implements IMeetingService{
 			Attendant authedUser = userService.getUserById(((CustomUserDetails) pAuthentication.getPrincipal()).getId());
 			pMeeting.setOrganiser(authedUser);
 			List<Meeting> meetings = meetingDAO.persistMeeting(pMeeting, authedUser.getId());
-			pMeeting.addAttendant(authedUser);
+			// pMeeting.addAttendant(authedUser);
 			return new ApiResponse<List<Meeting>>(meetings, KrakenConstants.CODE_OK, "");
 		} catch (DAOException e) {
 			return new ApiResponse<List<Meeting>>(null, KrakenConstants.CODE_NOK, e.getMessage());

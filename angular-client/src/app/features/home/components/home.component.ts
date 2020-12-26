@@ -18,6 +18,7 @@ export class HomeComponent {
     return this.userMeetings$;
   }
   @Input() set userMeetings(value: Meeting[]) {
+    console.log(value);
     if (value && value.length > 0) {
       const currentTime = new Date().getTime();
 
@@ -53,7 +54,6 @@ export class HomeComponent {
     return this.error$;
   }
   @Input() set error(value: any) {
-    console.log(this.lastCreatedEditedMeeting);
     if (value && this.lastCreatedEditedMeeting) {
       this.reOpenMeetingModal(this.lastCreatedEditedMeeting);
     }

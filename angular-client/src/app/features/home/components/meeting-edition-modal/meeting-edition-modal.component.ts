@@ -45,10 +45,6 @@ export class MeetingEditionModalComponent {
       updateOn: 'blur',
     });
 
-    console.log(this.data.organiser);
-    console.log(this.data.attendantList);
-    console.log(this.data.userList);
-
     this.attendantListCopy = Object.assign([], this.data.attendantList);
 
     if (!data.id || data.id === -1) {

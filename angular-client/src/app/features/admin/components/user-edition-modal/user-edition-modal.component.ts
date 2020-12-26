@@ -34,10 +34,7 @@ export class UserEditionModalComponent {
     this.userEditionForm = this.formBuilder.group({
       username: new FormControl(data.username, [Validators.required, Validators.minLength(5), Validators.maxLength(50)]),
       email: new FormControl(data.email, [Validators.required, Validators.email, Validators.minLength(5), Validators.maxLength(50)]),
-      roles: new FormControl(userRoles, [Validators.required]),
-      password: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(15)]),
-      confirmPassword: new FormControl('',
-        [Validators.required, Validators.minLength(5), Validators.maxLength(15)]),
+      roles: new FormControl(userRoles, [Validators.required])
     },
     {
       validators: [validateConfirmPassword()],
@@ -46,6 +43,10 @@ export class UserEditionModalComponent {
 
     if (!data.id || data.id === -1) {
       this.creatingUser = true;
+      this.userEditionForm.addControl('password', new FormControl(data.password,
+        [Validators.required, Validators.minLength(5), Validators.maxLength(15)]));
+      this.userEditionForm.addControl('confirmPassword', new FormControl(data.password,
+        [Validators.required, Validators.minLength(5), Validators.maxLength(15)]));
     } else {
       this.userEditionForm.addControl('id', new FormControl(data.id));
     }
