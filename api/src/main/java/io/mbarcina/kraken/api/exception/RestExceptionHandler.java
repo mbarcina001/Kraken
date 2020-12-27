@@ -17,7 +17,7 @@ import io.mbarcina.kraken.auth.utils.KrakenConstants;
 public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 	
 	@ExceptionHandler(DAOException.class)
-    public final ResponseEntity<Object> handleUserNotFoundException(DAOException ex, WebRequest request) {
+    public final ResponseEntity<Object> handleDAOException(DAOException ex, WebRequest request) {
         ApiResponse<List<String>> customResponse = new ApiResponse<List<String>>(null, KrakenConstants.CODE_NOK, ex.getMessage());
         return new ResponseEntity(customResponse, HttpStatus.OK);
     }

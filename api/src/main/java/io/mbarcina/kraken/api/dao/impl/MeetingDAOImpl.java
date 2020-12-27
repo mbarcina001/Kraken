@@ -6,6 +6,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -18,6 +20,8 @@ public class MeetingDAOImpl implements IMeetingDAO{
 	
 	@Autowired
 	private EntityManager entityManager;
+	
+    private static final Logger LOGGER = LoggerFactory.getLogger(MeetingDAOImpl.class);
 
 	@Transactional
 	public Meeting getMeetingById(int pId) throws DAOException {
@@ -30,6 +34,8 @@ public class MeetingDAOImpl implements IMeetingDAO{
 
 		return meeting;
 		} catch (Exception e) {
+			LOGGER.error("getMeetingById - ERR - DAOException: " + e.getMessage());
+			LOGGER.error(e.getStackTrace().toString());
 			throw new DAOException("Error retrieving meeting with id " + pId + ": " +  e.getMessage());
 		}
 		
@@ -40,6 +46,8 @@ public class MeetingDAOImpl implements IMeetingDAO{
 		try {TypedQuery<Meeting> theQuery = entityManager.createQuery("SELECT m FROM Meeting m JOIN m.attendantList a WHERE (a.id = " + pUserId + " OR m.organiser.id = " + pUserId + ") GROUP BY m.id", Meeting.class);
 			return theQuery.getResultList();
 		} catch (Exception e) {
+			LOGGER.error("getUserMeetingList - ERR - DAOException: " + e.getMessage());
+			LOGGER.error(e.getStackTrace().toString());
 			throw new DAOException("Error retrieving meetings: " + e.getMessage());
 		}
 	}
@@ -50,6 +58,8 @@ public class MeetingDAOImpl implements IMeetingDAO{
 			entityManager.persist(pMeeting);
 			return this.getUserMeetingList(pUserId);
 		} catch (Exception e) {
+			LOGGER.error("persistMeeting - ERR - DAOException: " + e.getMessage());
+			LOGGER.error(e.getStackTrace().toString());
 			throw new DAOException("Error saving meeting: " + e.getMessage());
 		}
 	}
@@ -60,6 +70,8 @@ public class MeetingDAOImpl implements IMeetingDAO{
 			entityManager.createQuery("DELETE FROM Meeting where id=" + pMeetingId).executeUpdate();
 			return this.getUserMeetingList(pUserId);
 		} catch (Exception e) {
+			LOGGER.error("deleteMeeting - ERR - DAOException: " + e.getMessage());
+			LOGGER.error(e.getStackTrace().toString());
 			throw new DAOException("Error deleting meeting: " + e.getMessage());
 		}
 	}

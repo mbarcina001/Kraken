@@ -9,4 +9,5 @@ Sample of web architecture with Docker &amp; Kubernetes
 - Angular 9
 - NGRX
 - Docker
+- Log4j2
 - Kubernetes & Minikube

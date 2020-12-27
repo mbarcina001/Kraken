@@ -9,11 +9,11 @@ import io.mbarcina.kraken.auth.entity.Role;
 
 public interface IUserService {
 	
-	public ApiResponse<List<Attendant>> getUserList();
-	public ApiResponse<List<Role>> getRoleList();
+	public ApiResponse<List<Attendant>> getUserList() throws DAOException;
+	public ApiResponse<List<Role>> getRoleList() throws DAOException;
 	public ApiResponse<List<Attendant>> createUser(Attendant pUser) throws DAOException;
-	public ApiResponse<List<Attendant>> editUser(Attendant pUser);
-	public ApiResponse<List<Attendant>> deleteUser(int pUserId);
+	public ApiResponse<List<Attendant>> editUser(Attendant pUser) throws DAOException;
+	public ApiResponse<List<Attendant>> deleteUser(int pUserId) throws DAOException;
 	public Attendant getUserById(int pUserid) throws DAOException;
 
 }

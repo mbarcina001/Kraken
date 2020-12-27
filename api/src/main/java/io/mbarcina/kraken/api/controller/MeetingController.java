@@ -20,7 +20,7 @@ import io.mbarcina.kraken.auth.utils.KrakenConstants;
 @RestController
 @RequestMapping("/meeting")
 public class MeetingController {
-	
+		
 	@Autowired
 	private IMeetingService meetingService;
 	
@@ -44,8 +44,8 @@ public class MeetingController {
 	
 	@Secured({KrakenConstants.ROLE_ADMIN, KrakenConstants.ROLE_USER})
 	@RequestMapping(method = RequestMethod.DELETE)
-	public ApiResponse<List<Meeting>> deleteMeeting(OAuth2Authentication authentication, @RequestParam(name = "meetingId") int pMeetingId) throws DAOException {
-		return meetingService.deleteMeeting(authentication, pMeetingId);
+	public ApiResponse<List<Meeting>> deleteMeeting(OAuth2Authentication pAuthentication, @RequestParam(name = "meetingId") int pMeetingId) throws DAOException {
+		return meetingService.deleteMeeting(pAuthentication, pMeetingId);
 	}
 
 }

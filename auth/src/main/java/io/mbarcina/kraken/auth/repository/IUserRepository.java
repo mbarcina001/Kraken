@@ -9,5 +9,6 @@ import io.mbarcina.kraken.auth.entity.User;
 public interface IUserRepository extends CrudRepository<User, Integer> {
 	 User findByUsername(String pUsername);
 	 User findByEmail(String pUsername);
+	 @SuppressWarnings("unchecked")
 	 User save(User pUser);
 }
