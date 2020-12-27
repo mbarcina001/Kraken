@@ -1,0 +1,4 @@
+2020-12-27 14:15:34 INFO  No active profile set, falling back to default profiles: default
+2020-12-27 14:15:39 WARN  spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2020-12-27 14:15:44 INFO  Started KrakenApiApplication in 13.039 seconds (JVM running for 14.485)
+2020-12-27 14:15:44 INFO  Simple log statement with inputs 1, 2 and 3

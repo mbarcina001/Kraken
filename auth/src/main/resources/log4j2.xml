@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+    <Appenders>
+        <Console name="LogToConsole" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+        </Console>
+         <RollingFile
+		       name="LogToFile"
+		       fileName="./src/main/resources/logs/kraken.log"
+		       filePattern="./src/main/resources/logs/kraken.%d{dd-MMM}.log.gz"
+		    ignoreExceptions="false">
+		    <PatternLayout>
+		        <Pattern>%d{yyyy-MM-dd HH:mm:ss} %-5p %m%n</Pattern>
+		    </PatternLayout>
+		    <Policies>
+		        <TimeBasedTriggeringPolicy interval="1"/>
+		    </Policies>
+		    <DefaultRolloverStrategy max="5" />
+		</RollingFile>
+    </Appenders>
+    <Loggers>
+        <root level="info">
+	        <appender-ref ref="LogToConsole" />
+	        <appender-ref ref="LogToFile" />
+	    </root>
+	
+	    <logger name="io.mbarcina.kraken.api" level="trace" additivity="false">
+	        <appender-ref ref="LogToFile" />
+	        <appender-ref ref="LogToConsole" />
+	    </logger>
+    </Loggers>
+</Configuration>
