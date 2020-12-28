@@ -16,7 +16,6 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sun.istack.NotNull;
 
 @Entity
@@ -35,7 +34,6 @@ public class User {
 	
 	@NotNull
 	@NotBlank
-	@JsonIgnore
 	@Column(name="password")
     private String password;
 	

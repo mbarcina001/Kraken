@@ -52,7 +52,7 @@ public class MeetingServiceImpl implements IMeetingService{
 	@Transactional
 	public ApiResponse<List<Meeting>> createMeeting(OAuth2Authentication pAuthentication, Meeting pMeeting) throws DAOException {
         LOGGER.info("createMeeting - INI - Authentication: " + pAuthentication + " - Meeting: " + pMeeting);
-		Attendant authedUser = userService.getUserById(((CustomUserDetails) pAuthentication.getPrincipal()).getId());
+		Attendant authedUser = userService.getAttendantById(((CustomUserDetails) pAuthentication.getPrincipal()).getId());
 		pMeeting.setOrganiser(authedUser);
 		List<Meeting> meetingListResult = meetingDAO.persistMeeting(pMeeting, authedUser.getId());
 		LOGGER.info("createMeeting - END - Meeting List: " + meetingListResult);

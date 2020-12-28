@@ -37,11 +37,6 @@ public class Attendant {
 	
 	@NotNull
 	@NotBlank
-	@Column(name="password")
-    private String password;
-	
-	@NotNull
-	@NotBlank
 	@Column(name="email")
     private String email;
 	
@@ -77,15 +72,6 @@ public class Attendant {
 	public void setUsername(String username) {
 		this.username = username;
 	}
-	
-	public String getPassword() {
-		return password;
-	}
-	
-	public void setPassword(String password) {
-		this.password = password;
-	}
-	
 	public String getEmail() {
 		return email;
 	}
@@ -112,7 +98,7 @@ public class Attendant {
 
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", username=" + username + ", password=" + password + ", email=" + email + ", roles="
+		return "User [id=" + id + ", username=" + username + ", email=" + email + ", roles="
 				+ roles + "]";
 	}
 
@@ -122,7 +108,6 @@ public class Attendant {
 		int result = 1;
 		result = prime * result + ((email == null) ? 0 : email.hashCode());
 		result = prime * result + id;
-		result = prime * result + ((password == null) ? 0 : password.hashCode());
 		result = prime * result + ((roles == null) ? 0 : roles.hashCode());
 		result = prime * result + ((username == null) ? 0 : username.hashCode());
 		return result;
@@ -144,11 +129,6 @@ public class Attendant {
 			return false;
 		if (id != other.id)
 			return false;
-		if (password == null) {
-			if (other.password != null)
-				return false;
-		} else if (!password.equals(other.password))
-			return false;
 		if (roles == null) {
 			if (other.roles != null)
 				return false;
@@ -164,12 +144,11 @@ public class Attendant {
 	
 	public Attendant() {  }
 
-	public Attendant(int id, @NotBlank String username, @NotBlank String password, @NotBlank String email,
+	public Attendant(int id, @NotBlank String username, @NotBlank String email,
 			List<Role> roles) {
 		super();
 		this.id = id;
 		this.username = username;
-		this.password = password;
 		this.email = email;
 		this.roles = roles;
 	}

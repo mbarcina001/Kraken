@@ -5,12 +5,15 @@ import java.util.List;
 import io.mbarcina.kraken.api.entity.Attendant;
 import io.mbarcina.kraken.api.exception.DAOException;
 import io.mbarcina.kraken.auth.entity.Role;
+import io.mbarcina.kraken.auth.entity.User;
 
 public interface IUserDAO {
 	
-	public Attendant getUserById(int pId) throws DAOException;
-	public List<Attendant> getUserList() throws DAOException;
+	public User getUserById(int pId) throws DAOException;
+	public Attendant getAttendantById(int pId) throws DAOException;
+	public List<User> getUserList() throws DAOException;
+	public List<Attendant> getAttendantList() throws DAOException;
 	public List<Role> getRoleList() throws DAOException;
-	public List<Attendant> saveUser(Attendant pUser) throws DAOException;
-	public List<Attendant> deleteUser(int pUserId) throws DAOException;
+	public List<User> saveUser(User pUser) throws DAOException;
+	public List<User> deleteUser(int pUserId) throws DAOException;
 }

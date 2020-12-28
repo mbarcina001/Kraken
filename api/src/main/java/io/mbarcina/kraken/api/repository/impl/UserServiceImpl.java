@@ -15,6 +15,7 @@ import io.mbarcina.kraken.api.exception.DAOException;
 import io.mbarcina.kraken.api.repository.IUserService;
 import io.mbarcina.kraken.api.response.ApiResponse;
 import io.mbarcina.kraken.auth.entity.Role;
+import io.mbarcina.kraken.auth.entity.User;
 import io.mbarcina.kraken.auth.utils.KrakenConstants;
 
 
@@ -28,11 +29,19 @@ public class UserServiceImpl implements IUserService{
 
 	
 	@Transactional
-	public ApiResponse<List<Attendant>> getUserList() throws DAOException {
+	public ApiResponse<List<User>> getUserList() throws DAOException {
         LOGGER.info("getUserList - INI");
-		List<Attendant> userListResult = userDAO.getUserList();
+		List<User> userListResult = userDAO.getUserList();
         LOGGER.info("getUserList - END - User List: " + userListResult);
-		return new ApiResponse<List<Attendant>>(userListResult, KrakenConstants.CODE_OK, "");
+		return new ApiResponse<List<User>>(userListResult, KrakenConstants.CODE_OK, "");
+	}
+	
+	@Transactional
+	public ApiResponse<List<Attendant>> getAttendantList() throws DAOException {
+        LOGGER.info("getAttendantList - INI");
+		List<Attendant> attendantListResult = userDAO.getAttendantList();
+        LOGGER.info("getAttendantList - END - Attendant List: " + attendantListResult);
+		return new ApiResponse<List<Attendant>>(attendantListResult, KrakenConstants.CODE_OK, "");
 	}
 	
 	@Transactional
@@ -44,43 +53,48 @@ public class UserServiceImpl implements IUserService{
 	}
 
 	@Transactional
-	public ApiResponse<List<Attendant>> createUser(Attendant pUser) throws DAOException {
+	public ApiResponse<List<User>> createUser(User pUser) throws DAOException {
         LOGGER.info("createUser - INI - User: " + pUser);
-		List<Attendant> userListResult = userDAO.saveUser(pUser);
+		List<User> userListResult = userDAO.saveUser(pUser);
         LOGGER.info("createUser - END - User List: " + userListResult);
-		return new ApiResponse<List<Attendant>>(userListResult, KrakenConstants.CODE_OK, "");
+		return new ApiResponse<List<User>>(userListResult, KrakenConstants.CODE_OK, "");
 	}
 	
 	@Transactional
-	public ApiResponse<List<Attendant>> editUser(Attendant pUser) throws DAOException {
+	public ApiResponse<List<User>> editUser(User pUser) throws DAOException {
         LOGGER.info("editUser - INI - User: " + pUser);
-		Attendant userToSave = this.getUserById(pUser.getId());
+        User userToSave = this.getUserById(pUser.getId());
 		
 		if (userToSave == null) {
 			LOGGER.error("editUser - ERR - User not found");
-			return new ApiResponse<List<Attendant>>(null, KrakenConstants.CODE_NOK, "User not found");
+			return new ApiResponse<List<User>>(null, KrakenConstants.CODE_NOK, "User not found");
 		}
 		
 		userToSave.setEmail(pUser.getEmail());
 		userToSave.setUsername(pUser.getUsername());
 		userToSave.setRoles(pUser.getRoles());
 
-		List<Attendant> userListResult = userDAO.saveUser(userToSave);
+		List<User> userListResult = userDAO.saveUser(userToSave);
         LOGGER.info("editUser - END - User List: " + userListResult);
-		return new ApiResponse<List<Attendant>>(userListResult, KrakenConstants.CODE_OK, "");
+		return new ApiResponse<List<User>>(userListResult, KrakenConstants.CODE_OK, "");
 	}
 	
 	@Transactional
-	public ApiResponse<List<Attendant>> deleteUser(int pUserId) throws DAOException {
+	public ApiResponse<List<User>> deleteUser(int pUserId) throws DAOException {
         LOGGER.info("deleteUser - INI - User id: " + pUserId);
 
-		List<Attendant> userListResult = userDAO.deleteUser(pUserId);
+		List<User> userListResult = userDAO.deleteUser(pUserId);
         LOGGER.info("deleteUser - END - User List: " + userListResult);
-		return new ApiResponse<List<Attendant>>(userListResult, KrakenConstants.CODE_OK, "");
+		return new ApiResponse<List<User>>(userListResult, KrakenConstants.CODE_OK, "");
 	}
 	
 	@Transactional
-	public Attendant getUserById(int pId) throws DAOException {
+	public User getUserById(int pId) throws DAOException {
 		return userDAO.getUserById(pId);
+	}
+	
+	@Transactional
+	public Attendant getAttendantById(int pId) throws DAOException {
+		return userDAO.getAttendantById(pId);
 	}
 }
