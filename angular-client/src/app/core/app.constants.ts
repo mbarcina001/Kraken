@@ -23,6 +23,7 @@ export const USER_ROLE = 'ROLE_USER';
  */
 export const SUCCESS_TITLE = 'SUCCESS';
 export const ERROR_TITLE = 'ERROR';
+export const UNEXPECTED_ERROR = 'Unexpected error happenned';
 
 /**
  * Field error constants

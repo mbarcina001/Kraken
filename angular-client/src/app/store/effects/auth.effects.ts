@@ -3,7 +3,7 @@ import { Actions, ofType, Effect } from '@ngrx/effects';
 import { catchError, map, switchMap } from 'rxjs/operators';
 import { AuthService } from '../services/auth.service';
 import { Auth } from '../models/auth.model';
-import { HOME_ROUTE, LOGIN_ROUTE } from 'src/app/core/app.constants';
+import { HOME_ROUTE, LOGIN_ROUTE, UNEXPECTED_ERROR } from 'src/app/core/app.constants';
 import { Router } from '@angular/router';
 import jwt_decode from 'jwt-decode';
 import { ACTION_AUTH_LOGIN, ACTION_AUTH_LOGIN_ERROR, ACTION_AUTH_LOGIN_SUCCESS, ACTION_AUTH_LOGOUT, ACTION_AUTH_LOGOUT_SUCCESS,
@@ -28,7 +28,6 @@ export class AuthEffects {
         this.authService.auth(action.loginRequest.email, action.loginRequest.password).pipe(
           map((result: any) => {
             const decoded: any = jwt_decode(result.access_token);
-            console.log(decoded);
             const authenticatedUser = new Auth(decoded.id, decoded.email, decoded.user_name, result.access_token, decoded.authorities);
             return { type: ACTION_AUTH_LOGIN_SUCCESS, authenticatedUser };
           }),
@@ -51,7 +50,9 @@ export class AuthEffects {
     authError$ = this.actions$.pipe(
       ofType(ACTION_AUTH_LOGIN_ERROR),
       map((action: any) => {
-        this.toastrService.error(action.error, 'Login Error');
+        console.log(action.error);
+        this.toastrService.error(action.error.error != null && action.error.error.error != null ?
+          'Wrong credentials' : UNEXPECTED_ERROR, 'Login Error');
       })
     );
 
