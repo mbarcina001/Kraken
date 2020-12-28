@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter, OnInit, Input } from '@angular/core';
+import { Component, Output, EventEmitter, OnInit, Input, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { validateConfirmPassword } from 'src/app/shared/validators/confirm-password.validator';
@@ -8,18 +8,28 @@ import { validateConfirmPassword } from 'src/app/shared/validators/confirm-passw
   templateUrl: './register-form.component.html',
   styleUrls: ['./register-form.component.scss']
 })
-export class RegisterFormComponent implements OnInit {
+export class RegisterFormComponent implements OnInit, AfterViewInit {
 
   @Input() resetForm: Observable<any>;
   @Output() showLoginTemplate = new EventEmitter<any>();
   @Output() doRegister = new EventEmitter<any>();
 
   public registerForm: FormGroup;
+  public avoidAutocompleteLoad = false;
 
-  constructor() { }
+  constructor(private cdRef: ChangeDetectorRef) { }
 
   ngOnInit() {
     this.createRegisterForm();
+    this.registerForm.disable();
+  }
+
+  ngAfterViewInit() {
+    setTimeout(() => {
+      this.registerForm.enable();
+      this.avoidAutocompleteLoad = false;
+      this.cdRef.detectChanges();
+    }, 1000);
   }
 
   createRegisterForm() {

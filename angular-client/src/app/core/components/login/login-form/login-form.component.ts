@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter, OnInit, Input } from '@angular/core';
+import { Component, Output, EventEmitter, OnInit, Input, ChangeDetectorRef, AfterViewInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 
@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
   templateUrl: './login-form.component.html',
   styleUrls: ['./login-form.component.scss']
 })
-export class LoginFormComponent implements OnInit{
+export class LoginFormComponent implements OnInit, AfterViewInit {
 
   @Input() enableForm: Observable<any>;
   @Input() isLoading: boolean;
@@ -15,14 +15,27 @@ export class LoginFormComponent implements OnInit{
   @Output() doLogin = new EventEmitter<any>();
 
   public loginForm: FormGroup;
+  public avoidAutocompleteLoad = false;
 
-  constructor() { }
+  constructor(private cdRef: ChangeDetectorRef) { }
 
   ngOnInit() {
     this.loginForm = new FormGroup({
       email: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('', Validators.required),
     });
+
+    this.avoidAutocompleteLoad = true;
+    this.loginForm.disable();
+    this.cdRef.detectChanges();
+  }
+
+  ngAfterViewInit() {
+    setTimeout(() => {
+      this.loginForm.enable();
+      this.avoidAutocompleteLoad = false;
+      this.cdRef.detectChanges();
+    }, 1000);
   }
 
   showErrors(controlName: string) {

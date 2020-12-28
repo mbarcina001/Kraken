@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, Inject, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
@@ -13,11 +13,13 @@ import * as appConstants from '../../../../core/app.constants';
   styleUrls: ['./user-edition-modal.component.scss']
 })
 
-export class UserEditionModalComponent {
+export class UserEditionModalComponent implements AfterViewInit {
 
+  avoidAutocompleteLoad = false;
   creatingUser = false;
   public userEditionForm: FormGroup;
   allRoles: Role[];
+  @ViewChild('fieldName') fieldName: ElementRef;
 
   public EXPOSE_CONSTANTS = appConstants;
 
@@ -27,19 +29,37 @@ export class UserEditionModalComponent {
     public data: {id: number, username: string, email: string, roles: Role[], allRoles: Role[], password?: string},
     private formBuilder: FormBuilder,
     private toastrService: ToastrService,
-    public formValidationService: FormValidationService
+    public formValidationService: FormValidationService,
+    private cdRef: ChangeDetectorRef
   ) {
     const userRoles = Array.isArray(data.roles) ? data.roles : [data.roles];
+    this.avoidAutocompleteLoad = true;
 
     this.userEditionForm = this.formBuilder.group({
       username: new FormControl(data.username, [Validators.required, Validators.minLength(5), Validators.maxLength(50)]),
       email: new FormControl(data.email, [Validators.required, Validators.email, Validators.minLength(5), Validators.maxLength(50)]),
       roles: new FormControl(userRoles, [Validators.required])
-    },
+    }/*,
     {
       validators: [validateConfirmPassword()],
       updateOn: 'blur',
-    });
+    }*/);
+
+    this.userEditionForm.disable();
+
+    setTimeout(() => {
+      this.userEditionForm.enable();
+      this.avoidAutocompleteLoad = false;
+
+      if (this.fieldName && this.fieldName.nativeElement) {
+        console.log('2');
+        this.fieldName.nativeElement.focus();
+        this.userEditionForm.get('password').markAsUntouched();
+      }
+
+      this.avoidAutocompleteLoad = false;
+      this.cdRef.detectChanges();
+    }, 1000);
 
     if (!data.id || data.id === -1) {
       this.creatingUser = true;
@@ -52,6 +72,12 @@ export class UserEditionModalComponent {
     }
 
     this.allRoles = data.allRoles;
+    console.log('3');
+  }
+
+  ngAfterViewInit() {
+    console.log('1');
+    this.fieldName.nativeElement.focus();
   }
 
   onSaveUser() {

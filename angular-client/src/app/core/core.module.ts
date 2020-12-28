@@ -12,6 +12,7 @@ import { LoginFormComponent } from './components/login/login-form/login-form.com
 import { RegisterFormComponent } from './components/login/register-form/register-form.component';
 import { NoPermissionsComponent } from './components/no-permissions/no-permissions.component';
 import { MatInputModule } from '@angular/material/input';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
     declarations: [
@@ -28,7 +29,8 @@ import { MatInputModule } from '@angular/material/input';
         AppRoutingModule,
         FormsModule,
         ReactiveFormsModule,
-        MatInputModule
+        MatInputModule,
+        SharedModule
     ],
     providers: [
         AuthService

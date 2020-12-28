@@ -1,11 +1,13 @@
+<app-spinner *ngIf="avoidAutocompleteLoad"></app-spinner>
+
 <div>
-    <form [formGroup]="userEditionForm" class="form" autocomplete="off">        
+    <form [formGroup]="userEditionForm" class="form">        
         <h2 class="mb-4" *ngIf="!creatingUser">User edition</h2>
         <h2 class="mb-4" *ngIf="creatingUser">User creation</h2>
 
         <mat-form-field>
             <mat-label>Username <span class="mandatory-field">*</span></mat-label>
-            <input id="usernameEditionModal" name="usernameEditionModal" ng-reflect-name="usernameEditionModal" type="text" matInput formControlName="username">
+            <input #fieldName id="usernameEditionModal" name="usernameEditionModal" ng-reflect-name="usernameEditionModal" type="text" matInput formControlName="username" autofocus>
             <mat-error *ngIf="userEditionForm.get('username').errors && userEditionForm.get('username').touched">
                 {{ formValidationService.getErrorMessage(userEditionForm.get('username')) }}
             </mat-error>
@@ -22,7 +24,7 @@
         <div class="form-contents" *ngIf="creatingUser">
             <mat-form-field>
                 <mat-label>Password <span class="mandatory-field">*</span></mat-label>
-                <input id="passwordEditionModal" name="passwordEditionModal" ng-reflect-name="passwordEditionModal"  type="password" matInput formControlName="password">
+                <input id="passwordEditionModal" name="passwordEditionModal" ng-reflect-name="passwordEditionModal" type="password" matInput formControlName="password">
                 <mat-error *ngIf="userEditionForm.get('password').errors && userEditionForm.get('password').touched">
                     {{ formValidationService.getErrorMessage(userEditionForm.get('password')) }}
                 </mat-error>
@@ -30,7 +32,7 @@
 
             <mat-form-field>
                 <mat-label>Repeat password <span class="mandatory-field">*</span></mat-label>
-                <input id="confirmPasswordEditionModal" name="confirmPasswordEditionModal" ng-reflect-name="confirmPasswordEditionModal"  type="password" matInput formControlName="confirmPassword">
+                <input id="confirmPasswordEditionModal" name="confirmPasswordEditionModal" ng-reflect-name="confirmPasswordEditionModal" type="password" matInput formControlName="confirmPassword">
                 <mat-error *ngIf="userEditionForm.get('confirmPassword').errors && userEditionForm.get('confirmPassword').touched">
                     {{ formValidationService.getErrorMessage(userEditionForm.get('confirmPassword')) }}
                 </mat-error>

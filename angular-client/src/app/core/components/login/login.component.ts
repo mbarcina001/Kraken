@@ -1,7 +1,6 @@
 import { Component, Output, EventEmitter, ViewChild, TemplateRef, ChangeDetectorRef, ChangeDetectionStrategy, AfterViewInit, Input } from '@angular/core';
 import { Subject } from 'rxjs';
 import { LOGIN_TEMPLATE, REGISTER_TEMPLATE } from '../../app.constants';
-import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-login',
