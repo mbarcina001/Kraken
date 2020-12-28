@@ -52,7 +52,6 @@ export class UserEditionModalComponent implements AfterViewInit {
       this.avoidAutocompleteLoad = false;
 
       if (this.fieldName && this.fieldName.nativeElement) {
-        console.log('2');
         this.fieldName.nativeElement.focus();
         this.userEditionForm.get('password').markAsUntouched();
       }
@@ -72,11 +71,9 @@ export class UserEditionModalComponent implements AfterViewInit {
     }
 
     this.allRoles = data.allRoles;
-    console.log('3');
   }
 
   ngAfterViewInit() {
-    console.log('1');
     this.fieldName.nativeElement.focus();
   }
 

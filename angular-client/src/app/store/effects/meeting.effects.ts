@@ -3,7 +3,7 @@ import { Actions, Effect, ofType } from '@ngrx/effects';
 import { ToastrService } from 'ngx-toastr';
 import { of } from 'rxjs';
 import { switchMap, map, catchError } from 'rxjs/operators';
-import { SUCCESS_TITLE, ERROR_TITLE } from 'src/app/core/app.constants';
+import { SUCCESS_TITLE, ERROR_TITLE, UNEXPECTED_ERROR, ACCESS_DENIED_ERROR } from 'src/app/core/app.constants';
 import { ApiListResponse } from '../models/api-list-response';
 import { Meeting } from '../models/meeting.model';
 import { MeetingService } from '../services/meeting.service';
@@ -33,10 +33,19 @@ import { ACTION_MEETING_GET_MEETINGS, ACTION_MEETING_GET_MEETINGS_SUCCESS, ACTIO
           return { type: ACTION_MEETING_GET_MEETINGS_ERROR, error: meetingResponse.errorMessage };
         }),
         catchError((err: any) => {
-          return of({ type: ACTION_MEETING_GET_MEETINGS_ERROR, error: err.statusText });
+          return of({ type: ACTION_MEETING_GET_MEETINGS_ERROR, error: err });
         }),
       )
     )
+  );
+
+  @Effect({dispatch: false})
+  getUserMeetingsError$ = this.actions$.pipe(
+    ofType(ACTION_MEETING_GET_MEETINGS_ERROR),
+    map((action: any) => {
+      this.toastrService.error(action.error.error != null && action.error.error.error != null && action.error.error.error === 'access_denied' ?
+        ACCESS_DENIED_ERROR : UNEXPECTED_ERROR, ERROR_TITLE);
+    })
   );
 
   @Effect()
@@ -51,7 +60,7 @@ import { ACTION_MEETING_GET_MEETINGS, ACTION_MEETING_GET_MEETINGS_SUCCESS, ACTIO
           return { type: ACTION_MEETING_CREATE_MEETING_ERROR, error: meetingResponse.errorMessage };
         }),
         catchError((err: any) => {
-          return of({ type: ACTION_MEETING_CREATE_MEETING_ERROR, error: err.statusText });
+          return of({ type: ACTION_MEETING_CREATE_MEETING_ERROR, error: err });
         }),
       )
     )
@@ -69,7 +78,8 @@ import { ACTION_MEETING_GET_MEETINGS, ACTION_MEETING_GET_MEETINGS_SUCCESS, ACTIO
   createMeetingError$ = this.actions$.pipe(
     ofType(ACTION_MEETING_CREATE_MEETING_ERROR),
     map((action: any) => {
-      this.toastrService.error(action.error, ERROR_TITLE);
+      this.toastrService.error(action.error.error != null && action.error.error.error != null && action.error.error.error === 'access_denied' ?
+        'Access Denied' : UNEXPECTED_ERROR, ERROR_TITLE);
     })
   );
 
@@ -85,7 +95,7 @@ import { ACTION_MEETING_GET_MEETINGS, ACTION_MEETING_GET_MEETINGS_SUCCESS, ACTIO
           return { type: ACTION_MEETING_EDIT_MEETING_ERROR, error: meetingResponse.errorMessage };
         }),
         catchError((err: any) => {
-          return of({ type: ACTION_MEETING_EDIT_MEETING_ERROR, error: err.statusText });
+          return of({ type: ACTION_MEETING_EDIT_MEETING_ERROR, error: err });
         }),
       )
     )
@@ -103,8 +113,9 @@ import { ACTION_MEETING_GET_MEETINGS, ACTION_MEETING_GET_MEETINGS_SUCCESS, ACTIO
   editMeetingError$ = this.actions$.pipe(
     ofType(ACTION_MEETING_EDIT_MEETING_ERROR),
     map((action: any) => {
-      this.toastrService.error(action.error, ERROR_TITLE);
-    })
+      this.toastrService.error(action.error.error != null && action.error.error.error != null && action.error.error.error === 'access_denied' ?
+        'Access Denied' : UNEXPECTED_ERROR, ERROR_TITLE);
+      })
   );
 
   @Effect()
@@ -119,7 +130,7 @@ import { ACTION_MEETING_GET_MEETINGS, ACTION_MEETING_GET_MEETINGS_SUCCESS, ACTIO
           return { type: ACTION_MEETING_DELETE_MEETING_ERROR, error: meetingResponse.errorMessage };
         }),
         catchError((err: any) => {
-          return of({ type: ACTION_MEETING_DELETE_MEETING_ERROR, error: err.statusText });
+          return of({ type: ACTION_MEETING_DELETE_MEETING_ERROR, error: err });
         }),
       )
     )
@@ -137,7 +148,8 @@ import { ACTION_MEETING_GET_MEETINGS, ACTION_MEETING_GET_MEETINGS_SUCCESS, ACTIO
   deleteMeetingError$ = this.actions$.pipe(
     ofType(ACTION_MEETING_DELETE_MEETING_ERROR),
     map((action: any) => {
-      this.toastrService.error(action.error, ERROR_TITLE);
+      this.toastrService.error(action.error.error != null && action.error.error.error != null && action.error.error.error === 'access_denied' ?
+        'Access Denied' : UNEXPECTED_ERROR, ERROR_TITLE);
     })
   );
 
@@ -152,7 +164,6 @@ import { ACTION_MEETING_GET_MEETINGS, ACTION_MEETING_GET_MEETINGS_SUCCESS, ACTIO
           new Date(meeting.meetingEndDate) : null,
       });
     });
-    console.log(meetings);
     return meetings;
   }
 

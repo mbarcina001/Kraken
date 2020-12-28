@@ -17,7 +17,6 @@ export class MeetingTableComponent {
     return this.data$;
   }
   @Input() set data(value: Meeting[]) {
-    console.log(value);
     if (value && value.length > 0) {
       this.dataSource = new MatTableDataSource(value);
       this.dataSource.sortingDataAccessor = (item, property) => {

@@ -3,7 +3,7 @@ import { Actions, ofType, Effect } from '@ngrx/effects';
 import { catchError, map, switchMap } from 'rxjs/operators';
 import { AuthService } from '../services/auth.service';
 import { Auth } from '../models/auth.model';
-import { HOME_ROUTE, LOGIN_ROUTE, UNEXPECTED_ERROR } from 'src/app/core/app.constants';
+import { HOME_ROUTE, LOGIN_ERROR_TITLE, LOGIN_ROUTE, UNEXPECTED_ERROR, WRONG_CREDENTIALS_ERROR } from 'src/app/core/app.constants';
 import { Router } from '@angular/router';
 import jwt_decode from 'jwt-decode';
 import { ACTION_AUTH_LOGIN, ACTION_AUTH_LOGIN_ERROR, ACTION_AUTH_LOGIN_SUCCESS, ACTION_AUTH_LOGOUT, ACTION_AUTH_LOGOUT_SUCCESS,
@@ -50,9 +50,8 @@ export class AuthEffects {
     authError$ = this.actions$.pipe(
       ofType(ACTION_AUTH_LOGIN_ERROR),
       map((action: any) => {
-        console.log(action.error);
-        this.toastrService.error(action.error.error != null && action.error.error.error != null ?
-          'Wrong credentials' : UNEXPECTED_ERROR, 'Login Error');
+        this.toastrService.error(action.error.error != null && action.error.error.error != null && action.error.error.error === 'invalid_grant' ?
+          WRONG_CREDENTIALS_ERROR : UNEXPECTED_ERROR, LOGIN_ERROR_TITLE);
       })
     );
 

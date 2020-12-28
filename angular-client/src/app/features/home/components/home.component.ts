@@ -18,7 +18,6 @@ export class HomeComponent {
     return this.userMeetings$;
   }
   @Input() set userMeetings(value: Meeting[]) {
-    console.log(value);
     if (value && value.length > 0) {
       const currentTime = new Date().getTime();
 

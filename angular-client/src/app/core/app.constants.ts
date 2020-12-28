@@ -23,7 +23,10 @@ export const USER_ROLE = 'ROLE_USER';
  */
 export const SUCCESS_TITLE = 'SUCCESS';
 export const ERROR_TITLE = 'ERROR';
+export const LOGIN_ERROR_TITLE = 'Login error';
 export const UNEXPECTED_ERROR = 'Unexpected error happenned';
+export const WRONG_CREDENTIALS_ERROR = 'Wrong credentials';
+export const ACCESS_DENIED_ERROR = 'Access denied';
 
 /**
  * Field error constants

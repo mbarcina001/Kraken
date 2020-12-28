@@ -13,7 +13,7 @@ import {
 import { of } from 'rxjs';
 import { ApiListResponse } from '../models/api-list-response';
 import { ToastrService } from 'ngx-toastr';
-import { ERROR_TITLE, SUCCESS_TITLE } from 'src/app/core/app.constants';
+import { ACCESS_DENIED_ERROR, ERROR_TITLE, SUCCESS_TITLE, UNEXPECTED_ERROR } from 'src/app/core/app.constants';
 
 @Injectable()
 export class UserEffects {
@@ -36,10 +36,20 @@ export class UserEffects {
           return of({ type: ACTION_USER_GET_USERS_ERROR, error: usersResponse.errorMessage });
         }),
         catchError((err: any) => {
-          return of({ type: ACTION_USER_GET_USERS_ERROR, error: err.statusText });
+          return of({ type: ACTION_USER_GET_USERS_ERROR, error: err });
         }),
       )
     )
+  );
+
+
+  @Effect({dispatch: false})
+  getUsersError$ = this.actions$.pipe(
+    ofType(ACTION_USER_GET_USERS_ERROR),
+    map((action: any) => {
+      this.toastrService.error(action.error.error != null && action.error.error.error != null && action.error.error.error === 'access_denied' ?
+        ACCESS_DENIED_ERROR : UNEXPECTED_ERROR, ERROR_TITLE);
+    })
   );
 
 
@@ -55,11 +65,21 @@ export class UserEffects {
           return of({ type: ACTION_USER_GET_ROLES_ERROR, roles: rolesResponse.errorMessage });
         }),
         catchError((err: any) => {
-          return of({ type: ACTION_USER_GET_ROLES_ERROR, error: err.statusText });
+          return of({ type: ACTION_USER_GET_ROLES_ERROR, error: err });
         }),
       )
     )
   );
+
+  @Effect({dispatch: false})
+  getRolesError$ = this.actions$.pipe(
+    ofType(ACTION_USER_GET_ROLES_ERROR),
+    map((action: any) => {
+      this.toastrService.error(action.error.error != null && action.error.error.error != null && action.error.error.error === 'access_denied' ?
+        ACCESS_DENIED_ERROR : UNEXPECTED_ERROR, ERROR_TITLE);
+    })
+  );
+
 
   @Effect()
   createUser$ = this.actions$.pipe(
@@ -73,7 +93,7 @@ export class UserEffects {
           return { type: ACTION_USER_CREATE_USER_ERROR, error: userResponse.errorMessage };
         }),
         catchError((err: any) => {
-          return of({ type: ACTION_USER_CREATE_USER_ERROR, error: err.statusText });
+          return of({ type: ACTION_USER_CREATE_USER_ERROR, error: err });
         }),
       )
     )
@@ -91,7 +111,8 @@ export class UserEffects {
   createUserError$ = this.actions$.pipe(
     ofType(ACTION_USER_CREATE_USER_ERROR),
     map((action: any) => {
-      this.toastrService.error(action.error, ERROR_TITLE);
+      this.toastrService.error(action.error.error != null && action.error.error.error != null && action.error.error.error === 'access_denied' ?
+        'Access Denied' : UNEXPECTED_ERROR, ERROR_TITLE);
     })
   );
 
@@ -109,7 +130,7 @@ export class UserEffects {
           return { type: ACTION_USER_EDIT_USER_ERROR, error: userResponse.errorMessage };
         }),
         catchError((err: any) => {
-          return of({ type: ACTION_USER_EDIT_USER_ERROR, error: err.statusText });
+          return of({ type: ACTION_USER_EDIT_USER_ERROR, error: err });
         }),
       )
     )
@@ -136,7 +157,8 @@ export class UserEffects {
   editUserError$ = this.actions$.pipe(
     ofType(ACTION_USER_EDIT_USER_ERROR),
     map((action: any) => {
-      this.toastrService.error(action.error, ERROR_TITLE);
+      this.toastrService.error(action.error.error != null && action.error.error.error != null && action.error.error.error === 'access_denied' ?
+        'Access Denied' : UNEXPECTED_ERROR, ERROR_TITLE);
     })
   );
 
@@ -154,7 +176,7 @@ export class UserEffects {
           return { type: ACTION_USER_DELETE_USER_ERROR, error: userResponse.errorMessage };
         }),
         catchError((err: any) => {
-          return of({ type: ACTION_USER_DELETE_USER_ERROR, error: err.statusText });
+          return of({ type: ACTION_USER_DELETE_USER_ERROR, error: err });
         }),
       )
     )
@@ -181,7 +203,8 @@ export class UserEffects {
   deleteUserError$ = this.actions$.pipe(
     ofType(ACTION_USER_DELETE_USER_ERROR),
     map((action: any) => {
-      this.toastrService.error(action.error, ERROR_TITLE);
+      this.toastrService.error(action.error.error != null && action.error.error.error != null && action.error.error.error === 'access_denied' ?
+        'Access Denied' : UNEXPECTED_ERROR, ERROR_TITLE);
     })
   );
 }
