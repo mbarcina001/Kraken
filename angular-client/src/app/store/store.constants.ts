@@ -25,6 +25,10 @@ export const ACTION_USER_GET_USERS = '[User] get users';
 export const ACTION_USER_GET_USERS_SUCCESS = '[User] get users success';
 export const ACTION_USER_GET_USERS_ERROR = '[User] get users error';
 
+export const ACTION_USER_GET_ATTENDANTS = '[User] get attendants';
+export const ACTION_USER_GET_ATTENDANTS_SUCCESS = '[User] get attendants success';
+export const ACTION_USER_GET_ATTENDANTS_ERROR = '[User] get attendants error';
+
 export const ACTION_USER_CREATE_USER = '[User] create user';
 export const ACTION_USER_CREATE_USER_SUCCESS = '[User] create user success';
 export const ACTION_USER_CREATE_USER_ERROR = '[User] create user error';

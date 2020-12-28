@@ -7,6 +7,12 @@ export const selectUsers = createSelector(
     (user: UserState) => user.users
 );
 
+export const selectAttendants = createSelector(
+    // tslint:disable-next-line: no-string-literal
+    (state: any) => state.user,
+    (user: UserState) => user.attendants
+);
+
 export const selectRoles = createSelector(
     // tslint:disable-next-line: no-string-literal
     (state: any) => state.user,

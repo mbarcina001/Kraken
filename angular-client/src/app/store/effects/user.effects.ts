@@ -8,7 +8,7 @@ import {
   ACTION_USER_GET_ROLES_ERROR, ACTION_USER_GET_USERS_ERROR, ACTION_USER_CREATE_USER, ACTION_USER_CREATE_USER_ERROR,
   ACTION_USER_CREATE_USER_SUCCESS, ACTION_USER_DELETE_USER, ACTION_USER_DELETE_USER_ERROR, ACTION_USER_DELETE_USER_SUCCESS,
   ACTION_USER_EDIT_USER, ACTION_USER_EDIT_USER_ERROR, ACTION_USER_EDIT_USER_SUCCESS, RESPONSE_CODE_OK, ACTION_AUTH_LOGOUT,
-  ACTION_USER_EDIT_USER_SUCCESS_FORCE_LOGOUT, ACTION_USER_DELETE_USER_SUCCESS_FORCE_LOGOUT
+  ACTION_USER_EDIT_USER_SUCCESS_FORCE_LOGOUT, ACTION_USER_DELETE_USER_SUCCESS_FORCE_LOGOUT, ACTION_USER_GET_ATTENDANTS, ACTION_USER_GET_ATTENDANTS_ERROR, ACTION_USER_GET_ATTENDANTS_SUCCESS
 } from '../store.constants';
 import { of } from 'rxjs';
 import { ApiListResponse } from '../models/api-list-response';
@@ -46,6 +46,34 @@ export class UserEffects {
   @Effect({dispatch: false})
   getUsersError$ = this.actions$.pipe(
     ofType(ACTION_USER_GET_USERS_ERROR),
+    map((action: any) => {
+      this.toastrService.error(action.error.error != null && action.error.error.error != null && action.error.error.error === 'access_denied' ?
+        ACCESS_DENIED_ERROR : UNEXPECTED_ERROR, ERROR_TITLE);
+    })
+  );
+
+  @Effect()
+  getAttendants$ = this.actions$.pipe(
+    ofType(ACTION_USER_GET_ATTENDANTS),
+    switchMap(() => this.userService.getAttendants()
+      .pipe(
+        map((usersResponse: ApiListResponse<User>) => {
+          if (usersResponse.returnCode === RESPONSE_CODE_OK) {
+            return { type: ACTION_USER_GET_ATTENDANTS_SUCCESS, attendants: usersResponse.data };
+          }
+          return of({ type: ACTION_USER_GET_ATTENDANTS_ERROR, error: usersResponse.errorMessage });
+        }),
+        catchError((err: any) => {
+          return of({ type: ACTION_USER_GET_ATTENDANTS_ERROR, error: err });
+        }),
+      )
+    )
+  );
+
+
+  @Effect({dispatch: false})
+  getAttendantsError$ = this.actions$.pipe(
+    ofType(ACTION_USER_GET_ATTENDANTS_ERROR),
     map((action: any) => {
       this.toastrService.error(action.error.error != null && action.error.error.error != null && action.error.error.error === 'access_denied' ?
         ACCESS_DENIED_ERROR : UNEXPECTED_ERROR, ERROR_TITLE);

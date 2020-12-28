@@ -3,9 +3,10 @@ import { Store } from '@ngrx/store';
 import { Meeting } from 'src/app/store/models/meeting.model';
 import { selectAuthenticatedUser } from 'src/app/store/selectors/auth.selector';
 import { selectMeetings, selectMeetingsLoading, selectMeetingsError } from 'src/app/store/selectors/meeting.selector';
-import { selectUsers, selectUserLoading } from 'src/app/store/selectors/user.selector';
+import { selectAttendants, selectUserLoading } from 'src/app/store/selectors/user.selector';
 import { ACTION_MEETING_CREATE_MEETING, ACTION_MEETING_DELETE_MEETING, ACTION_MEETING_EDIT_MEETING, ACTION_MEETING_GET_MEETINGS,
-  ACTION_USER_GET_USERS } from 'src/app/store/store.constants';
+  ACTION_USER_GET_ATTENDANTS,
+} from 'src/app/store/store.constants';
 
 @Component({
   selector: 'app-home-container',
@@ -15,7 +16,7 @@ import { ACTION_MEETING_CREATE_MEETING, ACTION_MEETING_DELETE_MEETING, ACTION_ME
 export class HomeContainerComponent implements OnInit {
 
   getAuthenticatedUser$ = this.store.select(selectAuthenticatedUser);
-  userList$ = this.store.select(selectUsers);
+  userList$ = this.store.select(selectAttendants);
   userListLoading$ = this.store.select(selectUserLoading);
   userMeetings$ = this.store.select(selectMeetings);
   meetingLoading$ = this.store.select(selectMeetingsLoading);
@@ -35,7 +36,7 @@ export class HomeContainerComponent implements OnInit {
   }
 
   getUserList() {
-    this.store.dispatch({ type: ACTION_USER_GET_USERS });
+    this.store.dispatch({ type: ACTION_USER_GET_ATTENDANTS });
   }
 
   createMeeting(pMeeting: Meeting) {
