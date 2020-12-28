@@ -25,7 +25,7 @@ public class UserController {
 	private IUserService userService;
 	
 	@RequestMapping(method = RequestMethod.GET)
-	@Secured({KrakenConstants.ROLE_ADMIN})
+	@Secured({KrakenConstants.ROLE_ADMIN, KrakenConstants.ROLE_USER})
 	public ApiResponse<List<Attendant>> getUserList() throws DAOException {
 		return userService.getUserList();
 	}
