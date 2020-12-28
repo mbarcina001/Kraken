@@ -56,6 +56,8 @@
                 <mat-option *ngFor="let user of getUsersNotAttendants()" [value]="user">{{user.username}}</mat-option>
               </mat-select>
             </mat-form-field>
+            
+            <p class="custom-error" *ngIf="meetingEditionForm.errors?.attendants && showAttendantsError">{{meetingEditionForm.errors.attendants}}</p>
           </div>
           <div class="col-3">
             <button type="button" class="btn btn-add mr-2 mt-2" (click)="addAttendant()"><i

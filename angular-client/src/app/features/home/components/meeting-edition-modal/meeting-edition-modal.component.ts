@@ -6,6 +6,7 @@ import { ToastrService } from 'ngx-toastr';
 import { ATTENDANT_DELETE_CONFIRM_COOKIE } from 'src/app/core/app.constants';
 import { FormValidationService } from 'src/app/core/services/form-validation.service';
 import { ModalConfirmComponent } from 'src/app/shared/modal-confirm/modal-confirm.component';
+import { validateAttendants } from 'src/app/shared/validators/attendants-validator';
 import { validateMeetingDates } from 'src/app/shared/validators/meeting-dates.validator';
 import { User } from 'src/app/store/models/user.model';
 
@@ -21,6 +22,7 @@ export class MeetingEditionModalComponent {
 
   public attendantListCopy: User[];
   public selectedAttendant: User = null;
+  public showAttendantsError = false;
 
   constructor(
     private dialogRef: MatDialogRef<MeetingEditionModalComponent>,
@@ -39,13 +41,15 @@ export class MeetingEditionModalComponent {
       description: new FormControl(data.description, [Validators.required, Validators.minLength(5), Validators.maxLength(50)]),
       meetingStartDate: new FormControl(data.meetingStartDate, [Validators.required]),
       meetingEndDate: new FormControl(data.meetingEndDate, [Validators.required]),
+      attendantList: new FormControl(this.attendantListCopy)
     },
     {
-      validators: [validateMeetingDates()],
+      validators: [validateMeetingDates(), validateAttendants(1)],
       updateOn: 'blur',
     });
 
     this.attendantListCopy = Object.assign([], this.data.attendantList);
+    this.meetingEditionForm.get('attendantList').setValue(this.attendantListCopy);
 
     if (!data.id || data.id === -1) {
       this.creatingMeeting = true;
@@ -60,7 +64,6 @@ export class MeetingEditionModalComponent {
 
   onSaveMeeting() {
     if (this.meetingEditionForm.valid) {
-      this.meetingEditionForm.addControl('attendantList', new FormControl(this.attendantListCopy));
       this.meetingEditionForm.addControl('organiser', new FormControl(this.data.organiser));
       this.dialogRef.close(this.meetingEditionForm.value);
     } else {
@@ -70,6 +73,7 @@ export class MeetingEditionModalComponent {
         this.meetingEditionForm.controls[i].markAsTouched();
       }
       this.toastrService.error('Please fix all errors in form', 'Error');
+      this.showAttendantsError = true;
     }
   }
 
@@ -80,6 +84,7 @@ export class MeetingEditionModalComponent {
   addAttendant() {
     if (this.selectedAttendant) {
       this.attendantListCopy.push(this.selectedAttendant);
+      this.meetingEditionForm.get('attendantList').setValue(this.attendantListCopy);
     }
   }
 
@@ -104,6 +109,7 @@ export class MeetingEditionModalComponent {
   doRemoveAttendant(pUser: User){
     if (!this.data.disabled) {
       this.attendantListCopy.splice(this.attendantListCopy.findIndex(user => user.id === pUser.id), 1);
+      this.meetingEditionForm.get('attendantList').setValue(this.attendantListCopy);
     }
   }
 

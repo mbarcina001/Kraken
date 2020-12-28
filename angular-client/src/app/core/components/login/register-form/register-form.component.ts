@@ -6,7 +6,7 @@ import { validateConfirmPassword } from 'src/app/shared/validators/confirm-passw
 @Component({
   selector: 'app-register-form',
   templateUrl: './register-form.component.html',
-  styleUrls: ['./register-form.component.scss']
+  styleUrls: ['./register-form.component.scss', '../login.component.scss']
 })
 export class RegisterFormComponent implements OnInit, AfterViewInit {
 

@@ -33,7 +33,8 @@ export const FIELD_ERROR_MESSAGES = {
     minlength: (params) => 'Field allows ' + params.requiredLength + ' characters minimum',
     email: () => 'Valid email is required: ex@abc.xyz',
     confirmPassword: () => 'Passwords must match',
-    endDate: (params) => 'Test',
+    matDatetimePickerParse: () => 'Field must be a date',
+    attendants: () => '2 attendants minimum'
 };
 
 
