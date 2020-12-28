@@ -27,6 +27,8 @@ export class HeaderComponent implements OnInit{
     this.getAuthenticatedUser$.subscribe(user => {
       if (user && user.roles.find(role => role === appConstants.ADMIN_ROLE)) {
         this.isAdmin = true;
+      } else {
+        this.isAdmin = false;
       }
     });
   }
