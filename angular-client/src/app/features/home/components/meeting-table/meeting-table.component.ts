@@ -1,5 +1,5 @@
-import { AfterViewInit, Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
-import { MatSort, MatSortable } from '@angular/material/sort';
+import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { Meeting } from 'src/app/store/models/meeting.model';
