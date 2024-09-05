@@ -2,7 +2,7 @@
 
 ###### Project in development
 
-Sample of web architecture with Docker &amp; Kubernetes.
+Sample of web architecture with Docker.
 
 - Spring Boot
 - Hibernate + MySQL
@@ -10,7 +10,6 @@ Sample of web architecture with Docker &amp; Kubernetes.
 - NGRX
 - Docker
 - Log4j2
-- Kubernetes & Minikube (To be developed in 2021)
 
 ## Running the project
 
